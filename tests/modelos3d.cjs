@@ -14,7 +14,7 @@ vm.runInNewContext(models,c,{filename:"modelos3d-catalogo.js"});
 vm.runInNewContext(cad,c,{filename:"modelos3d-engine.js"});
 const engine=c.module.exports;
 assert.equal(typeof engine.CADViewer,"function");
-const frog=read("modelos3d/lego-sapo-10698.ldr"),meta=engine.inspect(frog);
+const frog=read("modelos3d/lego-sapo-10698-packed.mpd"),meta=engine.inspect(frog);
 assert(meta.stepSeparators>=10);
 assert(meta.partsReferenced>=16);
 assert.equal(meta.isMultiPart,true);
