@@ -78,10 +78,11 @@
    if(changed){this.resetView(false);}
    if(this.native)this.buildWebGL();
    else this.schedule();
+   if(!this.started&&list.length){this.started=true;void this.enhance();}
   }
   resetView(draw=true){this.yaw=-.75;this.pitch=.58;this.zoom=1;if(this.native)this.frameWebGL();if(draw)this.schedule();}
-  rotate(){this.yaw+=Math.PI/4;if(this.native){const c=this.native.controls, pos=c.object.position.clone().sub(c.target);pos.applyAxisAngle(this.native.THREE.Vector3.prototype.constructor?new this.native.THREE.Vector3(0,1,0):{x:0,y:1,z:0},Math.PI/4);c.object.position.copy(c.target).add(pos);c.update();}else this.schedule();}
-  zoomBy(f){this.zoom=clamp(this.zoom*f,.3,5);if(this.native){this.native.controls.dollyIn?this.native.controls.dollyIn(f):this.native.camera.position.multiplyScalar(1/f);this.native.controls.update();}else this.schedule();}
+  rotate(){this.yaw+=Math.PI/4;if(this.native){const c=this.native.controls, pos=c.object.position.clone().sub(c.target);pos.applyAxisAngle(new this.native.THREE.Vector3(0,1,0),Math.PI/4);c.object.position.copy(c.target).add(pos);c.update();}else this.schedule();}
+  zoomBy(f){this.zoom=clamp(this.zoom*f,.3,5);if(this.native){const c=this.native.controls;const offset=this.native.camera.position.clone().sub(c.target).multiplyScalar(1/f);this.native.camera.position.copy(c.target).add(offset);c.update();}else this.schedule();}
   schedule(){if(!this.ctx||this.native)return;if(this.frame)return;this.frame=requestAnimationFrame(()=>{this.frame=0;this.draw();});}
   cameraPoint(point,center,camera){
    const x=point[0]-center[0],y=point[1]-center[1],z=point[2]-center[2],cy=Math.cos(this.yaw),sy=Math.sin(this.yaw);
