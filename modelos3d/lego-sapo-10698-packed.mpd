@@ -1,0 +1,378 @@
+0 FILE lego-sapo-10698.ldr
+0 Sapo LEGO Classic 10698 - Reconstrucao preliminar do manual original
+0 Name: lego-sapo-10698.ldr
+0 Author: OTTO 3D - estudo de engenharia
+0 !THEME Classic
+0 !KEYWORDS 10698 frog LEGO
+0 // IMPORTANTE: posicoes interpretadas visualmente a partir do manual oficial. Nao certificado.
+0 // ETAPA 1: placa verde 2x3
+1 2 0 0 0 1 0 0 0 1 0 0 0 1 3021.dat
+0 STEP
+0 // ETAPA 2: duas rampas verdes invertidas nas laterais
+1 2 -30 -8 0 0 0 -1 0 1 0 1 0 0 4287.dat
+1 2 30 -8 0 0 0 1 0 1 0 -1 0 0 4287.dat
+0 STEP
+0 // ETAPA 3: rampas laterais
+1 2 -20 -16 0 0 0 -1 0 1 0 1 0 0 3040.dat
+1 2 20 -16 0 0 0 1 0 1 0 -1 0 0 3040.dat
+0 STEP
+0 // ETAPA 4: rampa superior verde
+1 2 0 -24 0 1 0 0 0 1 0 0 0 1 3039.dat
+0 STEP
+0 // ETAPA 5: bloco verde-lima na frente
+1 27 0 -24 -20 1 0 0 0 1 0 0 0 1 3004.dat
+0 STEP
+0 // ETAPA 6: duas rampas verdes laterais
+1 2 -20 -32 20 0 0 -1 0 1 0 1 0 0 85984.dat
+1 2 20 -32 20 0 0 1 0 1 0 -1 0 0 85984.dat
+0 STEP
+0 // ETAPA 7: bloco verde-lima superior
+1 27 0 -48 -20 1 0 0 0 1 0 0 0 1 3003.dat
+0 STEP
+0 // ETAPA 8: placa do focinho
+1 2 0 -72 -20 1 0 0 0 1 0 0 0 1 3021.dat
+0 STEP
+0 // ETAPA 9: dois suportes verdes para olhos
+1 2 -10 -80 -20 1 0 0 0 1 0 0 0 1 4070.dat
+1 2 10 -80 -20 1 0 0 0 1 0 0 0 1 4070.dat
+0 STEP
+0 // ETAPA 10: rampa dianteira do focinho
+1 2 0 -80 -40 1 0 0 0 1 0 0 0 1 3039.dat
+0 STEP
+0 // ETAPA 11: dois olhos estampados (pecas redondas)
+1 15 -10 -80 -30 1 0 0 0 0 -1 0 1 0 98138p07.dat
+1 15 10 -80 -30 1 0 0 0 0 -1 0 1 0 98138p07.dat
+0 FILE 3021.dat
+0 Plate  2 x  3
+0 Name: 3021.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Part UPDATE 2002-03
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2001-10-26 [PTadmin] Official Update 2001-01
+0 !HISTORY 2002-05-07 [unknown] BFC Certification
+0 !HISTORY 2002-06-11 [PTadmin] Official Update 2002-03
+0 !HISTORY 2007-06-07 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+
+1 16 10 4 0 1 0 0 0 -1 0 0 0 1 stud4.dat
+1 16 -10 4 0 1 0 0 0 -1 0 0 0 1 stud4.dat
+
+0 BFC INVERTNEXT
+1 16 0 8 0 26 0 0 0 -4 0 0 0 16 box5.dat
+
+4 16 30 8 20 26 8 16 -26 8 16 -30 8 20
+0 Next Line was 4 16 30 8 -20 26 8 -16 -26 8 -16 -30 8 -20
+4 16 -30 8 -20 -26 8 -16 26 8 -16 30 8 -20
+0 Next Line was 4 16 30 8 20 26 8 16 26 8 -16 30 8 -20
+4 16 30 8 -20 26 8 -16 26 8 16 30 8 20
+4 16 -30 8 20 -26 8 16 -26 8 -16 -30 8 -20
+
+1 16 0 8 0 30 0 0 0 -8 0 0 0 20 box5.dat
+
+1 16 20 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 0 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 -20 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 20 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 0 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 -20 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+0
+0 FILE 4287.dat
+0 ~Moved to 4287a
+0 Name: 4287.dat
+0 Author: [PTadmin]
+0 !LDRAW_ORG Part UPDATE 2017-01
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2017-12-30 [PTadmin] Official Update 2017-01
+
+0 // Slope Brick 33  3 x  1 Inverted with Notch and Thick Front
+
+1 16 0 0 0 1 0 0 0 1 0 0 0 1 4287a.dat
+0 FILE 3040.dat
+0 ~Moved to 3040b
+0 Name: 3040.dat
+0 Author: [PTadmin]
+0 !LDRAW_ORG Part UPDATE 2004-04
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2004-03-02 [PTadmin] Official Update 2004-01
+0 !HISTORY 2004-11-06 [PTadmin] Official Update 2004-04
+0 !HISTORY 2007-06-09 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+
+ 1 16 0 0 0 1 0 0 0 1 0 0 0 1 3040b.dat
+0 FILE 3039.dat
+0 Slope Brick 45  2 x  2
+0 Name: 3039.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Part UPDATE 2003-03
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2003-07-02 [Steffen] BFCed; re-worked part to use s\3039s01.dat
+0 !HISTORY 2003-12-19 [PTadmin] Official Update 2003-03
+0 !HISTORY 2007-06-09 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+
+1 16 0 0 0 1 0 0 0 1 0 0 0 1 s\3039s01.dat
+4 16 20 20 -30 20 0 -10 -20 0 -10 -20 20 -30
+0
+0 FILE 3004.dat
+0 Brick  1 x  2
+0 Name: 3004.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Part UPDATE 2022-05
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2001-10-26 [PTadmin] Official Update 2001-01
+0 !HISTORY 2002-05-07 [unknown] BFC Certification
+0 !HISTORY 2002-06-11 [PTadmin] Official Update 2002-03
+0 !HISTORY 2007-05-07 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+0 !HISTORY 2022-08-04 [MagFors] Using subfile
+0 !HISTORY 2022-09-15 [PTadmin] Official Update 2022-05
+
+1 16 0 0 0 1 0 0 0 1 0 0 0 1 s\3004s01.dat
+4 16 -20 24 -10 20 24 -10 20 0 -10 -20 0 -10
+0 FILE 85984.dat
+0 Slope Brick 31  1 x  2 x  0.667
+0 Name: 85984.dat
+0 Author: Magnus Forsberg [MagFors]
+0 !LDRAW_ORG Part UPDATE 2020-02
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2010-04-05 [PTadmin] Official Update 2010-01
+0 !HISTORY 2014-11-21 [roland] Auto-corrected with libfix version of LDCad 1.4
+0 !HISTORY 2015-10-11 [PTadmin] Official Update 2015-01
+0 !HISTORY 2016-11-03 [MagFors] Made subfile
+0 !HISTORY 2016-12-31 [PTadmin] Official Update 2016-01
+0 !HISTORY 2019-06-06 [Philo] Rounded corners and flattened top.
+0 !HISTORY 2020-09-05 [PTadmin] Official Update 2020-02
+
+1 16 0 0 0 1 0 0 0 1 0 0 0 1 s\85984s01.dat
+3 16 19.41 -15.01 8.35 18 -15.6 9.3333 20 -13.6 6
+3 16 -18 -15.6 9.3333 -19.41 -15.01 8.35 -20 -13.6 6
+4 16 -18 -15.6 9.3333 -20 -13.6 6 20 -13.6 6 18 -15.6 9.3333
+4 16 -20 -4 -10 20 -4 -10 20 -13.6 6 -20 -13.6 6
+0 FILE 3003.dat
+0 Brick  2 x  2
+0 Name: 3003.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Part UPDATE 2022-05
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2001-10-26 [PTadmin] Official Update 2001-01
+0 !HISTORY 2002-05-07 [unknown] BFC Certification
+0 !HISTORY 2002-06-11 [PTadmin] Official Update 2002-03
+0 !HISTORY 2007-05-07 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+0 !HISTORY 2022-08-04 [MagFors] Using subfile
+0 !HISTORY 2022-09-15 [PTadmin] Official Update 2022-05
+
+1 16 0 0 0 1 0 0 0 1 0 0 0 1 s\3003s01.dat
+4 16 -20 24 -20 20 24 -20 20 0 -20 -20 0 -20
+0 FILE 4070.dat
+0 Brick  1 x  1 with Headlight
+0 Name: 4070.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Part UPDATE 2003-02
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+0 !KEYWORDS side stud, headlight brick
+
+0 !HISTORY 1998-06-20 [PTadmin] Official Update 1998-06
+0 !HISTORY 2003-01-28 [sbliss] Completed header; BFC'ed; remeshed polygons
+0 !HISTORY 2003-08-01 [PTadmin] Official Update 2003-02
+0 !HISTORY 2007-06-30 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+
+ 2 24 6 24 6 -6 24 6
+ 2 24 -6 24 6 -6 24 -6
+ 2 24 -6 24 -6 6 24 -6
+ 2 24 6 24 -6 6 24 6
+
+ 4 16 10 24 10 6 24 6 -6 24 6 -10 24 10
+ 4 16 -10 24 10 -6 24 6 -6 24 -6 -10 24 -10
+ 4 16 -10 24 -10 -6 24 -6 6 24 -6 10 24 -10
+ 4 16 10 24 -10 6 24 -6 6 24 6 10 24 10
+
+ 2 24 10 24 10 -10 24 10
+ 2 24 -10 24 10 -10 24 -10
+ 2 24 -10 24 -10 10 24 -10
+ 2 24 10 24 -10 10 24 10
+
+ 1 16 0 20 -8 10 0 0 0 1 0 0 0 2 rect.dat
+ 2 24 6 20 -2 -6 20 -2
+ 2 24 -6 20 -2 -6 20 -6
+ 2 24 6 20 -6 6 20 -2
+4 16 6 20 -2 6 20 -6 -6 20 -6 -6 20 -2
+ 1 16 0 16 8 6 0 0 0 1 0 0 0 2 rect.dat
+1 16 0 4 4 -6 0 0 0 -1 0 0 0 6 rect.dat
+ 1 16 0 0 2 10 0 0 0 1 0 0 0 8 rect.dat
+
+ 2 24 6 16 10 6 4 10
+ 2 24 -6 16 10 -6 4 10
+ 2 24 10 24 10 10 0 10
+ 2 24 -10 24 10 -10 0 10
+ 2 24 6 24 6 6 16 6
+ 2 24 -6 24 6 -6 16 6
+ 2 24 6 20 -2 6 4 -2
+ 2 24 -6 20 -2 -6 4 -2
+ 2 24 6 24 -6 6 20 -6
+ 2 24 -6 24 -6 -6 20 -6
+ 2 24 10 20 -6 10 0 -6
+ 2 24 -10 20 -6 -10 0 -6
+ 2 24 10 24 -10 10 20 -10
+ 2 24 -10 24 -10 -10 20 -10
+
+ 1 16 0 10 -2 4 0 0 0 0 4 0 1 0 4-4edge.dat
+1 16 0 10 -2 4 0 0 0 0 -4 0 -1 0 4-4ndis.dat
+0 BFC INVERTNEXT
+ 1 16 0 10 -2 4 0 0 0 0 4 0 -4 0 4-4cyli.dat
+ 1 16 0 10 -6 6 0 0 0 0 6 0 1 0 4-4edge.dat
+ 1 16 0 10 -6 6 0 0 0 0 6 0 1 0 4-4ndis.dat
+
+4 16 -6 16 10 6 16 10 10 24 10 -10 24 10
+4 16 -6 4 10 -6 16 10 -10 24 10 -10 0 10
+4 16 6 4 10 -6 4 10 -10 0 10 10 0 10
+4 16 6 16 10 6 4 10 10 0 10 10 24 10
+
+ 4 16 6 24 6 6 16 6 -6 16 6 -6 24 6
+
+4 16 -4 14 -2 4 14 -2 6 20 -2 -6 20 -2
+4 16 -4 6 -2 -4 14 -2 -6 20 -2 -6 4 -2
+4 16 4 6 -2 -4 6 -2 -6 4 -2 6 4 -2
+4 16 4 14 -2 4 6 -2 6 4 -2 6 20 -2
+
+ 4 16 10 20 -6 6 16 -6 -6 16 -6 -10 20 -6
+ 4 16 -10 20 -6 -6 16 -6 -6 4 -6 -10 0 -6
+ 4 16 -10 0 -6 -6 4 -6 6 4 -6 10 0 -6
+ 4 16 10 0 -6 6 4 -6 6 16 -6 10 20 -6
+
+4 16 -6 20 -6 6 20 -6 6 24 -6 -6 24 -6
+
+ 4 16 10 24 -10 10 20 -10 -10 20 -10 -10 24 -10
+
+ 4 16 10 24 10 10 20 -6 10 20 -10 10 24 -10
+ 4 16 10 24 10 10 0 10 10 0 -6 10 20 -6
+
+4 16 6 20 -6 6 20 -2 6 24 6 6 24 -6
+4 16 6 24  6  6 20 -2 6  4 -2  6 16 6
+4 16 6 4  -2  6 4 10  6 16 10  6 16 6
+
+4 16 -6 24 6 -6 20 -2 -6 20 -6 -6 24 -6
+4 16 -6 4 -2 -6 20 -2 -6 24 6 -6 16 6
+4 16 -6 16 10 -6 4 10 -6 4 -2 -6 16 6
+
+4 16 -10 20 -10 -10 20 -6 -10 24 10 -10 24 -10
+4 16 -10 0 -6 -10 0 10 -10 24 10 -10 20 -6
+
+ 1 16 0 0 0 1 0 0 0 1 0 0 0 1 stud.dat
+ 1 16 0 10 -6 1 0 0 0 0 1 0 1 0 stud2a.dat
+0
+0 FILE 98138p07.dat
+0 Tile  1 x  1 Round with Eye Pattern
+0 Name: 98138p07.dat
+0 Author: Nils Schmidt [BlackBrick89]
+0 !LDRAW_ORG Part UPDATE 2022-01
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !KEYWORDS Bricklink 98138pb007
+
+0 !HISTORY 2012-08-09 [PTadmin] Official Update 2012-02
+0 !HISTORY 2014-08-25 [cwdee] Correct description
+0 !HISTORY 2014-12-23 [PTadmin] Official Update 2014-02
+0 !HISTORY 2020-10-07 [Cheenzo] Filled gap with ering, Reworked to use round primitives on the whole pattern
+0 !HISTORY 2022-01-14 [PTadmin] Official Update 2022-01
+
+1 16 0 0 0 1 0 0 0 1 0 0 0 1 s\98138s02.dat
+
+1 16 0 0 0 10 0 0 0 1 0 0 0 10 4-4ering.dat
+1 16 -1.8 0 -4 2.4 0 0 0 1 0 0 0 2.4 4-4disc.dat
+1 0 -1.8 0 -4 -2.4 0 0 0 1 0 0 0 -2.4 1-4tang.dat
+1 0 -1.8 0 -4 -2.4 0 0 0 1 0 0 0 2.4 3-4ndis.dat
+1 0 -1.4 0 -1.8 6.7 0 0 0 1 0 0 0 6.7 1-4chrd.dat
+1 0 -1.4 0 -1.8 -6.7 0 0 0 1 0 0 0 6.7 1-4chrd.dat
+1 0 -1.4 0 -1.8 6.7 0 0 0 1 0 0 0 -6.7 1-4chrd.dat
+1 0 -1.4 0 -1.8 -6.7 0 0 0 1 0 0 0 -6.7 1-4chrd.dat
+1 16 -1.4 0 -1.8 6.7 0 0 0 1 0 0 0 6.7 1-4ndis.dat
+1 16 -1.4 0 -1.8 -6.7 0 0 0 1 0 0 0 6.7 1-4tang.dat
+1 16 -1.4 0 -1.8 6.7 0 0 0 1 0 0 0 -6.7 1-4tang.dat
+1 16 -1.4 0 -1.8 -6.7 0 0 0 1 0 0 0 -6.7 1-4tang.dat
+3 0 -1.4 0 4.9 -1.8 0 -1.6 .6 0 -1.6
+3 0 .6 0 -1.6 5.3 0 -1.8 -1.4 0 4.9
+3 0 5.3 0 -1.8 .6 0 -1.6 .6 0 -4
+3 0 5.3 0 -1.8 .6 0 -4 .6 0 -6.4
+3 0 5.3 0 -1.8 .6 0 -6.4 -1.4 0 -8.5
+3 0 -1.4 0 -8.5 .6 0 -6.4 -1.8 0 -6.4
+3 0 -1.8 0 -6.4 -2.27736 0 -6.4 -1.4 0 -8.5
+3 0 -2.27736 0 -6.4 -2.71848 0 -6.21736 -1.4 0 -8.5
+3 0 -1.4 0 -8.5 -2.71848 0 -6.21736 -3.1596 0 -6.03472
+3 0 -1.4 0 -8.5 -3.1596 0 -6.03472 -3.49704 0 -5.69704
+3 0 -1.4 0 -8.5 -3.49704 0 -5.69704 -8.1 0 -1.8
+3 0 -8.1 0 -1.8 -3.49704 0 -5.69704 -3.83472 0 -5.3596
+3 0 -8.1 0 -1.8 -3.83472 0 -5.3596 -4.01736 0 -4.91848
+3 0 -8.1 0 -1.8 -4.01736 0 -4.91848 -4.2 0 -4.47736
+3 0 -8.1 0 -1.8 -4.2 0 -4.47736 -4.2 0 -4
+3 0 -8.1 0 -1.8 -4.2 0 -4 -4.2 0 -1.6
+3 0 -8.1 0 -1.8 -4.2 0 -1.6 -1.4 0 4.9
+3 0 -1.4 0 4.9 -4.2 0 -1.6 -1.8 0 -1.6
+3 16 0 0 10 -1.4 0 4.9 5.3 0 4.9
+3 16 0 0 10 5.3 0 4.9 3.827 0 9.239
+3 16 3.827 0 9.239 5.3 0 4.9 7.071 0 7.071
+3 16 7.071 0 7.071 5.3 0 4.9 9.239 0 3.827
+3 16 9.239 0 3.827 5.3 0 4.9 5.3 0 -1.8
+3 16 9.239 0 3.827 5.3 0 -1.8 10 0 0
+3 16 10 0 0 5.3 0 -1.8 9.239 0 -3.827
+3 16 9.239 0 -3.827 5.3 0 -1.8 5.3 0 -3.13263
+3 16 9.239 0 -3.827 5.3 0 -3.13263 7.071 0 -7.071
+3 16 7.071 0 -7.071 5.3 0 -3.13263 4.79013 0 -4.36409
+3 16 7.071 0 -7.071 4.79013 0 -4.36409 4.28026 0 -5.59555
+3 16 7.071 0 -7.071 4.28026 0 -5.59555 3.827 0 -9.239
+3 16 3.827 0 -9.239 4.28026 0 -5.59555 3.33757 0 -6.53757
+3 16 3.827 0 -9.239 3.33757 0 -6.53757 2.39555 0 -7.48026
+3 16 2.39555 0 -7.48026 1.16409 0 -7.99013 3.827 0 -9.239
+3 16 3.827 0 -9.239 1.16409 0 -7.99013 -.06737 0 -8.5
+3 16 3.827 0 -9.239 -.06737 0 -8.5 0 0 -10
+3 16 0 0 -10 -.06737 0 -8.5 -1.4 0 -8.5
+3 16 0 0 -10 -1.4 0 -8.5 -2.73263 0 -8.5
+3 16 0 0 -10 -2.73263 0 -8.5 -3.827 0 -9.239
+3 16 -3.827 0 -9.239 -2.73263 0 -8.5 -3.96409 0 -7.99013
+3 16 -3.827 0 -9.239 -3.96409 0 -7.99013 -5.19555 0 -7.48026
+3 16 -3.827 0 -9.239 -5.19555 0 -7.48026 -7.071 0 -7.071
+3 16 -7.071 0 -7.071 -5.19555 0 -7.48026 -6.13757 0 -6.53757
+3 16 -7.071 0 -7.071 -6.13757 0 -6.53757 -7.08026 0 -5.59555
+3 16 -7.071 0 -7.071 -7.08026 0 -5.59555 -9.239 0 -3.827
+3 16 -9.239 0 -3.827 -7.08026 0 -5.59555 -7.59013 0 -4.36409
+3 16 -9.239 0 -3.827 -7.59013 0 -4.36409 -8.1 0 -3.13263
+3 16 -9.239 0 -3.827 -8.1 0 -3.13263 -10 0 0
+3 16 -10 0 0 -8.1 0 -3.13263 -8.1 0 -1.8
+3 16 -10 0 0 -8.1 0 -1.8 -8.1 0 -.46737
+3 16 -10 0 0 -8.1 0 -.46737 -9.239 0 3.827
+3 16 -9.239 0 3.827 -8.1 0 -.46737 -7.59013 0 .76409
+3 16 -9.239 0 3.827 -7.59013 0 .76409 -7.08026 0 1.99555
+3 16 -9.239 0 3.827 -7.08026 0 1.99555 -7.071 0 7.071
+3 16 -7.071 0 7.071 -7.08026 0 1.99555 -6.13757 0 2.93757
+3 16 -7.071 0 7.071 -6.13757 0 2.93757 -5.19555 0 3.88026
+3 16 -7.071 0 7.071 -5.19555 0 3.88026 -3.827 0 9.239
+3 16 -3.827 0 9.239 -5.19555 0 3.88026 -3.96409 0 4.39013
+3 16 -3.827 0 9.239 -3.96409 0 4.39013 -2.73263 0 4.9
+3 16 -3.827 0 9.239 -2.73263 0 4.9 0 0 10
+3 16 0 0 10 -2.73263 0 4.9 -1.4 0 4.9
