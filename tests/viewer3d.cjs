@@ -5,7 +5,7 @@ for(const id of ["legacyTurn","legacyZoomIn","legacyZoomOut","legacyReset","lega
  assert(html.includes('id="'+id+'"'),"Controle 3D ausente: "+id);
 }
 assert(html.includes("three@0.161.0"),"Import map precisa apontar para a mesma versão do WebGL.");
-assert(html.indexOf("viewer3d.js?v=6.0.0")<html.indexOf("catalogo-app.js?v=6.0.0"),
+assert(html.indexOf("viewer3d.js?v=7.0.0")<html.indexOf("catalogo-app.js?v=7.0.0"),
  "Carregar renderizador antes da aplicação.");
 assert(app.includes("oldViewer.setModel"),"Montagem não atualiza renderizador.");
 assert(app.includes("oldViewer?.zoomBy"),"Zoom não foi conectado.");
