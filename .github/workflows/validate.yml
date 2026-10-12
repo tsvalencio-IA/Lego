@@ -1,4 +1,4 @@
-name: Validar OTTO 3D
+name: Validar OTTO LEGO Simples
 on:
   push:
     branches: [main]
@@ -7,21 +7,17 @@ on:
 permissions:
   contents: read
 jobs:
-  smoke:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validar sintaxe JavaScript
+      - name: Validar a sintaxe
         run: |
-          node --check app.js
+          node --check simple.js
           node --check generator.js
-          node --check oraculo.js
-      - name: Testar estoque, reservas e projetos
-        run: node tests/smoke.cjs
-      - name: Testar ORÁCULO 3D e regras de fidelidade
-        run: node tests/oraculo.cjs
-      - name: Conferir integridade da interface e cache PWA
-        run: node tests/integration.cjs
+          node --check inventory-seed.js
+      - name: Testar o aplicativo real
+        run: node tests/v4.cjs
