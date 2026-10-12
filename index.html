@@ -1,123 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b1630">
-  <meta name="description" content="ORÁCULO 3D: arquiteto de LEGO com auditoria de peças, projetos em 3D e validação de montagem.">
-  <title>OTTO 3D | ORÁCULO — Arquiteto de LEGO</title>
-  <link rel="stylesheet" href="./styles.css?v=3.0.0">
-  <link rel="manifest" href="./manifest.webmanifest">
-  <script type="importmap">
-  {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"}}
-  </script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17244a"><title>OTTO LEGO — Monte de verdade</title>
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#17243b;background:#f3f6fb}*{box-sizing:border-box}body{margin:0}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}header{background:#182b55;color:#fff;padding:18px max(16px,calc((100vw - 1080px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px}header strong{font-size:1.4rem}header small{display:block;color:#bed1f5}main{max-width:1110px;margin:auto;padding:24px 16px 65px}h1{font-size:clamp(1.6rem,3.5vw,2.25rem);line-height:1.2;margin:2px 0 8px}h2{font-size:1.2rem;margin:0 0 14px}h3{font-size:1rem;margin:12px 0}p{line-height:1.55}section.panel,.tile{background:white;border:1px solid #dde4ef;border-radius:16px;box-shadow:0 2px 10px #1429550b;padding:20px}.subtitle,.muted{color:#52627b}.subtitle{margin-top:0}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}.stat{background:white;border:1px solid #dce3ef;border-radius:13px;padding:13px}.stat b{display:block;font-size:clamp(1.35rem,3vw,2rem);font-variant-numeric:tabular-nums}.stat span{font-size:.78rem;color:#566781}.cols{display:grid;grid-template-columns:1fr 1.23fr;gap:14px;align-items:start}.panel{margin-bottom:14px}.field{width:100%;padding:12px;border:1px solid #b8c5d9;border-radius:10px;background:#fff;color:#152644}textarea.field{height:100px;resize:vertical}label{display:block;font-weight:700;margin:12px 0 7px}button{border:0;border-radius:10px;padding:10px 14px;background:#e5ecf8;color:#193457;font-weight:700}button.primary{background:#265bdf;color:white}button.minor{padding:7px 10px;font-size:.82rem}button.outline{border:1px solid #c3cee0;background:white}.line{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.wrap{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.mini{color:#5d6b83;font-size:.84rem}.notice{padding:13px 14px;border-radius:10px;margin:13px 0;background:#ecf2fd;color:#314668;font-size:.86rem;line-height:1.5}.notice.error{background:#fff1ed;color:#8a2f24}.notice.ok{background:#eaf8ef;color:#226240}.sketch{height:330px;border-radius:12px;background:linear-gradient(#e7f0fe,#f8fbff);border:1px solid #d4dff0;display:flex;align-items:center;justify-content:center;overflow:hidden}.sketch svg{width:100%;height:100%;touch-action:pan-y}.sketch .blank{text-align:center;padding:18px;color:#71819c}.step{border:1px solid #dce4f2;border-radius:11px;padding:12px;background:#f6f9ff;margin:12px 0;font-size:.91rem}.listrow{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 0;border-bottom:1px solid #e3e9f1}.listrow:last-child{border:0}.listrow small{display:block;color:#65738a;margin-top:3px}.project{border:1px solid #d7e2f1;border-radius:12px;padding:14px;background:#f9fbff;margin:9px 0}.project b{display:block}.project small{color:#52627b}.hidden{display:none!important}table{width:100%;border-collapse:collapse;font-size:.86rem}th,td{border-bottom:1px solid #e4eaf2;padding:9px;text-align:left}td:last-child,th:last-child{text-align:right}caption{text-align:left}.bar{height:8px;background:#e5ecf7;border-radius:7px;overflow:hidden}.bar>div{height:100%;background:#3a72e5;width:0}#notice{text-wrap:pretty}footer{text-align:center;font-size:.76rem;color:#66758c;padding:28px 14px}a{color:#1b57c1}input[type=range]{accent-color:#245bd6}#inventoryFile,#backupFile{max-width:100%}@media(max-width:800px){.cols{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:500px){main{padding:15px 10px 40px}section.panel{padding:14px}.stats{gap:7px}.stat{padding:10px}.sketch{height:265px}header{padding:12px}.line.mobile-stack{align-items:stretch}.line.mobile-stack>button{flex:1}}
+</style>
 </head>
 <body>
-<header class="topbar">
-  <div class="branding"><div class="brand-icon" aria-hidden="true">▦</div><div><strong>OTTO <span>3D · ORÁCULO</span></strong><small>Laboratório de criações</small></div></div>
-  <div class="header-right"><span class="set-pill">LEGO Classic • 10698</span><button id="export" class="btn btn-ghost" title="Salvar backup JSON">↧ <span>Backup</span></button></div>
-</header>
-<main class="container">
-  <div class="heading-row"><div><div class="eyebrow">MEU MUNDO DE CONSTRUÇÕES</div><h1>O que vamos construir, Otto?</h1><p>Imagine, planeje, monte e acompanhe cada peça da sua cidade.</p></div><span class="status-label" id="catalogStatus">Verificando inventário</span></div>
-  <section class="metrics" aria-label="Painel do estoque">
-    <article class="metric"><span>Peças da caixa</span><strong id="total">790</strong><small>LEGO 10698</small></article>
-    <article class="metric"><span>Identificadas</span><strong id="identified">—</strong><small id="unmapped">Catálogo parcial</small></article>
-    <article class="metric"><span>Em projetos</span><strong id="committed">0</strong><small id="committed-detail">Montadas e reservadas</small></article>
-    <article class="metric highlighted"><span>Livres e catalogadas</span><strong id="available">—</strong><small>Por tipo e cor</small></article>
-  </section>
-  <nav class="tabs" aria-label="Seções do aplicativo">
-    <button class="tab active" data-tab="criar">✦ Projetar</button>
-    <button class="tab" data-tab="oraculo">◈ ORÁCULO · Engenharia</button>
-    <button class="tab" data-tab="cidade">▦ Minha cidade <span id="projectCount">0</span></button>
-    <button class="tab" data-tab="pecas">▤ Peças e estoque</button>
-    <button class="tab" data-tab="sobre">ⓘ Precisão</button>
-  </nav>
-
-  <section id="page-criar" class="page active">
-    <div class="workspace">
-      <article class="panel idea">
-        <div class="panel-heading"><div><span class="eyebrow">01 / SUA IDEIA</span><h2>Imagine e peça</h2></div><span class="dot-purple"></span></div>
-        <label for="ideaText">Conte como quer seu brinquedo</label>
-        <textarea id="ideaText" rows="4" placeholder="Ex.: Quero uma torre azul de 3 camadas ou uma casa 4x4 com porta..."></textarea>
-        <div class="field-row"><button id="voice" class="btn btn-ghost">◉ Falar minha ideia</button><span id="voiceState" class="fine">Também pode escrever</span></div>
-        <div class="chips"><button data-idea="Quero uma torre alta">Torre</button><button data-idea="Quero uma casinha">Casinha</button><button data-idea="Quero um muro grande">Muro</button><button data-idea="Quero uma escada de 6x2 com 3 camadas">Escada</button><button data-idea="Quero uma plataforma de 4x4 com 2 camadas">Plataforma</button></div>
-        <label for="nameText">Nome do projeto</label><input id="nameText" maxlength="70" placeholder="Ex.: Torre do Otto">
-        <button id="generate" class="btn btn-primary full">✦ Calcular projeto com peças reais</button>
-        <div class="notice">O gerador calcula uma montagem nova na grade de pinos usando somente tijolos retangulares catalogados. Confere encaixe geométrico, apoio e estoque; não certifica estabilidade física.</div>
-        <div id="plannerMessage" role="status" aria-live="polite"></div>
-      </article>
-      <article class="panel viewer">
-        <div class="viewer-top"><div><span class="eyebrow">02 / PROJETO 3D</span><h2 id="modelTitle">Sua criação aparece aqui</h2></div><span class="scene-tag" id="modelStatus">Sem projeto</span></div>
-        <div class="scene" id="scene" aria-label="Visualizador tridimensional com controle de rotação e zoom"><div class="scene-placeholder" id="scenePlaceholder"><span>▧</span><strong>Seu laboratório está pronto</strong><small>Escolha uma ideia para visualizar a montagem.</small></div></div>
-        <div class="viewer-tools"><button id="rotate" class="btn btn-ghost btn-sm">⟳ Girar</button><button id="fit" class="btn btn-ghost btn-sm">⊡ Centralizar</button><button id="realGeometry" class="btn btn-ghost btn-sm">◈ Ver detalhes reais (LDraw)</button><span class="fine">Arraste para girar • gesto de pinça para zoom</span></div>
-        <div class="steps-header"><div><span class="eyebrow">03 / MONTE PASSO A PASSO</span><h3 id="stepTitle">Etapas da montagem</h3></div><span id="stepCounter" class="step-counter">0 / 0</span></div>
-        <div class="step-card" id="stepDetail">Assim que Otto criar um projeto, cada etapa aparecerá aqui.</div>
-        <div class="step-navigation"><button id="prevStep" class="btn btn-ghost" disabled>← Anterior</button><input id="stepRange" type="range" min="0" max="0" value="0" disabled aria-label="Navegar nas etapas"><button id="nextStep" class="btn btn-primary" disabled>Próxima →</button></div>
-        <div id="projectActions" class="project-actions hidden"><button id="saveProject" class="btn btn-primary">＋ Salvar na cidade</button><button id="exportLDraw" class="btn btn-ghost">↓ Projeto LDraw (.ldr)</button><button id="clearPreview" class="btn btn-ghost">Limpar prévia</button></div>
-      </article>
-    </div>
-    <article class="panel materials"><div class="panel-heading"><div><span class="eyebrow">04 / LISTA DO PROJETO</span><h2>Peças necessárias</h2></div><span id="bomTotal" class="list-pill">0 peças</span></div><div id="bom" class="empty-small">Crie um projeto para consultar quantidades por formato e cor.</div></article>
-  </section>
-
-  <section id="page-oraculo" class="page">
-    <div class="two-columns">
-      <article class="panel">
-        <div class="panel-heading"><div><span class="eyebrow">ARQUITETO + ENGENHEIRO LEGO</span><h2>Consultar o ORÁCULO 3D</h2></div><span class="scene-tag">V3 • Verificador</span></div>
-        <p>Descreva exatamente o brinquedo que Otto deseja, incluindo tamanho, cor, peças móveis e detalhes. O ORÁCULO verifica o que é possível comprovar com a caixa catalogada e mostra as limitações antes de gerar.</p>
-        <label for="oracleInput">Projeto desejado</label>
-        <textarea id="oracleInput" rows="5" maxlength="600" placeholder="Ex.: Quero uma torre azul de 3 camadas. Ou quero um caminhão com caçamba que levanta."></textarea>
-        <div class="chips"><button data-oracle-example="Quero uma torre azul de 3 camadas">Torre</button><button data-oracle-example="Quero uma casa 4x4 com porta">Casa</button><button data-oracle-example="Quero um caminhão com caçamba que levanta">Caminhão móvel</button></div>
-        <button id="oracleAnalyze" class="btn btn-primary full">◈ Analisar engenharia e estoque</button>
-        <div id="oracleVerdict" class="oracle-verdict" role="status" aria-live="polite">O laudo aparecerá aqui depois da análise.</div>
-        <div class="project-actions"><button id="oracleOpenPlan" class="btn btn-primary hidden">◈ Abrir projeto no 3D</button><button id="oracleExport" class="btn btn-ghost" disabled>↓ Baixar laudo JSON</button></div>
-      </article>
-      <article class="panel">
-        <div class="panel-heading"><div><span class="eyebrow">PROVAS E LIMITES</span><h2>O que foi realmente verificado?</h2></div></div>
-        <div id="oracleEvidence" class="oracle-evidence"><p class="fine">Os critérios são verificados por projeto; quantidade total da caixa não autoriza criar peças não registradas.</p></div>
-        <hr><span class="eyebrow">MAPA DE CAPACIDADES</span><div id="oracleCapabilities"></div>
-        <p class="fine">Biblioteca LDraw: geometria CAD voluntária sob licenças aplicáveis. Encaixe em grade não substitui ensaio físico e teste de movimento.</p>
-      </article>
-    </div>
-  </section>
-
-  <section id="page-cidade" class="page">
-    <article class="panel"><div class="panel-heading"><div><span class="eyebrow">CONSTRUINDO UM UNIVERSO</span><h2>A cidade do Otto</h2><p class="fine">Os projetos planejados reservam peças; os montados permanecem ocupando estoque.</p></div><span class="list-pill" id="cityTotal">0 projetos</span></div><div id="projectGrid" class="project-grid"></div></article>
-  </section>
-
-  <section id="page-pecas" class="page">
-    <div class="two-columns">
-      <article class="panel"><div class="panel-heading"><div><span class="eyebrow">CONFERÊNCIA</span><h2>Meu inventário</h2></div><span class="list-pill" id="inventoryProgress">—</span></div><p class="fine">Somente quantidades identificadas podem ser reservadas. Uma lista parcial nunca vira automaticamente 790 itens.</p>
-        <div class="progress"><div id="progressBar"></div></div><div class="field-row wrap"><input id="inventoryFilter" placeholder="Buscar cor, nome ou código..." aria-label="Pesquisar peças"><button id="downloadCSV" class="btn btn-ghost">Exportar CSV</button></div><div id="inventoryList" class="inventory-list"></div>
-      </article>
-      <article class="panel"><div class="panel-heading"><div><span class="eyebrow">IMPORTAR CATÁLOGO</span><h2>Conferir caixa 10698</h2></div></div>
-        <p>Importe um CSV ou JSON validado com <b>código, cor e quantidade</b>. Antes de substituir o catálogo, o sistema informa a soma e exige 790 unidades para marcar como completo.</p>
-        <label class="file-label" for="importFile">↑ Selecionar inventário CSV ou JSON</label><input type="file" id="importFile" accept=".csv,.json,text/csv,application/json" hidden>
-        <div id="importMessage" class="notice">Importação deve representar apenas as peças regulares do conjunto — não somar extras, componentes internos de conjuntos e alternativas em duplicidade.</div>
-        <button id="resetCatalog" class="btn btn-ghost btn-sm">Restaurar amostra conferida</button>
-        <hr><h3>Formato CSV aceito</h3><pre>part,color,quantity,name
-3004,Black,4,Brick 1 x 2
-3002,Black,8,Brick 2 x 3</pre>
-        <p class="fine">A versão inicial possui uma amostra verificada do catálogo BrickLink. Complete o inventário antes de tratar o planejamento como representação integral da caixa.</p>
-      </article>
-    </div>
-  </section>
-  <section id="page-sobre" class="page">
-    <article class="panel docs"><span class="eyebrow">COMPROMISSO COM A PRECISÃO</span><h2>O que é real e o que ainda precisa ser validado</h2>
-    <p><b>Estoque:</b> os cálculos são feitos pelo par código da peça + cor, reservando somente quantidades confirmadas. O número 790 representa o total nominal da caixa, não uma autorização para inventar peças.</p>
-    <p><b>Visualização:</b> as peças retangulares comuns são desenhadas em proporções de referência (passo 8 mm; tijolo 9,6 mm; placa 3,2 mm). Detalhes internos, encaixes não retangulares, estabilidade e carga não são simulados. A prévia 3D inicial é didática; o botão LDraw tenta carregar a malha real de cada tijolo em uma biblioteca externa, sem comprovar estabilidade mecânica.</p>
-    <p><b>Geometria LDraw:</b> utiliza biblioteca comunitária com licença CC BY 2.0 e atribuição à LDraw.org Parts Library. O modo detalhado exige internet; caso as malhas não carreguem, o sistema mantém a visualização esquemática sem fingir precisão.</p>
-    <p><b>Gerador:</b> algoritmo procedural de cobertura exata de pinos, com famílias de casas, torres, muros, escadas e plataformas. Valida colisões, conectividade e apoio geométrico mínimo, mas não certifica resistência, atrito, equilíbrio ou encaixes de peças especiais.</p>
-    <p><b>Salvamento:</b> projetos e inventário ficam no armazenamento deste navegador. Use Backup para transferir dados; eles ainda não são sincronizados em tempo real entre aparelhos.</p>
-    <p><b>Fontes:</b> <a href="https://www.bricklink.com/catalogItemInv.asp?S=10698-1" target="_blank" rel="noopener">BrickLink 10698-1</a> · <a href="https://www.ldraw.org/legal-info" target="_blank" rel="noopener">Biblioteca LDraw e licenças</a> · <a href="https://www.lego.com/pt-br/service/building-instructions/10698" target="_blank" rel="noopener">Instruções LEGO 10698</a>.</p>
-    <button id="restoreBackup" class="btn btn-ghost">↥ Restaurar backup do Otto</button><input type="file" accept=".json,application/json" id="backupFile" hidden><div id="backupMessage" role="status"></div>
-    </article>
-  </section>
+<header><div><strong>▣ OTTO LEGO</strong><small>Construir, conferir e guardar</small></div><span style="font-size:.77rem">Classic 10698 · v4 simples</span></header>
+<main>
+<h1>O que vamos montar, Otto?</h1>
+<p class="subtitle">Escolha um projeto possível com as peças registradas. Sem inventar formatos ou quantidades.</p>
+<div class="stats" aria-label="Estoque">
+ <div class="stat"><b>790</b><span>Total nominal da caixa</span></div>
+ <div class="stat"><b id="known">—</b><span>Catalogadas</span></div>
+ <div class="stat"><b id="busy">—</b><span>Reservadas / montadas</span></div>
+ <div class="stat"><b id="free">—</b><span>Disponíveis conhecidas</span></div>
+</div>
+<div class="cols">
+<section class="panel">
+<h2>1. Peça seu projeto</h2>
+<label for="prompt">Descreva a construção</label>
+<textarea class="field" id="prompt" placeholder="Ex.: Quero uma torre azul de 3 camadas"></textarea>
+<div class="wrap" aria-label="Exemplos"><button class="minor" data-example="torre de 3 camadas">Torre</button><button class="minor" data-example="muro de 6x2 com 2 camadas">Muro</button><button class="minor" data-example="casa 4x4 com abertura">Casa</button><button class="minor" data-example="escada 6x2 com 3 camadas">Escada</button></div>
+<label for="projectName">Nome do projeto (opcional)</label><input class="field" id="projectName" maxlength="60" placeholder="Ex.: Torre do Otto">
+<div class="wrap"><button class="primary" id="create">Calcular projeto</button><button id="dictate">🎙 Falar</button></div>
+<div id="notice" class="notice">O gerador disponível monta torres, muros, casas simples, escadas e plataformas com tijolos retangulares da caixa. Outros formatos serão informados como não suportados.</div>
+<h3>Peças do projeto</h3><div id="materials" class="mini">Nenhum projeto calculado.</div>
+</section>
+<section class="panel">
+<div class="line"><h2>2. Veja como montar</h2><span id="previewLabel" class="mini">Sem projeto</span></div>
+<div class="sketch" id="sketch" aria-label="Vista isométrica simplificada do projeto"><div class="blank">Aqui aparecerá o desenho do projeto.</div></div>
+<p class="mini">Desenho isométrico sem bibliotecas externas. Formato aproximado dos tijolos; não é uma certificação de estabilidade física.</p>
+<div class="line mobile-stack"><button id="turn" disabled>⟳ Girar vista</button><button id="previous" disabled>← Anterior</button><span id="stepCount" class="mini">0 / 0</span><button class="primary" id="next" disabled>Próximo →</button></div>
+<div id="instruction" class="step">Calcule um projeto para acompanhar as etapas.</div>
+<div class="wrap"><button class="primary" id="save" disabled>Salvar na cidade</button><button id="download" disabled>Exportar projeto LDraw (.ldr)</button></div>
+</section>
+</div>
+<section class="panel"><div class="line"><h2>3. Cidade do Otto</h2><span id="cityCount" class="mini">0 projetos</span></div><p class="mini">Salvar reserva peças; marcar montado mantém a reserva; desmontar devolve as peças ao estoque.</p><div id="city"></div></section>
+<section class="panel"><div class="line"><h2>4. Meu estoque</h2><span id="inventoryInfo" class="mini"></span></div><div class="bar"><div id="progress"></div></div><p class="mini">As peças não catalogadas não ficam disponíveis. Confira os itens reais da caixa antes de confiar nos saldos.</p>
+<label for="search">Procurar peça</label><input id="search" class="field" placeholder="Digite código, cor ou nome">
+<div id="stock" style="overflow:auto;max-height:370px;margin-top:12px"></div>
+<div class="wrap"><button id="backup">Baixar backup</button><button id="exportCsv">Exportar estoque CSV</button><button id="importButton">Importar catálogo CSV/JSON</button><input type="file" id="inventoryFile" accept=".csv,.json" class="hidden"><button id="restoreButton">Restaurar backup</button><input type="file" id="backupFile" accept=".json" class="hidden"></div>
+</section>
+<section class="panel"><h2>O que este sistema confirma</h2><p class="mini">A geração verifica quantidades registradas, colisões e apoios básicos numa grade de tijolos retangulares. O desenho é esquemático e a estrutura não foi testada fisicamente. O conjunto oficial contém 790 peças, mas o estoque inicial disponível no aplicativo é apenas uma amostra parcial. Modelos com rodas, animais, engrenagens e mecanismos móveis ainda não são produzidos por este gerador.</p><p class="mini">Fonte para conferência: <a href="https://www.bricklink.com/catalogItemInv.asp?S=10698-1" target="_blank" rel="noopener">inventário LEGO Classic 10698 no BrickLink</a>.</p></section>
 </main>
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
-<footer>Projeto OTTO 3D · Conjunto 10698 · Powered by thIAguinho Soluções Digitais</footer>
-<script src="./generator.js?v=3.0.0"></script>
-<script src="./oraculo.js?v=3.0.0"></script>
-<script type="module" src="./app.js?v=3.0.0"></script>
-<script>if ("serviceWorker" in navigator && location.protocol==="https:") { window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{})); }</script>
+<footer>Powered by thIAguinho Soluções Digitais</footer>
+<script src="./inventory-seed.js?v=4.0.0"></script><script src="./generator.js?v=4.0.0"></script><script src="./simple.js?v=4.0.0"></script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(regs=>Promise.all(regs.map(r=>r.unregister()))).catch(()=>{});if('caches' in window)caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('otto3d-shell-')).map(k=>caches.delete(k)))).catch(()=>{});}</script>
 </body>
 </html>
