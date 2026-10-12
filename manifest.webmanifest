@@ -1,0 +1,17 @@
+{
+  "name": "OTTO 3D — Laboratório de Criações",
+  "short_name": "OTTO 3D",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090f22",
+  "theme_color": "#0b1630",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
