@@ -1,4 +1,4 @@
-/* OTTO LEGO v4. Sem bibliotecas externas. Mantém dados de otto3d:v1. */
+/* OTTO LEGO v5: 3D com controle livre, fallback local e preservação de otto3d:v1. */
 (()=>{"use strict";
 const el=id=>document.getElementById(id), TOTAL=790, KEY="otto3d:v1", G=window.OTTOGenerator;
 const seed=Array.isArray(window.OTTO_SEED)?window.OTTO_SEED:[];
@@ -8,7 +8,7 @@ const key=p=>String(p.part)+"|"+String(p.color).toLowerCase();
 const count=a=>a.reduce((n,p)=>n+Number(p.quantity||0),0);
 const copy=o=>JSON.parse(JSON.stringify(o));
 function read(){try{const a=JSON.parse(localStorage.getItem(KEY));if(a&&a.version===1&&Array.isArray(a.projects)&&Array.isArray(a.catalog))return a;}catch{}return {version:1,catalog:copy(seed),projects:[]};}
-let data=read(),draft=null,index=0,angle=0,inCity=false;
+let data=read(),draft=null,index=0,angle=0,inCity=false,viewer=null;
 function alertText(msg,bad=false){el("notice").textContent=msg;el("notice").className="notice "+(bad?"error":"ok");}
 function saveData(){try{localStorage.setItem(KEY,JSON.stringify(data));return true;}catch{alertText("Não foi possível gravar. Faça um backup.",true);return false;}}
 function reserved(skip=null){const b=new Map();for(const p of data.projects){if(p.status==="desmontado"||p.id===skip)continue;for(const part of p.pieces||[]){const k=key(part);b.set(k,(b.get(k)||0)+1);}}return b;}
@@ -16,7 +16,15 @@ function missing(pieces,except=null,catalog=data.catalog){const existing=new Map
 function unsupported(text){const q=String(text).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase(),rx=/\b(carro|caminhao|caminhoes|robo|animal|gato|cachorro|sapo|dinossauro|foguete|helicoptero|aviao|barco|trem|trator|moto|escavadeira|guindaste|pontes?|rodas?|pneus?|eixos?|motor|engrenagens?|articulad[oa]|dobradicas?|janela|janelas|portas?|mecanismo|eletrico|movel|moveis|levantar|levanta|girar|gira|piscina|garagem|cidade|bairro)\b/;return q.match(rx)?.[0]||null;}
 function metrics(){const total=count(data.catalog),used=[...reserved().values()].reduce((a,b)=>a+b,0);el("known").textContent=total;el("busy").textContent=used;el("free").textContent=Math.max(0,total-used);el("inventoryInfo").textContent=data.catalog.length+" códigos/cores registrados";el("cityCount").textContent=data.projects.length+" projetos";el("progress").style.width=Math.min(100,total/TOTAL*100)+"%";}
 function parts(){if(!draft){el("materials").textContent="Nenhum projeto calculado.";return;}const need=new Map(),busy=reserved(inCity?draft.id:null),stock=new Map(data.catalog.map(p=>[key(p),p.quantity]));for(const p of draft.pieces){const k=key(p);if(!need.has(k))need.set(k,{...p,n:0});need.get(k).n++;}el("materials").innerHTML=[...need.values()].map(p=>'<div class="listrow"><div><b>'+esc(p.name||p.part)+'</b><small>'+esc(p.color)+' · #'+esc(p.part)+' · '+((stock.get(key(p))||0)-(busy.get(key(p))||0))+' livre(s)</small></div><strong>'+p.n+'×</strong></div>').join("");}
-function isoView(){if(!draft){el("sketch").innerHTML='<div class="blank">Aqui aparecerá o desenho do projeto.</div>';return;}if(index===0){el("sketch").innerHTML='<div class="blank">Separe as peças e pressione Próximo.</div>';return;}const pList=draft.pieces.slice(0,index),total=draft.pieces,mx=Math.max(1,...total.map(p=>p.x+p.w)),mz=Math.max(1,...total.map(p=>p.z+p.d));
+function isoView(){
+ if(window.OTTO3D&&el("sketch")?.replaceChildren){
+  try{
+   if(!viewer)viewer=window.OTTO3D.create(el("sketch"),{onStatus:message=>{const status=el("renderMode");if(status)status.textContent=message;}});
+   viewer.setModel(draft?.pieces||[],index);
+   return;
+  }catch(e){viewer=null;console.warn("3D indisponível, usando esquema:",e);}
+ }
+ if(!draft){el("sketch").innerHTML='<div class="blank">Aqui aparecerá o desenho do projeto.</div>';return;}if(index===0){el("sketch").innerHTML='<div class="blank">Separe as peças e pressione Próximo.</div>';return;}const pList=draft.pieces.slice(0,index),total=draft.pieces,mx=Math.max(1,...total.map(p=>p.x+p.w)),mz=Math.max(1,...total.map(p=>p.z+p.d));
 const xy=(x,z,y)=>{let a=x,b=z;if(angle===1){a=mz-z;b=x;}if(angle===2){a=mx-x;b=mz-z;}if(angle===3){a=z;b=mx-x;}return [(a-b)*12,(a+b)*5.5-y*14];};
 const poly=pts=>pts.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ");
 const shade=(hex,f)=>"#"+[1,3,5].map(i=>Math.min(255,Math.max(0,Math.round(parseInt(hex.slice(i,i+2),16)*f))).toString(16).padStart(2,"0")).join("");
@@ -31,7 +39,7 @@ const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);if(!xs.length){el("sketch").
 let x1=Math.min(...xs)-24,x2=Math.max(...xs)+24,y1=Math.min(...ys)-24,y2=Math.max(...ys)+24;
 paths.sort((a,b)=>a.order-b.order);
 el("sketch").innerHTML='<svg viewBox="'+[x1,y1,Math.max(80,x2-x1),Math.max(80,y2-y1)].join(" ")+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vista isométrica esquemática"><g>'+paths.map(p=>p.path).join("")+'</g></svg>';}
-function screen(){const n=draft?.pieces?.length||0;el("stepCount").textContent=index+" / "+n;el("next").disabled=!n||index>=n;el("previous").disabled=!n||index<=0;el("turn").disabled=!n;el("save").disabled=!n||inCity;el("download").disabled=!n;
+function screen(){const n=draft?.pieces?.length||0;el("stepCount").textContent=index+" / "+n;el("next").disabled=!n||index>=n;el("previous").disabled=!n||index<=0;el("turn").disabled=!n;el("zoomIn").disabled=!n;el("zoomOut").disabled=!n;el("resetView").disabled=!n;el("save").disabled=!n||inCity;el("download").disabled=!n;
 if(!n){el("instruction").textContent="Calcule um projeto para acompanhar as etapas.";isoView();return;}
 if(index===0){el("instruction").textContent="Separe "+n+" peça(s). Avance uma de cada vez.";}else{const p=draft.pieces[index-1];el("instruction").textContent="Passo "+index+": encaixe 1 peça "+(p.name||p.part)+", cor "+p.color+", código "+p.part+". Coluna "+(p.x+1)+", fila "+(p.z+1)+", camada "+(p.y+1)+".";}
 isoView();}
@@ -58,7 +66,11 @@ async function importStock(file){if(!file||file.size>1000000)return alertText("A
 async function restore(file){if(!file||file.size>2000000)return alertText("Backup inválido.",true);try{const raw=JSON.parse(await file.text()),v=raw?.app==="OTTO3D"?raw.data:raw,cat=checkedCatalog(v);if(v.version!==1||!Array.isArray(v.projects))throw Error("Backup incompatível.");const busy=new Map();for(const p of v.projects){if(!Array.isArray(p.pieces)||p.pieces.length>790||!["planejado","montado","desmontado"].includes(p.status))throw Error("Projeto inválido.");if(p.status!=="desmontado")for(const piece of p.pieces)busy.set(key(piece),(busy.get(key(piece))||0)+1);}for(const [k,n] of busy){if((cat.find(p=>key(p)===k)?.quantity||0)<n)throw Error("Backup possui reservas superiores ao estoque: "+k);}if(!confirm("Substituir dados locais pelo backup selecionado?"))return;data={version:1,catalog:cat,projects:v.projects};reset();saveData();render();alertText("Backup restaurado.");}catch(e){alertText("Falha no backup: "+e.message,true);}}
 el("create").onclick=generate;
 document.querySelectorAll("[data-example]").forEach(b=>b.onclick=()=>{el("prompt").value=b.dataset.example;generate();});
-el("previous").onclick=()=>{index=Math.max(0,index-1);screen();};el("next").onclick=()=>{index=Math.min(draft.pieces.length,index+1);screen();};el("turn").onclick=()=>{angle=(angle+1)%4;isoView();};el("save").onclick=save;
+el("previous").onclick=()=>{index=Math.max(0,index-1);screen();};el("next").onclick=()=>{index=Math.min(draft.pieces.length,index+1);screen();};el("turn").onclick=()=>{if(viewer)viewer.rotate();else{angle=(angle+1)%4;isoView();}};
+el("zoomIn").onclick=()=>{if(viewer)viewer.zoomBy(1.22);};
+el("zoomOut").onclick=()=>{if(viewer)viewer.zoomBy(1/1.22);};
+el("resetView").onclick=()=>{if(viewer)viewer.resetView();};
+el("save").onclick=save;
 el("city").addEventListener("click",onCity);el("search").oninput=stock;
 el("backup").onclick=()=>download("OTTO-backup.json",JSON.stringify(data,null,2),"application/json");
 el("exportCsv").onclick=()=>download("OTTO-estoque.csv",csv(),"text/csv;charset=utf-8");
