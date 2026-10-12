@@ -23,3 +23,5 @@ jobs:
         run: node tests/smoke.cjs
       - name: Testar ORÁCULO 3D e regras de fidelidade
         run: node tests/oraculo.cjs
+      - name: Conferir integridade da interface e cache PWA
+        run: node tests/integration.cjs
