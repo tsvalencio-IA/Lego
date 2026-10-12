@@ -27,7 +27,21 @@ const server=http.createServer((req,res)=>{
    },null,{timeout:20000});
    const cadStatus=await page.locator("#model3dStatus").textContent();
    assert.match(cadStatus,/3D carregado:/,"Modelo do sapo não carregou malhas LDraw reais");
-   console.log("Modelo Sapo v7:",cadStatus);
+   const modelCanvas=page.locator("#model3dCanvas canvas");
+   assert.equal(await modelCanvas.count(),1,"Precisa renderizar 3D dentro do sistema");
+   const imageBefore=await modelCanvas.screenshot();
+   await page.locator("#model3dRotate").click();
+   await page.waitForTimeout(250);
+   const imageAfter=await modelCanvas.screenshot();
+   assert(!imageBefore.equals(imageAfter),"Modelo não girou visualmente no navegador");
+   assert.equal(await page.locator("#model3dStep").textContent(),"11 / 11");
+   await page.locator("#model3dPrev").click();
+   assert.equal(await page.locator("#model3dStep").textContent(),"10 / 11");
+   await page.locator("#model3dNext").click();
+   assert.equal(await page.locator("#model3dStep").textContent(),"11 / 11");
+   await page.locator("#model3dZoomIn").click();
+   await page.locator("#model3dReset").click();
+   console.log("Modelo Sapo 3D aprovado:",viewport.width+"×"+viewport.height,cadStatus);
    await page.locator("#model3dClose").click();
 
    assert.equal(await page.locator("#prompt").count(),0,"Deve retirar criação livre");
