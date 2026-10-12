@@ -18,9 +18,9 @@ for(const p of models){
 assert(!html.includes('id="prompt"'),"O campo de inventar precisa ser removido");
 assert(!html.includes('id="create"'),"O botão de geração precisa ser removido");
 assert(!html.includes('src="./generator.js"'),"O gerador não pode ser carregado");
-for(const file of ["catalogo-reais.js?v=6.0.0","catalogo-app.js?v=6.0.0","viewer3d.js?v=6.0.0"])assert(html.includes(file),file);
+for(const file of ["catalogo-reais.js?v=7.0.0","catalogo-app.js?v=7.0.0","viewer3d.js?v=7.0.0"])assert(html.includes(file),file);
 const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]));
 for(const m of script.matchAll(/\$\("([^"]+)"\)/g))assert(ids.has(m[1]),"Falta id "+m[1]);
 assert(script.includes('otto3d:v1'),"Histórico original não pode ser apagado");
 assert(script.includes('otto-lego-reais:v1'),"Nova cidade precisa de chave separada");
-console.log("OTTO LEGO v6 PASS: modelos reais, 9 PDFs LEGO, 3 MOCs, sem gerador, UI consistente, dados preservados");
+console.log("OTTO LEGO v7 PASS: modelos reais, 9 PDFs LEGO, 3 MOCs, sem gerador, UI consistente, dados preservados");
