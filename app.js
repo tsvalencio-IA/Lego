@@ -1,4 +1,4 @@
-/* OTTO 3D v1.0.0: planning with verified partial set inventory.
+/* OTTO 3D v2.0.0: procedural brick planning with verified partial set inventory.
    The geometry renderer is educational; neither physical connectivity nor stability is certified. */
 const TOTAL=790, STORE="otto3d:v1";
 const el=id=>document.getElementById(id);
@@ -93,7 +93,7 @@ function renderProjects(){
  const root=el("projectGrid");
  if(!state.projects.length){root.innerHTML='<div class="empty-small">A cidade ainda não tem construções. Comece em “Projetar”.</div>';return;}
  root.innerHTML=state.projects.map(p=>{
-  const ico={torre:"♜",casinha:"⌂",muro:"▥",praca:"✿"}[p.kind]||"▣";
+  const ico={torre:"♜",casinha:"⌂",muro:"▥",escada:"▤",plataforma:"▦",praca:"✿"}[p.kind]||"▣";
   const badge={planejado:"Reservado",montado:"Montado",desmontado:"Desmontado"}[p.status]||p.status;
   return '<article class="project-card"><div class="emblem">'+ico+'</div><h3>'+cleanHTML(p.name)+'</h3><p>'+cleanHTML(p.idea)+'</p><div class="tags"><span>'+p.pieces.length+' peças</span><span>'+badge+'</span></div>'+
    '<div class="project-buttons"><button class="btn btn-ghost" data-project="'+cleanHTML(p.id)+'" data-action="view">Ver 3D</button>'+
@@ -102,60 +102,24 @@ function renderProjects(){
  }).join("");
 }
 function renderAll(){stockNumbers();renderInventory();renderProjects();if(preview)renderBOM();}
-function build(kind,name,idea){
- /* Educational arrangements of actual known rectangular bricks.
-    Coordinates in integer stud grid; y in brick height units. */
- const pieces=[],cat=catalogMap();
- const add=(part,color,x,y,z,w,d)=>{
-  const found=cat.get(key({part,color}));
-  if(!found)return false;
-  pieces.push({part,color,name:found.name,x,y,z,w,d,h:1});
-  return true;
- };
- if(kind==="torre"){
-  add("3001","Green",0,0,0,2,4);add("3001","Green",2,0,0,2,4);
-  add("3002","Black",0,1,0,2,3);add("3002","Black",2,1,0,2,3);
-  add("3001","Bright Blue",0,2,0,2,4);add("3001","Bright Blue",2,2,0,2,4);
-  add("3001","Bright Blue",0,3,0,2,4);
- }else if(kind==="casinha"){
-  add("3001","Green",0,0,0,2,4);add("3001","Green",2,0,0,2,4);
-  add("3002","Black",0,1,0,2,3);add("3002","Black",2,1,0,2,3);
-  add("3001","Bright Blue",0,2,0,2,4);add("3001","Bright Blue",2,2,0,2,4);
- }else if(kind==="muro"){
-  for(let i=0;i<4;i++)add("3002","Black",i*2,0,0,2,3);
-  for(let i=0;i<2;i++)add("3002","Bright Blue",i*2,1,0,2,3);
- }else if(kind==="praca"){
-  add("3001","Green",0,0,0,2,4);add("3001","Green",2,0,0,2,4);
-  add("3003","Dark Purple",0,1,0,2,2);add("3003","Dark Purple",2,1,0,2,2);
-  add("3003","Dark Red",0,1,2,2,2);add("3003","Dark Red",2,1,2,2,2);
- }
- return {id:null,kind,name,idea,pieces,status:"planejado"};
-}
-function classify(text){
- const q=text.toLowerCase();
- if(/torre|prédio|predio|castelo/.test(q))return "torre";
- if(/casa|casinha|loja|escola/.test(q))return "casinha";
- if(/muro|parede|cerca/.test(q))return "muro";
- if(/praça|praca|jardim|parque/.test(q))return "praca";
- return null;
-}
-function plannerMessage(msg,type=""){el("plannerMessage").className=type?"notice "+type:"notice";el("plannerMessage").textContent=msg;}
 function makePlan(){
  const idea=el("ideaText").value.trim();
- if(!idea){plannerMessage("Escreva ou fale sua ideia primeiro.","error");return;}
- const kind=classify(idea);
- if(!kind){plannerMessage("Este brinquedo ainda não possui um modelo validado. Nesta versão, peça uma torre, casinha, muro ou praça. Não inventaremos geometria ou peças para fingir um projeto.","error");return;}
- const labels={torre:"Torre",casinha:"Casinha",muro:"Muro",praca:"Praça"};
- const name=el("nameText").value.trim()||(labels[kind]+" do Otto");
- const p=build(kind,name,idea);
- if(!p.pieces.length){plannerMessage("Não foram encontradas no catálogo peças necessárias para esse modelo.","error");return;}
- showPreview(p,false);
+ if(!idea){plannerMessage("Otto precisa descrever primeiro o brinquedo.","error");return;}
+ const engine=window.OTTOGenerator;
+ if(!engine){plannerMessage("Motor de projetos não carregou. Recarregue a página e confira a conexão.","error");return;}
+ const name=el("nameText").value.trim()||undefined;
+ const result=engine.generate(idea,state.catalog,used(),{name,maxNodes:35000});
+ if(!result.ok){plannerMessage(result.error,"error");return;}
+ const p=result.project;
  const missing=shortage(p);
- plannerMessage(missing.length?"Prévia criada, mas o estoque não comporta todas as peças: "+missing.map(x=>x.part+" "+x.color+" faltam "+x.missing).join("; ")+".":"Prévia ilustrativa criada. Confira a lista e salve para reservar as peças.",missing.length?"error":"success");
+ if(missing.length){plannerMessage("Estoque insuficiente para a montagem: "+missing.map(x=>x.part+" "+x.color+" faltam "+x.missing).join("; "),"error");return;}
+ showPreview(p,false);
+ const m=p.generator;
+ plannerMessage("Projeto calculado: "+p.pieces.length+" peças reais catalogadas, base "+m.width+"×"+m.depth+" pinos, "+m.height+" camadas. Verificações aprovadas: colisões, estoque, conectividade entre camadas e apoio geométrico mínimo. Estabilidade física ainda não certificada.","success");
 }
 function showPreview(p,isSaved){
  preview=clone(p);previewSaved=isSaved;step=preview.pieces.length;
- el("modelTitle").textContent=preview.name;el("modelStatus").textContent=isSaved?"Da minha cidade":"Prévia ilustrativa";
+ el("modelTitle").textContent=preview.name;el("modelStatus").textContent=isSaved?"Da minha cidade":preview.generator?"Grade validada":"Prévia ilustrativa";
  el("scenePlaceholder").classList.add("hidden");
  el("projectActions").classList.remove("hidden");
  el("saveProject").classList.toggle("hidden",isSaved);
