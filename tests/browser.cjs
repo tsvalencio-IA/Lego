@@ -15,7 +15,7 @@ const server=http.createServer((req,res)=>{
  let browser;
  try{
   const address="http://127.0.0.1:"+server.address().port+"/";
-  browser=await chromium.launch({channel:"chrome",headless:true,args:["--no-sandbox","--disable-dev-shm-usage"]});
+  browser=await chromium.launch({headless:true,args:["--no-sandbox","--disable-dev-shm-usage"]});
   for(const viewport of [{width:1280,height:800},{width:390,height:844}]){
    const page=await browser.newPage({viewport,deviceScaleFactor:1});
    const errors=[];page.on("pageerror",error=>errors.push(error.message));
