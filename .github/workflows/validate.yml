@@ -19,10 +19,14 @@ jobs:
           node --check catalogo-reais.js
           node --check catalogo-app.js
           node --check viewer3d.js
+          node --check modelos3d-engine.js
+          node --check modelos3d-ui.js
+          node --check modelos3d-catalogo.js
       - name: Verificar fontes verdadeiras e retirar geração livre
         run: |
           node tests/catalogo-v6.cjs
           node tests/viewer3d.cjs
+          node tests/modelos3d.cjs
   browser-e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 12
