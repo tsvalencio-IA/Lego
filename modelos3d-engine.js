@@ -20,7 +20,7 @@
   if(linesOfParts.length>6000)throw Error("Modelo acima do limite de 6.000 instâncias.");
   const fields=linesOfParts.map(x=>x.trim().split(/\s+/));
   for(const x of fields){
-   if(x.length<15||!/^[-.\d]+$/.test(x[2])||!/^[\d-]+$/.test(x[1])||!x.slice(-1)[0].match(/^[\w./ -]+\.(?:dat|ldr|mpd)$/i))
+   if(x.length<15||!/^[-.\d]+$/.test(x[2])||!/^[\d-]+$/.test(x[1])||!/^[a-z0-9_./\\ -]+\.(?:dat|ldr|mpd)$/i.test(x.slice(14).join(" ")))
     throw Error("Linha LDraw inválida ou peça não suportada: "+x.slice(0,3).join(" "));
   }
   return {lineCount:lines.length,partsReferenced:linesOfParts.length,
