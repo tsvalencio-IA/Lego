@@ -14,7 +14,7 @@
  };
  const COLORS=[
   ["azul","Bright Blue"],["verde","Green"],["preto","Black"],["preta","Black"],
-  ["vermelho","Dark Red"],["vermelha","Dark Red"],["roxo","Dark Purple"],["roxa","Dark Purple"],
+  ["vermelho escuro","Dark Red"],["vermelha escura","Dark Red"],["vermelho","Red"],["vermelha","Red"],["roxo","Dark Purple"],["roxa","Dark Purple"],
   ["bege","Brick Yellow"],["amarelo","Yellow"],["amarela","Yellow"],["branco","White"],
   ["branca","White"],["rosa","Dark Pink"],["cinza","Light Bluish Gray"]
  ];
@@ -35,7 +35,7 @@
   let [width,depth,height]=defaults[kind];
   const rect=q.match(/\b(\d{1,2})\s*(?:x|por)\s*(\d{1,2})(?:\s*(?:x|por)\s*(\d{1,2}))?\b/);
   if(rect){width=Number(rect[1]);depth=Number(rect[2]);if(rect[3])height=Number(rect[3]);}
-  const size=(word)=>q.match(new RegExp("\\b"+word+"\\s*(?:de|com|:)?\\s*(\\d{1,2})\\b"));
+  const size=(word)=>q.match(new RegExp("\\b(?:"+word+")\\s*(?:de|com|:)?\\s*(\\d{1,2})\\b"));
   const w=size("largura"),d=size("comprimento"),h=size("altura|camadas?|andares?|niveis?");
   if(w)width=Number(w[1]);if(d)depth=Number(d[1]);if(h)height=Number(h[1]);
   const h2=q.match(/\b(\d{1,2})\s*(?:andares?|camadas?|niveis?)\b/);if(h2)height=Number(h2[1]);
