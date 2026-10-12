@@ -20,7 +20,7 @@ function isoView(){
  if(window.OTTO3D&&el("sketch")?.replaceChildren){
   try{
    if(!viewer)viewer=window.OTTO3D.create(el("sketch"),{onStatus:message=>{const status=el("renderMode");if(status)status.textContent=message;}});
-   viewer.setModel(draft?.pieces||[],index);
+   viewer.setModel(draft?.pieces||[],draft&&index===0?draft.pieces.length:index);
    return;
   }catch(e){viewer=null;console.warn("3D indisponível, usando esquema:",e);}
  }
@@ -41,7 +41,7 @@ paths.sort((a,b)=>a.order-b.order);
 el("sketch").innerHTML='<svg viewBox="'+[x1,y1,Math.max(80,x2-x1),Math.max(80,y2-y1)].join(" ")+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vista isométrica esquemática"><g>'+paths.map(p=>p.path).join("")+'</g></svg>';}
 function screen(){const n=draft?.pieces?.length||0;el("stepCount").textContent=index+" / "+n;el("next").disabled=!n||index>=n;el("previous").disabled=!n||index<=0;el("turn").disabled=!n;el("zoomIn").disabled=!n;el("zoomOut").disabled=!n;el("resetView").disabled=!n;el("save").disabled=!n||inCity;el("download").disabled=!n;
 if(!n){el("instruction").textContent="Calcule um projeto para acompanhar as etapas.";isoView();return;}
-if(index===0){el("instruction").textContent="Separe "+n+" peça(s). Avance uma de cada vez.";}else{const p=draft.pieces[index-1];el("instruction").textContent="Passo "+index+": encaixe 1 peça "+(p.name||p.part)+", cor "+p.color+", código "+p.part+". Coluna "+(p.x+1)+", fila "+(p.z+1)+", camada "+(p.y+1)+".";}
+if(index===0){el("instruction").textContent="Visão geral 3D com "+n+" peça(s). Toque Próximo para montar uma de cada vez.";}else{const p=draft.pieces[index-1];el("instruction").textContent="Passo "+index+": encaixe 1 peça "+(p.name||p.part)+", cor "+p.color+", código "+p.part+". Coluna "+(p.x+1)+", fila "+(p.z+1)+", camada "+(p.y+1)+".";}
 isoView();}
 function reset(){draft=null;index=0;angle=0;inCity=false;el("previewLabel").textContent="Sem projeto";parts();screen();}
 function generate(){reset();const prompt=el("prompt").value.trim();if(!prompt){alertText("Primeiro descreva o que quer construir.",true);return;}const unsupportedTerm=unsupported(prompt);if(unsupportedTerm){alertText("Este gerador ainda não constrói '"+unsupportedTerm+"' fielmente. Não vou inventar peças ou movimentos.",true);return;}if(!G?.generate){alertText("Gerador ausente. Verifique se generator.js está no GitHub.",true);return;}
