@@ -50,7 +50,7 @@ function load(){
   return o;
  }catch{return {version:1,catalog:clone(STARTER),projects:[]};}
 }
-let state=load(),preview=null,previewSaved=false,step=0,scene3d=null,viewLib=null,toastTimer;
+let state=load(),preview=null,previewSaved=false,step=0,scene3d=null,viewLib=null,toastTimer,oracleResult=null;
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(state));return true;}catch{notify("Sem espaço para salvar. Exporte um backup.",true);return false;}}
 function notify(msg,bad=false){const a=el("toast");a.textContent=msg;a.style.borderColor=bad?"#db748a":"#6075a7";a.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>a.classList.remove("show"),3900);}
 function cleanHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
@@ -102,20 +102,60 @@ function renderProjects(){
  }).join("");
 }
 function renderAll(){stockNumbers();renderInventory();renderProjects();if(preview)renderBOM();}
+
+function getOracleResult(idea,name){
+ const oracle=window.OTTOOracle,engine=window.OTTOGenerator;
+ if(!oracle||!engine)return {status:"MOTOR_INDISPONIVEL",message:"O ORÁCULO ou o motor geométrico não foram carregados."};
+ return oracle.analyze(idea,state.catalog,used(),engine,{name,maxNodes:35000});
+}
 function makePlan(){
  const idea=el("ideaText").value.trim();
  if(!idea){plannerMessage("Otto precisa descrever primeiro o brinquedo.","error");return;}
- const engine=window.OTTOGenerator;
- if(!engine){plannerMessage("Motor de projetos não carregou. Recarregue a página e confira a conexão.","error");return;}
- const name=el("nameText").value.trim()||undefined;
- const result=engine.generate(idea,state.catalog,used(),{name,maxNodes:35000});
- if(!result.ok){plannerMessage(result.error,"error");return;}
- const p=result.project;
- const missing=shortage(p);
- if(missing.length){plannerMessage("Estoque insuficiente para a montagem: "+missing.map(x=>x.part+" "+x.color+" faltam "+x.missing).join("; "),"error");return;}
- showPreview(p,false);
- const m=p.generator;
- plannerMessage("Projeto calculado: "+p.pieces.length+" peças reais catalogadas, base "+m.width+"×"+m.depth+" pinos, "+m.height+" camadas. Verificações aprovadas: colisões, estoque, conectividade entre camadas e apoio geométrico mínimo. Estabilidade física ainda não certificada.","success");
+ const result=getOracleResult(idea,el("nameText").value.trim()||undefined);
+ if(result.status!=="PROJETO_VALIDO_NA_GRADE"){
+  const extras=(result.unverified||[]).map(p=>p.label).join(", ");
+  plannerMessage(result.message+(extras?" Requisitos ainda não suportados: "+extras+".":""),"error");
+  el("oracleInput").value=idea;
+  oracleResult=result;displayOracle(result);return;
+ }
+ showPreview(result.project,false);
+ const m=result.project.generator;
+ plannerMessage("ORÁCULO: projeto calculado com "+result.project.pieces.length+" peças catalogadas, base "+m.width+"×"+m.depth+" pinos e "+m.height+" camadas. Estoque, colisões, suporte por etapa e conectividade verificados. Encaixes físicos e estabilidade ainda não certificados.","success");
+ oracleResult=result;
+ displayOracle(result);
+}
+function displayOracle(result){
+ const verdict=el("oracleVerdict"),evidence=el("oracleEvidence"),open=el("oracleOpenPlan");
+ const status=result?.status||"DESCONHECIDO",success=status==="PROJETO_VALIDO_NA_GRADE";
+ verdict.className="oracle-verdict "+(success?"ok":"blocked");
+ verdict.innerHTML="<strong>"+cleanHTML(success?"GRADE DE MONTAGEM CONFERIDA":"PROJETO NÃO LIBERADO")+"</strong><p>"+cleanHTML(result?.message||"Nenhum diagnóstico")+"</p>"+
+  (result?.unverified?.length?"<ul>"+result.unverified.map(x=>"<li>"+cleanHTML(x.label)+": "+cleanHTML(x.details)+"</li>").join("")+"</ul>":"")+
+  (result?.certificate?.errors?.length?"<ul>"+result.certificate.errors.map(x=>"<li>"+cleanHTML(x)+"</li>").join("")+"</ul>":"");
+ open.classList.toggle("hidden",!success);
+ el("oracleExport").disabled=false;
+ const inv=result.inventory||window.OTTOOracle?.inventoryAudit(state.catalog,used());
+ const cert=result.certificate;
+ evidence.innerHTML="<div class='oracle-evidence-grid'>"+
+  "<div><strong>"+(inv?.known??"?")+" / 790</strong><small>Peças catalogadas</small></div>"+
+  "<div><strong>"+(inv?.lots??"?")+" / 225</strong><small>Combinações código/cor</small></div>"+
+  "<div><strong>"+(cert?.pieces??0)+"</strong><small>Peças deste projeto</small></div>"+
+  "<div><strong>"+cleanHTML(status)+"</strong><small>Resultado da auditoria</small></div></div>"+
+  "<div class='oracle-checks'>"+
+  "<p>"+(cert?.geometry?.pass?"✓":"—")+" Colisões e encaixes na grade retangular</p>"+
+  "<p>"+(cert?.assembly?.pass?"✓":"—")+" Apoio sequencial por etapa</p>"+
+  "<p>"+(cert?.supply?.ok?"✓":"—")+" Estoque suficiente por código e cor</p>"+
+  "<p>— Resistência, equilíbrio e movimentos físicos: sem certificação</p>"+
+  "<p>— Geometria detalhada LDraw no visualizador: sem confirmação automática</p></div>";
+}
+function analyzeWithOracle(){
+ oracleResult=getOracleResult(el("oracleInput").value.trim(),el("nameText").value.trim()||undefined);
+ displayOracle(oracleResult);
+}
+function renderOracleCapabilities(){
+ const oracle=window.OTTOOracle;if(!oracle)return;
+ el("oracleCapabilities").innerHTML=oracle.families.map(group=>
+  "<div class='oracle-family'><b>"+cleanHTML(group.title)+"</b><small>"+cleanHTML(group.level==="grade-implementada"?"Cálculo geométrico implementado":"Aguardando desenvolvimento e validação")+"</small><p>"+group.items.map(i=>cleanHTML(i)).join(" · ")+"</p></div>"
+ ).join("");
 }
 function showPreview(p,isSaved){
  preview=clone(p);previewSaved=isSaved;step=preview.pieces.length;
@@ -158,6 +198,8 @@ function savePreview(){
  if(state.catalog.length===0){notify("Importe um catálogo antes de reservar.",true);return;}
  const missing=shortage(preview);
  if(missing.length){notify("Estoque insuficiente para reservar este projeto.",true);return;}
+ const audit=window.OTTOOracle?.certificate(preview,state.catalog,used(),window.OTTOGenerator);
+ if(!audit?.valid){notify("ORÁCULO bloqueou reserva: projeto sem laudo geométrico válido.",true);return;}
  const project=clone(preview);project.id="otto-"+Date.now()+"-"+Math.random().toString(36).slice(2,7);
  project.status="planejado";project.createdAt=new Date().toISOString();
  state.projects.push(project);persist();previewSaved=true;preview.id=project.id;
@@ -178,6 +220,7 @@ function onProjectAction(id,action){
   else project.status="montado";
  }
  persist();renderAll();
+renderOracleCapabilities();
  if(preview?.id===id)showPreview(project,true);
 }
 function showTab(tab){
@@ -317,6 +360,25 @@ function update3D(){
 qsa(".tab").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
 qsa(".chips button").forEach(b=>b.addEventListener("click",()=>{el("ideaText").value=b.dataset.idea;el("ideaText").focus();}));
 el("generate").addEventListener("click",makePlan);
+el("oracleAnalyze").addEventListener("click",analyzeWithOracle);
+el("oracleInput").addEventListener("keydown",event=>{
+ if((event.ctrlKey||event.metaKey)&&event.key==="Enter")analyzeWithOracle();
+});
+qsa("[data-oracle-example]").forEach(button=>button.addEventListener("click",()=>{
+ el("oracleInput").value=button.dataset.oracleExample;analyzeWithOracle();
+}));
+el("oracleOpenPlan").addEventListener("click",()=>{
+ if(oracleResult?.status!=="PROJETO_VALIDO_NA_GRADE")return;
+ const updated=getOracleResult(oracleResult.project.idea,oracleResult.project.name);
+ oracleResult=updated;displayOracle(updated);
+ if(updated.status!=="PROJETO_VALIDO_NA_GRADE"){notify("Estoque ou validação mudou. Atualize o plano.",true);return;}
+ showPreview(updated.project,false);showTab("criar");
+});
+el("oracleExport").addEventListener("click",()=>{
+ if(!oracleResult||!window.OTTOOracle)return;
+ fileSave("ORACULO-3D-laudo.json",window.OTTOOracle.projectReport(oracleResult),"application/json");
+});
+
 el("prevStep").addEventListener("click",()=>{step=Math.max(0,step-1);renderStep();if(viewLib)update3D();});
 el("nextStep").addEventListener("click",()=>{step=Math.min(preview?.pieces.length||0,step+1);renderStep();if(viewLib)update3D();});
 el("stepRange").addEventListener("input",e=>{step=Number(e.target.value);renderStep();if(viewLib)update3D();});
