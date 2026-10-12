@@ -19,6 +19,16 @@ const server=http.createServer((req,res)=>{
    await page.goto(url,{waitUntil:"domcontentloaded"});
    assert.equal(await page.locator("#catalogNumber").textContent(),"12");
    assert.equal(await page.locator(".build").count(),12);
+   await page.locator('[data-view3d="lego-sapo"]').click();
+   await page.waitForSelector("#model3dDetail.open",{timeout:10000});
+   await page.waitForFunction(()=>{
+     const s=document.querySelector("#model3dStatus")?.textContent||"";
+     return s.includes("3D carregado")||s.includes("Não foi possível")||s.includes("indisponível:");
+   },{timeout:60000});
+   const cadStatus=await page.locator("#model3dStatus").textContent();
+   console.log("Modelo Sapo v7:",cadStatus);
+   await page.locator("#model3dClose").click();
+
    assert.equal(await page.locator("#prompt").count(),0,"Deve retirar criação livre");
    await page.fill("#search","castelo");
    assert.equal(await page.locator(".build").count(),1);
