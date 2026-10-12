@@ -31,7 +31,7 @@
   const matches=Object.entries(kinds).filter(([word])=>new RegExp("\\b"+word+"s?\\b").test(q));
   if(!matches.length)return {ok:false,error:"Ainda não consigo gerar este formato. Experimente torre, casa, muro, escada ou plataforma. Nenhum modelo será inventado."};
   const kind=matches[0][1];
-  const defaults={torre:[2,4,3],casinha:[4,4,2],muro:[8,2,2],escada:[6,2,3],plataforma:[4,4,1]};
+  const defaults={torre:[2,4,3],casinha:[4,4,2],muro:[8,2,2],escada:[6,2,3],plataforma:[4,4,2]};
   let [width,depth,height]=defaults[kind];
   const rect=q.match(/\b(\d{1,2})\s*(?:x|por)\s*(\d{1,2})(?:\s*(?:x|por)\s*(\d{1,2}))?\b/);
   if(rect){width=Number(rect[1]);depth=Number(rect[2]);if(rect[3])height=Number(rect[3]);}
@@ -137,6 +137,9 @@
   if(!stock.length)return {ok:false,error:spec.color?
    "Não há tijolos retangulares disponíveis na cor solicitada ("+spec.color+").":"Não há tijolos retangulares disponíveis no estoque catalogado."};
   const target=createTarget(spec),required=target.reduce((s,layer)=>s+layer.size,0);
+  if(spec.height===1&&target[0].size>0&&!stock.some(p=>p.area===target[0].size&&
+    ((p.w===spec.width&&p.d===spec.depth)||(p.w===spec.depth&&p.d===spec.width))))
+   return {ok:false,error:"Uma construção de uma só camada precisa de uma peça única que cubra toda a base para permanecer conectada. Peça 2 camadas ou dimensões menores."};
   const capacity=stock.reduce((s,p)=>s+p.area*p.left,0);
   if(capacity<required)return {ok:false,error:"Estoque insuficiente: a construção ocupa "+required+" posições de pino, mas as peças livres cobrem no máximo "+capacity+"."};
   const occupied=target.map(()=>new Set()),pieces=[],maxNodes=Number(options.maxNodes)||35000;
