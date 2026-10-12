@@ -1,14 +1,14 @@
 const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
 const root=path.resolve(__dirname,".."),read=p=>fs.readFileSync(path.join(root,p),"utf8");
-const html=read("index.html"),src=read("viewer3d.js"),simple=read("simple.js");
-for(const id of ["turn","zoomIn","zoomOut","resetView","renderMode"]){
+const html=read("index.html"),src=read("viewer3d.js"),app=read("catalogo-app.js");
+for(const id of ["legacyTurn","legacyZoomIn","legacyZoomOut","legacyReset","legacyView"]){
  assert(html.includes('id="'+id+'"'),"Controle 3D ausente: "+id);
 }
 assert(html.includes("three@0.161.0"),"Import map precisa apontar para a mesma versão do WebGL.");
-assert(html.indexOf("viewer3d.js?v=5.0.0")<html.indexOf("simple.js?v=5.0.0"),
+assert(html.indexOf("viewer3d.js?v=6.0.0")<html.indexOf("catalogo-app.js?v=6.0.0"),
  "Carregar renderizador antes da aplicação.");
-assert(simple.includes("viewer.setModel"),"Montagem não atualiza renderizador.");
-assert(simple.includes("viewer.zoomBy"),"Zoom não foi conectado.");
+assert(app.includes("oldViewer.setModel"),"Montagem não atualiza renderizador.");
+assert(app.includes("oldViewer?.zoomBy"),"Zoom não foi conectado.");
 let drawCalls=0,raf=[];
 const ctx=new Proxy({
  clearRect(){},createLinearGradient(){return {addColorStop(){}};},fillRect(){},setTransform(){},
@@ -45,4 +45,4 @@ assert(viewer.yaw>a+Math.PI/4,"Arrastar não girou a cena.");
 handlers.pointerup({pointerId:1});
 viewer.setModel(pieces,1);assert.equal(viewer.visible,1,"Passos precisam atualizar a quantidade de peças.");
 viewer.resetView();assert.equal(viewer.zoom,1,"Centralizar deve resetar o zoom.");
-console.log("OTTO 3D v5 PASS: malha desenhada, movimento livre, gestos, zoom e passo a passo.");
+console.log("OTTO LEGO v6 legacy 3D PASS: malha desenhada, movimento livre, gestos, zoom e passo a passo.");
