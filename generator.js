@@ -211,5 +211,28 @@
   return {ok:true,project,audit:{...validate(project),nodes,requiredStuds:required,pieceCount:pieces.length,
    exactStock:true,collisionsChecked:true,supportChecked:true,physicalCertification:false}};
  }
- return {DIMS,parseRequest,createTarget,validate,generate};
+ const LDRAW_COLORS={
+  "Black":0,"Bright Blue":1,"Blue":1,"Green":2,"Bright Green":36,
+  "Dark Pink":5,"Dark Purple":268,"Dark Red":320,"Dark Tan":28,
+  "Brick Yellow":19,"Yellow":14,"White":15,"Red":4,"Light Bluish Gray":71
+ };
+ function exportLDraw(project){
+  if(!project?.pieces?.length)throw Error("Projeto vazio.");
+  const audit=validate(project);
+  if(!audit.ok)throw Error("Não é possível exportar uma montagem geométrica inválida: "+audit.errors.join("; "));
+  const lines=["0 OTTO 3D — Projeto LEGO em grade de pinos","0 Name: OTTO-3D.ldr",
+   "0 Author: OTTO 3D","0 !OTTO_AVISO Validacao geometrica sem certificacao estrutural"];
+  project.pieces.forEach((p,i)=>{
+   const d=dimensions(p);
+   if(!d||!(p.color in LDRAW_COLORS))throw Error("Cor ou geometria sem mapeamento LDraw: "+p.part+" "+p.color);
+   const turned=p.w===d[1]&&p.d===d[0]&&d[0]!==d[1];
+   const matrix=turned?"0 0 1 0 1 0 -1 0 0":"1 0 0 0 1 0 0 0 1";
+   const x=(p.x+p.w/2)*20,y=-(p.y+1)*24,z=(p.z+p.d/2)*20;
+   lines.push("0 Etapa "+(i+1)+" - "+p.name+" ("+p.color+")");
+   lines.push("1 "+LDRAW_COLORS[p.color]+" "+x+" "+y+" "+z+" "+matrix+" "+p.part+".dat");
+   if(i!==project.pieces.length-1)lines.push("0 STEP");
+  });
+  return lines.join("\n")+"\n";
+ }
+ return {DIMS,LDRAW_COLORS,parseRequest,createTarget,validate,generate,exportLDraw};
 });
