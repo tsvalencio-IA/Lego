@@ -1,42 +1,44 @@
-# OTTO LEGO — versão simples (v4)
+# OTTO LEGO — Biblioteca de projetos reais (v6)
 
-O aplicativo foi simplificado para oferecer um fluxo funcional com **HTML, JavaScript e desenho isométrico SVG**, sem Three.js, LDraw remoto, Firebase, API paga ou backend. O código permanece hospedado neste repositório.
+O aplicativo **não inventa novas construções**. A tela principal agora utiliza somente manuais publicados e com links verificáveis para a LEGO Classic **10698 (790 peças)**.
 
-## Como usar
+## Funcionalidades ativas
 
-1. Acesse a página publicada pelo GitHub Pages (consulte **Settings → Pages** do repositório para confirmar se a publicação está ativa).
-2. Em **Peça seu projeto**, descreva uma torre, muro, casa simples, escada ou plataforma. Exemplos: "torre azul de 3 camadas", "muro 6x2 com 2 camadas" e "casa 4x4 com abertura".
-3. Toque em **Calcular projeto**, depois em **Próximo** para visualizar uma peça de cada vez. **Girar vista** muda a perspectiva isométrica.
-4. Em **Salvar na cidade**, o sistema reserva a quantidade exata de cada par código/cor no inventário cadastrado.
-5. Na cidade, marque a construção como montada ou desmontada. Desmontar libera suas peças.
+- **9 manuais oficiais LEGO**: os dois volumes de instruções da caixa e mais 7 projetos extras (apartamento, câmera, castelo, escavadeira, sapo, palmeira e ursinho).
+- **3 projetos reais de autores no Rebrickable**, indicados explicitamente como alternativos para a 10698: casa modular (495 peças segundo o autor), Star Fighter (112) e camaleão (60).
+- Filtro por origem, busca por nome, detalhes e **abertura dos manuais originais** em PDF LEGO ou na página do autor. Se a incorporação do PDF for bloqueada pelo navegador, use o link externo original que sempre aparece.
+- **Cidade do Otto**: colocar modelos reais na lista, indicar “Quero montar”, “Montando”, “Concluído” ou “Desmontado” e retirar da lista sem mexer na fonte.
+- **Projetos antigos preservados** no armazenamento `otto3d:v1`, em uma área separada com visualização 3D giratória para os modelos antigos. Esses projetos antigos são identificados como *não verificados*; não se misturam aos manuais oficiais.
+- **Backup**: salva os projetos do catálogo `otto-lego-reais:v1` e a cópia do histórico antigo, sem limpar o navegador. Restauração disponível.
+- Interface responsiva para Android e computadores; HTML estático pelo GitHub Pages, sem credenciais, npm no celular ou contas obrigatórias.
 
-## O que funciona
+## Precisão: o que não está implementado
 
-- Gerador geométrico de famílias limitadas de construções com tijolos retangulares.
-- Visualização isométrica diretamente em SVG, sem nenhum download externo.
-- Etapas, códigos das peças, quantidades, cor, estoque, reservas e devoluções.
-- Projetos existentes e inventário preservados pelo armazenamento \`otto3d:v1\`.
-- Backup JSON, importação de catálogo CSV/JSON, exportação CSV do estoque e LDR do modelo.
-- Ditado por voz apenas quando o navegador oferece suporte.
+- Os manuais são **verdadeiros**, mas ainda não existe, neste repositório, uma reconstrução digital 3D das suas peças com prova de conformidade. Para eles, o manual original é a fonte definitiva; **não exibimos um modelo 3D inventado**.
+- **Não descontamos automaticamente o estoque** por projeto recém-selecionado, pois não obtivemos/validamos a lista completa de códigos e cores usados por *cada construção*. Conhecer apenas o total de peças ou os 790 itens da caixa seria insuficiente.
+- O histórico dos projetos antigos é independente do catálogo; conservar o 3D antigo não torna esses projetos oficiais.
+- Nenhum PDF de terceiros é alterado ou redistribuído pelo repositório. Links apontam diretamente para o produtor.
 
-## Limites — sem inventar
+## Fontes principais
 
-- A caixa **LEGO Classic 10698** possui **790 peças nominais**. O catálogo inicial do aplicativo registra uma **amostra de 131 peças em 39 códigos/cores**, herdada da primeira versão; a quantidade e o conteúdo físicos precisam ser conferidos. O resto não é atribuído a formas fictícias.
-- Os desenhos são **isométricos esquemáticos** (não modelos LDraw detalhados nem imagens oficiais das peças). O mecanismo verifica encaixes na grade e colisões básicas, **não resistência ou equilíbrio reais**.
-- Não há gerador fiel para veículos, animais, engrenagens ou articulações. Pedidos assim são recusados em vez de substituídos silenciosamente.
-- Os dados ficam neste navegador. Antes de trocar de aparelho ou limpar dados, baixe um backup.
-- Caso o site não abra, confirme a publicação do GitHub Pages. Uma aprovação de GitHub Actions não garante, sozinha, que o site esteja publicado.
+- Manuais oficiais do conjunto: https://www.lego.com/en-us/service/building-instructions/10698
+- Casa modular (Lenarex, MOC-47317): https://rebrickable.com/mocs/MOC-47317/Lenarex/10698-modular-house/
+- Nave Star Fighter (Moe Brickman, MOC-61117): https://rebrickable.com/mocs/MOC-61117/Moe%20Brickman/10698-star-fighter/
+- Camaleão (Lenarex, MOC-185994): https://rebrickable.com/mocs/MOC-185994/Lenarex/10698-chameleon/
 
 ## Arquivos ativos
 
-- \`index.html\`: interface completa responsiva e CSS embutido.
-- \`simple.js\`: funcionamento, visualizador SVG, projeto, inventário, backup e projetos salvos.
-- \`generator.js\`: núcleo de geração para tijolos retangulares.
-- \`inventory-seed.js\`: amostra herdada do catálogo.
-- \`tests/v4.cjs\`: validação automatizada do fluxo principal.
+- `index.html`: catálogo e interface do aplicativo.
+- `catalogo-reais.js`: fontes e atributos dos 12 projetos reais.
+- `catalogo-app.js`: filtros, manual, cidade, backup e histórico separado.
+- `viewer3d.js`: somente visualizador dos projetos antigos, sem fabricar modelos digitais dos novos manuais.
+- `tests/catalogo-v6.cjs` e `tests/browser.cjs`: testes de fontes, interface, persistência e navegador Android/desktop.
 
-Os demais arquivos do ORÁCULO antigo foram preservados apenas como histórico e não são carregados pela página principal. O service worker antigo é desativado quando a versão 4 é aberta.
+Os geradores e arquivos anteriores permanecem no GitHub para possível auditoria ou reversão, mas **não são carregados na página principal**. Workers antigos são desregistrados; dados locais permanecem.
 
-**Fonte de conferência:** https://www.bricklink.com/catalogItemInv.asp?S=10698-1
+## Deploy
 
-Powered by thIAguinho Soluções Digitais.
+GitHub → Settings → Pages → Deploy from a branch → `main` / `(root)`.
+Site esperado: https://tsvalencio-ia.github.io/Lego/
+
+**Powered by thIAguinho Soluções Digitais.**
