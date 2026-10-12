@@ -51,6 +51,7 @@ function load(){
  }catch{return {version:1,catalog:clone(STARTER),projects:[]};}
 }
 let state=load(),preview=null,previewSaved=false,step=0,scene3d=null,viewLib=null,toastTimer,oracleResult=null;
+let detailMode=false,detailSerial=0,detailModule=null;
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(state));return true;}catch{notify("Sem espaço para salvar. Exporte um backup.",true);return false;}}
 function notify(msg,bad=false){const a=el("toast");a.textContent=msg;a.style.borderColor=bad?"#db748a":"#6075a7";a.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>a.classList.remove("show"),3900);}
 function cleanHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
@@ -158,6 +159,8 @@ function renderOracleCapabilities(){
  ).join("");
 }
 function showPreview(p,isSaved){
+ detailMode=false;detailSerial++;
+ el("realGeometry").textContent="◈ Ver detalhes reais (LDraw)";
  preview=clone(p);previewSaved=isSaved;step=preview.pieces.length;
  el("modelTitle").textContent=preview.name;el("modelStatus").textContent=isSaved?"Da minha cidade":preview.generator?"Grade validada":"Prévia ilustrativa";
  el("scenePlaceholder").classList.add("hidden");
@@ -188,6 +191,8 @@ function renderBOM(){
  }).join("");
 }
 function clearPreview(){
+ detailMode=false;detailSerial++;
+ el("realGeometry").textContent="◈ Ver detalhes reais (LDraw)";
  preview=null;previewSaved=false;step=0;el("modelTitle").textContent="Sua criação aparece aqui";el("modelStatus").textContent="Sem projeto";
  el("scenePlaceholder").classList.remove("hidden");el("projectActions").classList.add("hidden");
  if(scene3d){scene3d.group.clear();scene3d.renderer.domElement.style.display="none";}
@@ -339,6 +344,35 @@ function addBrick(p,index){
  }
  g.position.set(p.x*8,p.y*9.6,p.z*8);return g;
 }
+
+async function renderDetailedLDraw(){
+ if(!detailMode||!preview)return;
+ const token=++detailSerial,button=el("realGeometry");
+ button.disabled=true;
+ button.textContent="◈ Carregando malhas LDraw…";
+ try{
+  if(!viewLib){await load3D();}
+  if(!viewLib||!scene3d)throw new Error("Visualizador Three.js indisponível");
+  if(!detailModule)detailModule=await import("./ldraw-view.js?v=3.0.0");
+  if(token!==detailSerial||!detailMode)return;
+  const geometry=await detailModule.loadDetail(preview,step,window.OTTOGenerator);
+  if(token!==detailSerial||!detailMode)return;
+  detailModule.installDetail(scene3d,geometry);
+  scene3d.renderer.domElement.style.display="block";
+  el("modelStatus").textContent=step===0?"Início · LDraw":"Malhas LDraw carregadas • grade não certificada";
+  button.textContent="◈ Voltar ao 3D esquemático";
+ }catch(error){
+  if(token===detailSerial){
+   detailMode=false;
+   el("modelStatus").textContent="LDraw indisponível — prévia esquemática";
+   button.textContent="◈ Ver detalhes reais (LDraw)";
+   update3D();
+   notify("Malhas LDraw indisponíveis: "+String(error?.message||error).slice(0,130),true);
+  }
+ }finally{
+  if(token===detailSerial)button.disabled=false;
+ }
+}
 function update3D(){
  if(!preview||!viewLib)return;
  try{
@@ -355,6 +389,7 @@ function update3D(){
    scene3d.controls.update();
   }
   resize3D();
+  if(detailMode)void renderDetailedLDraw();
  }catch(e){console.error("Falha na geometria 3D",e);notify("Não foi possível desenhar esta prévia.",true);}
 }
 qsa(".tab").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
@@ -418,4 +453,19 @@ el("voice").addEventListener("click",()=>{
 });
 el("rotate").addEventListener("click",()=>{if(scene3d){scene3d.controls.autoRotate=!scene3d.controls.autoRotate;el("rotate").textContent=scene3d.controls.autoRotate?"⏸ Parar giro":"⟳ Girar";}});
 el("fit").addEventListener("click",()=>{if(viewLib&&preview)update3D();});
+el("realGeometry").addEventListener("click",async()=>{
+ if(!preview){notify("Crie ou abra um projeto antes de carregar malhas LDraw.",true);return;}
+ if(detailMode){
+  detailMode=false;detailSerial++;
+  el("realGeometry").textContent="◈ Ver detalhes reais (LDraw)";
+  el("modelStatus").textContent="Prévia esquemática";
+  if(viewLib)update3D();
+  return;
+ }
+ if(!viewLib)await load3D();
+ if(!viewLib){notify("Não foi possível iniciar o 3D.",true);return;}
+ detailMode=true;
+ renderDetailedLDraw();
+});
+
 renderAll();
