@@ -1,0 +1,45 @@
+0 FILE lego-sapo-10698.ldr
+0 Sapo LEGO Classic 10698 - Reconstrucao preliminar do manual original
+0 Name: lego-sapo-10698.ldr
+0 Author: OTTO 3D - estudo de engenharia
+0 !THEME Classic
+0 !KEYWORDS 10698 frog LEGO
+0 // IMPORTANTE: posicoes interpretadas visualmente a partir do manual oficial. Nao certificado.
+0 // ETAPA 1: placa verde 2x3
+1 2 0 0 0 1 0 0 0 1 0 0 0 1 3021.dat
+0 STEP
+0 // ETAPA 2: duas rampas verdes invertidas nas laterais
+1 2 -30 -8 0 0 0 -1 0 1 0 1 0 0 4287.dat
+1 2 30 -8 0 0 0 1 0 1 0 -1 0 0 4287.dat
+0 STEP
+0 // ETAPA 3: rampas laterais
+1 2 -20 -16 0 0 0 -1 0 1 0 1 0 0 3040.dat
+1 2 20 -16 0 0 0 1 0 1 0 -1 0 0 3040.dat
+0 STEP
+0 // ETAPA 4: rampa superior verde
+1 2 0 -24 0 1 0 0 0 1 0 0 0 1 3039.dat
+0 STEP
+0 // ETAPA 5: bloco verde-lima na frente
+1 27 0 -24 -20 1 0 0 0 1 0 0 0 1 3004.dat
+0 STEP
+0 // ETAPA 6: duas rampas verdes laterais
+1 2 -20 -32 20 0 0 -1 0 1 0 1 0 0 85984.dat
+1 2 20 -32 20 0 0 1 0 1 0 -1 0 0 85984.dat
+0 STEP
+0 // ETAPA 7: bloco verde-lima superior
+1 27 0 -48 -20 1 0 0 0 1 0 0 0 1 3003.dat
+0 STEP
+0 // ETAPA 8: placa do focinho
+1 2 0 -72 -20 1 0 0 0 1 0 0 0 1 3021.dat
+0 STEP
+0 // ETAPA 9: dois suportes verdes para olhos
+1 2 -10 -80 -20 1 0 0 0 1 0 0 0 1 4070.dat
+1 2 10 -80 -20 1 0 0 0 1 0 0 0 1 4070.dat
+0 STEP
+0 // ETAPA 10: rampa dianteira do focinho
+1 2 0 -80 -40 1 0 0 0 1 0 0 0 1 3039.dat
+0 STEP
+0 // ETAPA 11: dois olhos estampados (pecas redondas)
+1 15 -10 -80 -30 1 0 0 0 0 -1 0 1 0 98138p07.dat
+1 15 10 -80 -30 1 0 0 0 0 -1 0 1 0 98138p07.dat
+0 STEP
