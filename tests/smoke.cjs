@@ -43,6 +43,12 @@ assert.equal(G.generate("carro",runtime.catalog()).ok,false,"unsupported shapes 
 assert.equal(G.generate("torre branca",runtime.catalog()).ok,false,"requested color must not be substituted");
 assert.equal(G.generate("plataforma de 4x4 com 1 camada",runtime.catalog()).ok,false,"disconnected layer must fail");
 assert.equal(G.parseRequest("casa 6x6 com 3 camadas").width,6);
+const house=G.generate("casa",runtime.catalog()).project;
+const ldr=G.exportLDraw(house);
+assert.equal((ldr.match(/^1 /gm)||[]).length,house.pieces.length,"each real brick must be exported");
+assert.equal((ldr.match(/^0 STEP$/gm)||[]).length,house.pieces.length-1,"each brick must have a separate assembly step");
+assert.match(ldr,/300[12345]\.dat|2456\.dat/);
+
 const tower=G.generate("torre",runtime.catalog()).project;
 runtime.setPreview(tower);runtime.savePreview();
 assert.equal(runtime.projects().length,1);
@@ -64,4 +70,4 @@ const collision={pieces:[{part:"3001",color:"Green",x:0,y:0,z:0,w:2,d:4},{part:"
 assert.equal(G.validate(collision).ok,false);
 const floating={pieces:[{part:"3001",color:"Green",x:0,y:1,z:0,w:2,d:4}]};
 assert.equal(G.validate(floating).ok,false);
-console.log("OTTO 3D v2 smoke: PASS (procedural plans, connectivity, colors, reservations, returns, imports)");
+console.log("OTTO 3D v2 smoke: PASS (procedural plans, connectivity, colors, LDraw steps, reservations, returns, imports)");
