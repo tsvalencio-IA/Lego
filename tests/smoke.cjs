@@ -5,9 +5,10 @@ const root=path.join(__dirname,"..");
 const script=fs.readFileSync(path.join(root,"app.js"),"utf8");
 const html=fs.readFileSync(path.join(root,"index.html"),"utf8");
 const G=require("../generator.js");
+const O=require("../oraculo.js");
 const manifest=JSON.parse(fs.readFileSync(path.join(root,"manifest.webmanifest"),"utf8"));
-assert.match(html,/generator\.js\?v=2\.0\.0/);
-assert.match(html,/app\.js\?v=2\.0\.0/);
+assert.match(html,/generator\.js\?v=3\.0\.0/);
+assert.match(html,/app\.js\?v=3\.0\.0/);
 assert.equal(manifest.start_url,"./");
 const ids=new Map();
 function element(id){
@@ -24,7 +25,7 @@ const memory=new Map();
 const localStorage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)};
 const runtime=new Function("document","localStorage","window","navigator","confirm","setTimeout","clearTimeout", "Blob","URL",script+
  "\nreturn {shortage,requirements,used,sum,savePreview,renderAll,parseCSV,validateCatalog,onProjectAction,projects:()=>state.projects,catalog:()=>state.catalog,setPreview:p=>{preview=p;previewSaved=false;},makePlan};"
-)(document,localStorage,{OTTOGenerator:G},null,()=>true,()=>1,()=>{},function(){},{createObjectURL(){return "";},revokeObjectURL(){}});
+)(document,localStorage,{OTTOGenerator:G,OTTOOracle:O},null,()=>true,()=>1,()=>{},function(){},{createObjectURL(){return "";},revokeObjectURL(){}});
 assert.equal(runtime.catalog().length,39);
 assert.equal(runtime.sum(runtime.catalog()),131);
 assert.equal(Number(element("total").textContent),790);
@@ -75,4 +76,4 @@ const collision={pieces:[{part:"3001",color:"Green",x:0,y:0,z:0,w:2,d:4},{part:"
 assert.equal(G.validate(collision).ok,false);
 const floating={pieces:[{part:"3001",color:"Green",x:0,y:1,z:0,w:2,d:4}]};
 assert.equal(G.validate(floating).ok,false);
-console.log("OTTO 3D v2 smoke: PASS (procedural plans, connectivity, colors, LDraw steps, reservations, returns, imports)");
+console.log("OTTO 3D v3 smoke: PASS (procedural plans, connectivity, colors, LDraw steps, reservations, returns, imports)");
