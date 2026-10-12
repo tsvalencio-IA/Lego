@@ -20,6 +20,7 @@ jobs:
           node --check catalogo-app.js
           node --check viewer3d.js
           node --check modelos3d-engine.js
+          node --check modelos3d-canvas.js
           node --check modelos3d-ui.js
           node --check modelos3d-catalogo.js
       - name: Verificar fontes verdadeiras e retirar geração livre
