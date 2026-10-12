@@ -1,8 +1,13 @@
 # OTTO 3D — Laboratório de Criações
 
-Versão 2: geração procedural de construções e controlar o estoque da caixa LEGO Classic 10698, diretamente no navegador.
+Versão 3 — ORÁCULO 3D: arquiteto/engenheiro de LEGO com auditoria matemática, controle de inventário, geração procedural e modo opcional de malhas reais LDraw.
 
 ## Implementado
+
+- **Área ORÁCULO Engenharia:** análise dos requisitos descritos pelo Otto, laudo com evidências e bloqueio de pedidos que precisem de engrenagens, rodas, articulações ou outras geometrias ainda não verificadas.
+- **Segurança das montagens:** validação independente de consumo por código/cor, colisão, conectividade e suporte de cada nova peça em relação à sequência das etapas anteriores.
+- **Visualização detalhada LDraw opcional:** tenta baixar malhas de tijolos reais da biblioteca comunitária, com aviso de carregamento/falha e volta ao 3D esquemático. Não serve como ensaio estrutural.
+- **Relatório de engenharia em JSON** para cada análise. Interface preparada para instalar no Android como PWA.
 
 - Dashboard de estoque por código + cor: total identificado, peças reservadas/montadas e livres.
 - Cidade com diversos projetos. Estados planejado/reservado, montado e desmontado; devolver peças ao desmontar.
@@ -14,13 +19,17 @@ Versão 2: geração procedural de construções e controlar o estoque da caixa 
 - Armazenamento local no navegador (localStorage) e interface responsiva Android/computador.
 - Sem necessidade de npm, Firebase ou servidor próprio.
 
+**Contrato técnico e critérios de aprovação:** [docs/ORACULO-V3.md](docs/ORACULO-V3.md).
+
 ## LIMITES QUE NÃO DEVEM SER CONFUNDIDOS COM RECURSOS PRONTOS
 
 **Catálogo parcial:** a caixa 10698 possui 790 peças regulares distribuídas em 225 lotes (código + cor), segundo o BrickLink. A aplicação inclui uma amostra conferida, não 790 peças ficticiamente distribuídas. O restante é registrado como não catalogado e indisponível para projeto até importar o inventário completo. Importações com 790 peças e 225 lotes são marcadas como completas apenas na contagem; é preciso ainda conferir peças e variantes com a caixa.
 
 **Geometria demonstrativa:** os blocos retangulares comuns têm escala externa baseada em grade de 8 mm e altura de 9,6 mm. Não são reproduzidos os tubos internos e todos os detalhes e não há simulação de força, encaixe mecânico ou estabilidade. Modelos de rodas, portas e peças especiais exigem biblioteca 3D detalhada (ex.: LDraw, respeitando licenças). Não apresentar estas prévias como montagens 100% certificadas.
 
-**Gerador procedural real em escopo limitado:** o texto/voz identifica cinco famílias geométricas e dimensões em pinos/camadas, depois busca uma cobertura exata usando exclusivamente tijolos retangulares de códigos conhecidos (3005, 3004, 3003, 3002, 3001, 2456), subtraindo reservas existentes. Recusa formatos ou cores impossíveis. A verificação matemática garante ausência de colisões, conexão por sobreposição entre camadas e apoio mínimo na grade; não garante estabilidade real, rigidez, resistência, atrito ou segurança. Não é uma IA livre e não projeta veículos, animais ou peças especiais.
+**Gerador procedural real em escopo limitado com aprovação do ORÁCULO:** o texto/voz identifica cinco famílias geométricas e dimensões em pinos/camadas, depois busca uma cobertura exata usando exclusivamente tijolos retangulares de códigos conhecidos (3005, 3004, 3003, 3002, 3001, 2456), subtraindo reservas existentes. Recusa formatos ou cores impossíveis. A verificação matemática garante ausência de colisões, conexão por sobreposição entre camadas e apoio mínimo na grade; não garante estabilidade real, rigidez, resistência, atrito ou segurança. Não é uma IA livre e não projeta veículos, animais ou peças especiais.
+
+**Fidelidade da malha:** o LDraw detalhado só pode ser considerado carregado depois do botão “Ver detalhes reais” completar o download e a análise das malhas. Falhas do CDN não são escondidas; o sistema volta ao esquema. A biblioteca LDraw.org utiliza licenças próprias e exige atribuição.
 
 **Sem sincronização:** os dados ficam no navegador. Exporte backup JSON antes de trocar de celular ou limpar dados. Three.js vem do CDN jsDelivr, portanto o primeiro carregamento 3D requer conexão.
 
@@ -31,6 +40,7 @@ Versão 2: geração procedural de construções e controlar o estoque da caixa 
 - "Quero um muro de 6x2 com 2 camadas"
 - "Quero uma escada de 6x2 com 3 camadas"
 - "Quero uma plataforma de 4x4 com 2 camadas"
+- "Quero um caminhão com caçamba móvel" — o ORÁCULO explica que ainda **não há projeto fiel comprovado**, em vez de inventar a montagem.
 
 O sistema pode recusar um pedido se faltar a combinação exata de peças, se não houver solução conectada ou se a busca atingir o limite. Isso é preferível a inventar peças ou encaixes. A prévia web simplifica a aparência externa dos tijolos; exporte o arquivo .ldr para visualização com modelos oficiais de peças em ferramentas compatíveis, conforme licenças das bibliotecas utilizadas.
 
