@@ -27,7 +27,7 @@
   const matches=DATA.filter(p=>(mode==="todos"||(mode==="lego"?p.origem==="LEGO oficial":p.origem!=="LEGO oficial"))&&
    [p.titulo,p.autor,p.categoria,p.origem].join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().includes(q));
   $("catalogNumber").textContent=DATA.length;$("foundCount").textContent=matches.length+" projeto(s) com fontes reais.";
-  $("catalogGrid").innerHTML=matches.map(p=>'<article class="build"><div class="build-top"><span class="build-icon" aria-hidden="true">'+esc(p.icone)+'</span><span class="kind">'+esc(p.categoria)+'</span></div><div class="build-body"><div class="by">'+esc(p.origem)+'</div><h3>'+esc(p.titulo)+'</h3><p>'+esc(p.detalhe)+'</p><p class="mini">'+(p.totalPecas==null?"Peças detalhadas: ainda não auditadas":p.totalPecas+" peças segundo o autor")+'</p><div class="build-actions"><button class="main" data-open="'+esc(p.id)+'">Ver instruções</button><button data-view3d="'+esc(p.id)+'">◉ 3D</button><button data-add="'+esc(p.id)+'" '+(item(p.id)?"disabled":"")+'>'+(item(p.id)?"Na cidade ✓":"+ Cidade")+'</button></div></div></article>').join("")||
+  $("catalogGrid").innerHTML=matches.map(p=>'<article class="build"><div class="build-top"><span class="build-icon" aria-hidden="true">'+esc(p.icone)+'</span><span class="kind">'+esc(p.categoria)+'</span></div><div class="build-body"><div class="by">'+esc(p.origem)+'</div><h3>'+esc(p.titulo)+'</h3><p>'+esc(p.detalhe)+'</p><p class="mini">'+(p.totalPecas==null?"Peças detalhadas: ainda não auditadas":p.totalPecas+" peças segundo o autor")+'</p><div class="build-actions"><button class="main" data-open="'+esc(p.id)+'">Ver instruções</button><button data-view3d="'+esc(p.id)+'">'+(window.OTTO_MODELOS3D?.[p.id]?"◉ 3D preliminar":"Importar 3D")+'</button><button data-add="'+esc(p.id)+'" '+(item(p.id)?"disabled":"")+'>'+(item(p.id)?"Na cidade ✓":"+ Cidade")+'</button></div></div></article>').join("")||
   '<div class="empty">Nenhum projeto desta fonte com esse nome. Tente outra busca.</div>';
  }
  function city(){
@@ -35,7 +35,7 @@
   $("cityRows").innerHTML=state.entries.map(e=>{
    const p=BY.get(e.id);if(!p)return "";
    const action=e.status==="quero"?"Iniciar montagem":e.status==="montando"?"Marcar concluído":e.status==="concluido"?"Desmontar":"Montar novamente";
-   return '<div class="city-row"><div><b>'+esc(p.titulo)+'</b><small>'+esc(p.origem)+" · "+esc(p.autor)+'</small></div><span class="status">'+label[e.status]+'</span><div class="actions"><button data-open="'+esc(p.id)+'">Manual</button><button data-view3d="'+esc(p.id)+'">◉ 3D</button><button class="main" data-next="'+esc(p.id)+'">'+action+'</button><button data-remove="'+esc(p.id)+'">Tirar</button></div></div>';
+   return '<div class="city-row"><div><b>'+esc(p.titulo)+'</b><small>'+esc(p.origem)+" · "+esc(p.autor)+'</small></div><span class="status">'+label[e.status]+'</span><div class="actions"><button data-open="'+esc(p.id)+'">Manual</button><button data-view3d="'+esc(p.id)+'">'+(window.OTTO_MODELOS3D?.[p.id]?"◉ 3D preliminar":"Importar 3D")+'</button><button class="main" data-next="'+esc(p.id)+'">'+action+'</button><button data-remove="'+esc(p.id)+'">Tirar</button></div></div>';
   }).join("")||'<div class="empty">A cidade está vazia. Adicione um projeto real do catálogo.</div>';
  }
  function oldState(){const x=read(LEGACY);return x?.version===1&&Array.isArray(x.projects)&&Array.isArray(x.catalog)?x:null;}
