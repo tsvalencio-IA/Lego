@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0b1630">
   <meta name="description" content="OTTO 3D: crie, planeje, monte e controle peças da sua cidade LEGO Classic 10698.">
   <title>OTTO 3D | Laboratório de criações</title>
-  <link rel="stylesheet" href="./styles.css?v=1.0.0">
+  <link rel="stylesheet" href="./styles.css?v=2.0.0">
   <link rel="manifest" href="./manifest.webmanifest">
   <script type="importmap">
   {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"}}
@@ -37,12 +37,12 @@
       <article class="panel idea">
         <div class="panel-heading"><div><span class="eyebrow">01 / SUA IDEIA</span><h2>Imagine e peça</h2></div><span class="dot-purple"></span></div>
         <label for="ideaText">Conte como quer seu brinquedo</label>
-        <textarea id="ideaText" rows="4" placeholder="Ex.: Otto quer uma torre azul bem alta com base preta..."></textarea>
+        <textarea id="ideaText" rows="4" placeholder="Ex.: Quero uma torre azul de 3 camadas ou uma casa 4x4 com porta..."></textarea>
         <div class="field-row"><button id="voice" class="btn btn-ghost">◉ Falar minha ideia</button><span id="voiceState" class="fine">Também pode escrever</span></div>
-        <div class="chips"><button data-idea="Quero uma torre alta">Torre</button><button data-idea="Quero uma casinha">Casinha</button><button data-idea="Quero um muro grande">Muro</button><button data-idea="Quero uma praça pequena">Praça</button></div>
+        <div class="chips"><button data-idea="Quero uma torre alta">Torre</button><button data-idea="Quero uma casinha">Casinha</button><button data-idea="Quero um muro grande">Muro</button><button data-idea="Quero uma escada de 6x2 com 3 camadas">Escada</button><button data-idea="Quero uma plataforma de 4x4 com 2 camadas">Plataforma</button></div>
         <label for="nameText">Nome do projeto</label><input id="nameText" maxlength="70" placeholder="Ex.: Torre do Otto">
-        <button id="generate" class="btn btn-primary full">✦ Criar projeto de demonstração</button>
-        <div class="notice">O gerador inicial utiliza modelos predefinidos e somente peças catalogadas. Não é uma IA livre nem certifica resistência física.</div>
+        <button id="generate" class="btn btn-primary full">✦ Calcular projeto com peças reais</button>
+        <div class="notice">O gerador calcula uma montagem nova na grade de pinos usando somente tijolos retangulares catalogados. Confere encaixe geométrico, apoio e estoque; não certifica estabilidade física.</div>
         <div id="plannerMessage" role="status" aria-live="polite"></div>
       </article>
       <article class="panel viewer">
@@ -92,7 +92,8 @@
 </main>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <footer>Projeto OTTO 3D · Conjunto 10698 · Powered by thIAguinho Soluções Digitais</footer>
-<script type="module" src="./app.js?v=1.0.0"></script>
+<script src="./generator.js?v=2.0.0" defer></script>
+<script type="module" src="./app.js?v=2.0.0"></script>
 <script>if ("serviceWorker" in navigator && location.protocol==="https:") { window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{})); }</script>
 </body>
 </html>
