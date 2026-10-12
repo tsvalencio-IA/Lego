@@ -13,11 +13,11 @@
  const REQUIRED_FEATURES=[
   {id:"rodas",label:"Rodas e eixos",rx:/\b(rodas?|eixos?|pneus?|rolantes?|rodar|pneumaticos?)\b/},
   {id:"articulacao",label:"Articulações móveis",rx:/\b(articulad[ao]s?|articulacoes?|dobradicas?|abrir|abre|fecha|fechar|mov[eé]l|moveis|levanta|levantar|girar|giratorio|bascula|basculante)\b/},
-  {id:"motor",label:"Motorização",rx:/\b(motores?|eletric[ao]s?|controle remoto|bateria|pilha|engrenagens?|transmiss[aã]o|automatic[ao])\b/},
-  {id:"detalhes",label:"Detalhes especiais",rx:/\b(janelas?|telhados?\s+(inclinados?|curvos?)|portas?\s+(?:que|com|moveis?|azuis?|vermelhas?)|asas?|helices?|bracos?\s+mecanicos?|escavadeiras?)\b/}
+  {id:"motor",label:"Motorização",rx:/\b(motores?|motorizad[ao]s?|eletric[ao]s?|controle remoto|bateria|pilha|engrenagens?|transmiss[aã]o|automatic[ao])\b/},
+  {id:"detalhes",label:"Detalhes especiais",rx:/\b(janelas?|varandas?|garagens?|piscinas?|jardins?|patios?|semaforos?|portoes?|cercas?|ca[cç]ambas?|cabines?|telhados?\s+(inclinados?|curvos?)|portas?\s+(?:que|com|moveis?|azuis?|vermelhas?)|asas?|helices?|bracos?\s+mecanicos?|escavadeiras?)\b/}
  ];
  const UNSUPPORTED_OBJECTS=[
-  {id:"veiculo",label:"Veículos com formato específico",rx:/\b(carros?|caminhoes?|caminhonetes?|onibus|tratores?|motos?|viaturas?|guinchos?|escavadeiras?|trem|trens|bicicletas?)\b/},
+  {id:"veiculo",label:"Veículos com formato específico",rx:/\b(carros?|caminh(?:ao|oes)|caminhonetes?|onibus|tratores?|motos?|viaturas?|guinchos?|escavadeiras?|trem|trens|bicicletas?)\b/},
   {id:"voador",label:"Aeronaves ou foguetes",rx:/\b(aviao|avioes|helicopteros?|foguetes?|naves?|drones?)\b/},
   {id:"animal",label:"Animais ou personagens",rx:/\b(dinossauros?|cachorros?|gatos?|sap[oo]s?|ursos?|passaros?|robos?|bonecos?|drag[ao]es?|monstros?)\b/},
   {id:"cidade",label:"Cidade completa",rx:/\b(cidades?|bairros?|vilas?|parques?\s+de\s+divers[aã]o)\b/},
