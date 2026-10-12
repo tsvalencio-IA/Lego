@@ -1,4 +1,4 @@
-# OTTO LEGO — Biblioteca de projetos reais (v6)
+# OTTO LEGO — Biblioteca de projetos reais + 3D (v7)
 
 O aplicativo **não inventa novas construções**. A tela principal agora utiliza somente manuais publicados e com links verificáveis para a LEGO Classic **10698 (790 peças)**.
 
@@ -12,9 +12,16 @@ O aplicativo **não inventa novas construções**. A tela principal agora utiliz
 - **Backup**: salva os projetos do catálogo `otto-lego-reais:v1` e a cópia do histórico antigo, sem limpar o navegador. Restauração disponível.
 - Interface responsiva para Android e computadores; HTML estático pelo GitHub Pages, sem credenciais, npm no celular ou contas obrigatórias.
 
+## Modelos 3D em desenvolvimento
+
+- **Sapo LEGO Classic 10698**: arquivo `modelos3d/lego-sapo-10698-packed.mpd`, reconstruído preliminarmente a partir do manual oficial LEGO. São 11 etapas e 16 referências a peças, utilizando malhas LDraw com 57 arquivos de peça/subpeça/primitiva embutidos. Geometria da peça baseada em modelos LDraw; posição e sequência são INTERPRETAÇÃO DO MANUAL e ainda precisam ser conferidas para garantir fidelidade 100%.
+- Clique no botão **3D preliminar** no card Sapo para abrir visualização giratória no próprio navegador. Arraste para girar, use zoom e navegue entre etapas. O renderizador `modelos3d-canvas.js` lê superfícies reais LDraw e projeta-as localmente, sem exigir Three.js ou CDN. Isso é visualização 3D genuína do arquivo digital, não prova de encaixe físico.
+- Nos outros projetos aparece **Importar 3D**: o manual continua acessível; o aplicativo aceita arquivos reais `.ldr`/`.mpd` (com autoria/proveniência) que ficam registrados no navegador via IndexedDB. Não exibe um projeto adivinhado.
+- A integração não modifica nem substitui os PDFs oficiais e mantém integralmente a cidade, o backup e o histórico antigo.
+
 ## Precisão: o que não está implementado
 
-- Os manuais são **verdadeiros**, mas ainda não existe, neste repositório, uma reconstrução digital 3D das suas peças com prova de conformidade. Para eles, o manual original é a fonte definitiva; **não exibimos um modelo 3D inventado**.
+- O primeiro modelo digital do sapo **não está auditado como 100% fiel**. A reconstrução geométrica usa as peças LDraw, mas a posição original deve ser conferida peça por peça em relação ao PDF. Os outros 11 projetos ainda não possuem um modelo digital validado. Nenhum deve ser anunciado como 3D pronto antes dessa verificação.
 - **Não descontamos automaticamente o estoque** por projeto recém-selecionado, pois não obtivemos/validamos a lista completa de códigos e cores usados por *cada construção*. Conhecer apenas o total de peças ou os 790 itens da caixa seria insuficiente.
 - O histórico dos projetos antigos é independente do catálogo; conservar o 3D antigo não torna esses projetos oficiais.
 - Nenhum PDF de terceiros é alterado ou redistribuído pelo repositório. Links apontam diretamente para o produtor.
@@ -31,10 +38,18 @@ O aplicativo **não inventa novas construções**. A tela principal agora utiliz
 - `index.html`: catálogo e interface do aplicativo.
 - `catalogo-reais.js`: fontes e atributos dos 12 projetos reais.
 - `catalogo-app.js`: filtros, manual, cidade, backup e histórico separado.
-- `viewer3d.js`: somente visualizador dos projetos antigos, sem fabricar modelos digitais dos novos manuais.
-- `tests/catalogo-v6.cjs` e `tests/browser.cjs`: testes de fontes, interface, persistência e navegador Android/desktop.
+- `viewer3d.js`: visualizador dos projetos antigos, separados do catálogo oficial.
+- `modelos3d-catalogo.js`: registro de quais modelos CAD são suportados e seu nível de validação.
+- `modelos3d/lego-sapo-10698-packed.mpd`: reconstrução do sapo com malhas LDraw e 11 etapas.
+- `modelos3d-canvas.js`: renderizador interativo offline de superfícies reais LDraw.
+- `modelos3d-engine.js` e `modelos3d-ui.js`: leitura, auditoria, importação, armazenamento e controles 3D.
+- `tests/catalogo-v6.cjs`, `tests/modelos3d.cjs` e `tests/browser.cjs`: testes do catálogo e de rotação, zoom, navegação de etapas, integridade do arquivo CAD e controles em Chromium para Android/desktop.
 
 Os geradores e arquivos anteriores permanecem no GitHub para possível auditoria ou reversão, mas **não são carregados na página principal**. Workers antigos são desregistrados; dados locais permanecem.
+
+## Licenças e fontes das geometrias
+
+Os arquivos de geometria da comunidade LDraw incluídos no MPD preservam nos respectivos subarquivos seus metadados de autoria e licença. Fonte LDraw.org Parts Library, sob CCAL/CC BY 2.0 conforme cabeçalhos específicos: https://www.ldraw.org/legal-info. O conjunto e as instruções são LEGO®; este projeto não é afiliado à LEGO. A reconstrução original de posições foi feita para OTTO 3D, com aviso de verificação pendente.
 
 ## Deploy
 
