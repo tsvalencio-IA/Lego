@@ -43,6 +43,9 @@ assert.equal(G.generate("carro",runtime.catalog()).ok,false,"unsupported shapes 
 assert.equal(G.generate("torre branca",runtime.catalog()).ok,false,"requested color must not be substituted");
 assert.equal(G.generate("plataforma de 4x4 com 1 camada",runtime.catalog()).ok,false,"disconnected layer must fail");
 assert.equal(G.parseRequest("casa 6x6 com 3 camadas").width,6);
+assert.equal(G.parseRequest("torre com altura de 4").height,4);
+assert.equal(G.parseRequest("torre vermelha").color,"Red");
+assert.equal(G.parseRequest("torre vermelho escuro").color,"Dark Red");
 const house=G.generate("casa",runtime.catalog()).project;
 const ldr=G.exportLDraw(house);
 assert.equal((ldr.match(/^1 /gm)||[]).length,house.pieces.length,"each real brick must be exported");
