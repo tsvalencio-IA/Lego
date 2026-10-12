@@ -2,7 +2,7 @@ const assert=require("node:assert/strict");
 const fs=require("node:fs"),vm=require("node:vm"),path=require("node:path");
 const root=path.resolve(__dirname,".."),read=p=>fs.readFileSync(path.join(root,p),"utf8");
 const html=read("index.html"),src=read("simple.js"),generator=read("generator.js"),seed=read("inventory-seed.js");
-for(const n of ["simple.js?v=4.0.0","generator.js?v=4.0.0","inventory-seed.js?v=4.0.0"])
+for(const n of ["simple.js?v=5.0.0","generator.js?v=5.0.0","inventory-seed.js?v=5.0.0","viewer3d.js?v=5.0.0"])
  assert(html.includes(n),"Arquivo não referenciado no HTML: "+n);
 const listed=[...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);
 assert.equal(new Set(listed).size,listed.length,"IDs HTML repetidos");
@@ -49,4 +49,4 @@ element("create").onclick();
 assert.match(element("notice").textContent,/não constrói/);
 assert.equal(element("save").disabled,true);
 assert.equal(element("sketch").innerHTML.includes("<svg"),false);
-console.log("OTTO v4 PASS: interface, estoque 131, geração real, SVG, salvar, montar, devolver, rejeitar pedidos impossíveis.");
+console.log("OTTO v5 regression PASS: interface, estoque 131, geração real, SVG, salvar, montar, devolver, rejeitar pedidos impossíveis.");
