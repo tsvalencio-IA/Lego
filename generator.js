@@ -225,14 +225,14 @@
   project.pieces.forEach((p,i)=>{
    const d=dimensions(p);
    if(!d||!(p.color in LDRAW_COLORS))throw Error("Cor ou geometria sem mapeamento LDraw: "+p.part+" "+p.color);
-   const turned=p.w===d[1]&&p.d===d[0]&&d[0]!==d[1];
+   const turned=d[0]!==d[1]&&(p.w!==d[1]||p.d!==d[0]);
    const matrix=turned?"0 0 1 0 1 0 -1 0 0":"1 0 0 0 1 0 0 0 1";
    const x=(p.x+p.w/2)*20,y=-(p.y+1)*24,z=(p.z+p.d/2)*20;
    lines.push("0 Etapa "+(i+1)+" - "+p.name+" ("+p.color+")");
    lines.push("1 "+LDRAW_COLORS[p.color]+" "+x+" "+y+" "+z+" "+matrix+" "+p.part+".dat");
    if(i!==project.pieces.length-1)lines.push("0 STEP");
   });
-  return lines.join("\n")+"\n";
+  return lines.join("\r\n")+"\r\n";
  }
  return {DIMS,LDRAW_COLORS,parseRequest,createTarget,validate,generate,exportLDraw};
 });
