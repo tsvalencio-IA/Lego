@@ -1,5 +1,5 @@
-const CACHE="otto3d-shell-v1.0.0";
-const CORE=["./","./index.html","./styles.css?v=1.0.0","./app.js?v=1.0.0","./manifest.webmanifest","./icon.svg"];
+const CACHE="otto3d-shell-v2.0.0";
+const CORE=["./","./index.html","./styles.css?v=2.0.0","./generator.js?v=2.0.0","./app.js?v=2.0.0","./manifest.webmanifest","./icon.svg"];
 self.addEventListener("install",event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));
 });
