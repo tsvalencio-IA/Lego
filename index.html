@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1630">
-  <meta name="description" content="OTTO 3D: crie, planeje, monte e controle peças da sua cidade LEGO Classic 10698.">
-  <title>OTTO 3D | Laboratório de criações</title>
-  <link rel="stylesheet" href="./styles.css?v=2.0.0">
+  <meta name="description" content="ORÁCULO 3D: arquiteto de LEGO com auditoria de peças, projetos em 3D e validação de montagem.">
+  <title>OTTO 3D | ORÁCULO — Arquiteto de LEGO</title>
+  <link rel="stylesheet" href="./styles.css?v=3.0.0">
   <link rel="manifest" href="./manifest.webmanifest">
   <script type="importmap">
   {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"}}
@@ -14,7 +14,7 @@
 </head>
 <body>
 <header class="topbar">
-  <div class="branding"><div class="brand-icon" aria-hidden="true">▦</div><div><strong>OTTO <span>3D</span></strong><small>Laboratório de criações</small></div></div>
+  <div class="branding"><div class="brand-icon" aria-hidden="true">▦</div><div><strong>OTTO <span>3D · ORÁCULO</span></strong><small>Laboratório de criações</small></div></div>
   <div class="header-right"><span class="set-pill">LEGO Classic • 10698</span><button id="export" class="btn btn-ghost" title="Salvar backup JSON">↧ <span>Backup</span></button></div>
 </header>
 <main class="container">
@@ -27,6 +27,7 @@
   </section>
   <nav class="tabs" aria-label="Seções do aplicativo">
     <button class="tab active" data-tab="criar">✦ Projetar</button>
+    <button class="tab" data-tab="oraculo">◈ ORÁCULO · Engenharia</button>
     <button class="tab" data-tab="cidade">▦ Minha cidade <span id="projectCount">0</span></button>
     <button class="tab" data-tab="pecas">▤ Peças e estoque</button>
     <button class="tab" data-tab="sobre">ⓘ Precisão</button>
@@ -56,6 +57,27 @@
       </article>
     </div>
     <article class="panel materials"><div class="panel-heading"><div><span class="eyebrow">04 / LISTA DO PROJETO</span><h2>Peças necessárias</h2></div><span id="bomTotal" class="list-pill">0 peças</span></div><div id="bom" class="empty-small">Crie um projeto para consultar quantidades por formato e cor.</div></article>
+  </section>
+
+  <section id="page-oraculo" class="page">
+    <div class="two-columns">
+      <article class="panel">
+        <div class="panel-heading"><div><span class="eyebrow">ARQUITETO + ENGENHEIRO LEGO</span><h2>Consultar o ORÁCULO 3D</h2></div><span class="scene-tag">V3 • Verificador</span></div>
+        <p>Descreva exatamente o brinquedo que Otto deseja, incluindo tamanho, cor, peças móveis e detalhes. O ORÁCULO verifica o que é possível comprovar com a caixa catalogada e mostra as limitações antes de gerar.</p>
+        <label for="oracleInput">Projeto desejado</label>
+        <textarea id="oracleInput" rows="5" maxlength="600" placeholder="Ex.: Quero uma torre azul de 3 camadas. Ou quero um caminhão com caçamba que levanta."></textarea>
+        <div class="chips"><button data-oracle-example="Quero uma torre azul de 3 camadas">Torre</button><button data-oracle-example="Quero uma casa 4x4 com porta">Casa</button><button data-oracle-example="Quero um caminhão com caçamba que levanta">Caminhão móvel</button></div>
+        <button id="oracleAnalyze" class="btn btn-primary full">◈ Analisar engenharia e estoque</button>
+        <div id="oracleVerdict" class="oracle-verdict" role="status" aria-live="polite">O laudo aparecerá aqui depois da análise.</div>
+        <div class="project-actions"><button id="oracleOpenPlan" class="btn btn-primary hidden">◈ Abrir projeto no 3D</button><button id="oracleExport" class="btn btn-ghost" disabled>↓ Baixar laudo JSON</button></div>
+      </article>
+      <article class="panel">
+        <div class="panel-heading"><div><span class="eyebrow">PROVAS E LIMITES</span><h2>O que foi realmente verificado?</h2></div></div>
+        <div id="oracleEvidence" class="oracle-evidence"><p class="fine">Os critérios são verificados por projeto; quantidade total da caixa não autoriza criar peças não registradas.</p></div>
+        <hr><span class="eyebrow">MAPA DE CAPACIDADES</span><div id="oracleCapabilities"></div>
+        <p class="fine">Biblioteca LDraw: geometria CAD voluntária sob licenças aplicáveis. Encaixe em grade não substitui ensaio físico e teste de movimento.</p>
+      </article>
+    </div>
   </section>
 
   <section id="page-cidade" class="page">
@@ -92,8 +114,9 @@
 </main>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <footer>Projeto OTTO 3D · Conjunto 10698 · Powered by thIAguinho Soluções Digitais</footer>
-<script src="./generator.js?v=2.0.0"></script>
-<script type="module" src="./app.js?v=2.0.0"></script>
+<script src="./generator.js?v=3.0.0"></script>
+<script src="./oraculo.js?v=3.0.0"></script>
+<script type="module" src="./app.js?v=3.0.0"></script>
 <script>if ("serviceWorker" in navigator && location.protocol==="https:") { window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{})); }</script>
 </body>
 </html>
