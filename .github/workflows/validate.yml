@@ -24,3 +24,18 @@ jobs:
         run: |
           node tests/v4.cjs
           node tests/viewer3d.cjs
+
+  browser-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Preparar navegador de teste
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.55.0
+          npx playwright install chromium
+      - name: Testar rotação, 3D e cidade em navegador real
+        run: node tests/browser.cjs
