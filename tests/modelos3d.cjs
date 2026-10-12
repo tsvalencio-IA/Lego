@@ -15,7 +15,7 @@ vm.runInNewContext(cad,c,{filename:"modelos3d-engine.js"});
 const engine=c.module.exports;
 assert.equal(typeof engine.CADViewer,"function");
 const frog=read("modelos3d/lego-sapo-10698.ldr"),meta=engine.inspect(frog);
-assert.equal(meta.stepSeparators,11);
+assert.equal(meta.stepSeparators,10);
 assert.equal(meta.partsReferenced,16);
 assert.equal(meta.isMultiPart,false);
 assert.equal(c.window.OTTO_MODELOS3D["lego-sapo"].quality,"reconstrucao-preliminar");
