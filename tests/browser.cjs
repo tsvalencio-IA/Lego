@@ -24,8 +24,9 @@ const server=http.createServer((req,res)=>{
    await page.waitForFunction(()=>{
      const s=document.querySelector("#model3dStatus")?.textContent||"";
      return s.includes("3D carregado")||s.includes("Não foi possível")||s.includes("indisponível:");
-   },{timeout:60000});
+   },null,{timeout:20000});
    const cadStatus=await page.locator("#model3dStatus").textContent();
+   assert.match(cadStatus,/3D carregado:/,"Modelo do sapo não carregou malhas LDraw reais");
    console.log("Modelo Sapo v7:",cadStatus);
    await page.locator("#model3dClose").click();
 
