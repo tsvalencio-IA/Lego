@@ -1,74 +1,42 @@
-# OTTO 3D — Laboratório de Criações
+# OTTO LEGO — versão simples (v4)
 
-Versão 3 — ORÁCULO 3D: arquiteto/engenheiro de LEGO com auditoria matemática, controle de inventário, geração procedural e modo opcional de malhas reais LDraw.
+O aplicativo foi simplificado para oferecer um fluxo funcional com **HTML, JavaScript e desenho isométrico SVG**, sem Three.js, LDraw remoto, Firebase, API paga ou backend. O código permanece hospedado neste repositório.
 
-## Implementado
+## Como usar
 
-- **Área ORÁCULO Engenharia:** análise dos requisitos descritos pelo Otto, laudo com evidências e bloqueio de pedidos que precisem de engrenagens, rodas, articulações ou outras geometrias ainda não verificadas.
-- **Segurança das montagens:** validação independente de consumo por código/cor, colisão, conectividade e suporte de cada nova peça em relação à sequência das etapas anteriores.
-- **Visualização detalhada LDraw opcional:** tenta baixar malhas de tijolos reais da biblioteca comunitária, com aviso de carregamento/falha e volta ao 3D esquemático. Não serve como ensaio estrutural.
-- **Relatório de engenharia em JSON** para cada análise. Interface preparada para instalar no Android como PWA.
+1. Acesse a página publicada pelo GitHub Pages (consulte **Settings → Pages** do repositório para confirmar se a publicação está ativa).
+2. Em **Peça seu projeto**, descreva uma torre, muro, casa simples, escada ou plataforma. Exemplos: "torre azul de 3 camadas", "muro 6x2 com 2 camadas" e "casa 4x4 com abertura".
+3. Toque em **Calcular projeto**, depois em **Próximo** para visualizar uma peça de cada vez. **Girar vista** muda a perspectiva isométrica.
+4. Em **Salvar na cidade**, o sistema reserva a quantidade exata de cada par código/cor no inventário cadastrado.
+5. Na cidade, marque a construção como montada ou desmontada. Desmontar libera suas peças.
 
-- Dashboard de estoque por código + cor: total identificado, peças reservadas/montadas e livres.
-- Cidade com diversos projetos. Estados planejado/reservado, montado e desmontado; devolver peças ao desmontar.
-- Gerador procedural que resolve cobertura exata de grade de pinos para torre, casa com porta e teto, muro, escada e plataforma, com tamanhos solicitados em texto, controle de cores, colisões e conectividade por camadas.
-- Visualizador tridimensional Three.js com rotação, zoom e instruções de montagem peça a peça.
-- Exportação LDraw (.ldr) com códigos reais de peças, coordenadas em unidades LDraw e etapas STEP para abrir em programas compatíveis.
-- Ideias em texto e ditado por voz quando o navegador oferecer suporte.
-- Importação CSV/JSON de inventário, backup JSON e restauração.
-- Armazenamento local no navegador (localStorage) e interface responsiva Android/computador.
-- Sem necessidade de npm, Firebase ou servidor próprio.
+## O que funciona
 
-**Contrato técnico e critérios de aprovação:** [docs/ORACULO-V3.md](docs/ORACULO-V3.md).
+- Gerador geométrico de famílias limitadas de construções com tijolos retangulares.
+- Visualização isométrica diretamente em SVG, sem nenhum download externo.
+- Etapas, códigos das peças, quantidades, cor, estoque, reservas e devoluções.
+- Projetos existentes e inventário preservados pelo armazenamento \`otto3d:v1\`.
+- Backup JSON, importação de catálogo CSV/JSON, exportação CSV do estoque e LDR do modelo.
+- Ditado por voz apenas quando o navegador oferece suporte.
 
-## LIMITES QUE NÃO DEVEM SER CONFUNDIDOS COM RECURSOS PRONTOS
+## Limites — sem inventar
 
-**Catálogo parcial:** a caixa 10698 possui 790 peças regulares distribuídas em 225 lotes (código + cor), segundo o BrickLink. A aplicação inclui uma amostra conferida, não 790 peças ficticiamente distribuídas. O restante é registrado como não catalogado e indisponível para projeto até importar o inventário completo. Importações com 790 peças e 225 lotes são marcadas como completas apenas na contagem; é preciso ainda conferir peças e variantes com a caixa.
+- A caixa **LEGO Classic 10698** possui **790 peças nominais**. O catálogo inicial do aplicativo registra uma **amostra de 131 peças em 39 códigos/cores**, herdada da primeira versão; a quantidade e o conteúdo físicos precisam ser conferidos. O resto não é atribuído a formas fictícias.
+- Os desenhos são **isométricos esquemáticos** (não modelos LDraw detalhados nem imagens oficiais das peças). O mecanismo verifica encaixes na grade e colisões básicas, **não resistência ou equilíbrio reais**.
+- Não há gerador fiel para veículos, animais, engrenagens ou articulações. Pedidos assim são recusados em vez de substituídos silenciosamente.
+- Os dados ficam neste navegador. Antes de trocar de aparelho ou limpar dados, baixe um backup.
+- Caso o site não abra, confirme a publicação do GitHub Pages. Uma aprovação de GitHub Actions não garante, sozinha, que o site esteja publicado.
 
-**Geometria demonstrativa:** os blocos retangulares comuns têm escala externa baseada em grade de 8 mm e altura de 9,6 mm. Não são reproduzidos os tubos internos e todos os detalhes e não há simulação de força, encaixe mecânico ou estabilidade. Modelos de rodas, portas e peças especiais exigem biblioteca 3D detalhada (ex.: LDraw, respeitando licenças). Não apresentar estas prévias como montagens 100% certificadas.
+## Arquivos ativos
 
-**Gerador procedural real em escopo limitado com aprovação do ORÁCULO:** o texto/voz identifica cinco famílias geométricas e dimensões em pinos/camadas, depois busca uma cobertura exata usando exclusivamente tijolos retangulares de códigos conhecidos (3005, 3004, 3003, 3002, 3001, 2456), subtraindo reservas existentes. Recusa formatos ou cores impossíveis. A verificação matemática garante ausência de colisões, conexão por sobreposição entre camadas e apoio mínimo na grade; não garante estabilidade real, rigidez, resistência, atrito ou segurança. Não é uma IA livre e não projeta veículos, animais ou peças especiais.
+- \`index.html\`: interface completa responsiva e CSS embutido.
+- \`simple.js\`: funcionamento, visualizador SVG, projeto, inventário, backup e projetos salvos.
+- \`generator.js\`: núcleo de geração para tijolos retangulares.
+- \`inventory-seed.js\`: amostra herdada do catálogo.
+- \`tests/v4.cjs\`: validação automatizada do fluxo principal.
 
-**Fidelidade da malha:** o LDraw detalhado só pode ser considerado carregado depois do botão “Ver detalhes reais” completar o download e a análise das malhas. Falhas do CDN não são escondidas; o sistema volta ao esquema. A biblioteca LDraw.org utiliza licenças próprias e exige atribuição.
+Os demais arquivos do ORÁCULO antigo foram preservados apenas como histórico e não são carregados pela página principal. O service worker antigo é desativado quando a versão 4 é aberta.
 
-**Sem sincronização:** os dados ficam no navegador. Exporte backup JSON antes de trocar de celular ou limpar dados. Three.js vem do CDN jsDelivr, portanto o primeiro carregamento 3D requer conexão.
+**Fonte de conferência:** https://www.bricklink.com/catalogItemInv.asp?S=10698-1
 
-## Exemplos para o Otto
-
-- "Quero uma torre azul com 3 camadas"
-- "Quero uma casa de 4x4 com porta"
-- "Quero um muro de 6x2 com 2 camadas"
-- "Quero uma escada de 6x2 com 3 camadas"
-- "Quero uma plataforma de 4x4 com 2 camadas"
-- "Quero um caminhão com caçamba móvel" — o ORÁCULO explica que ainda **não há projeto fiel comprovado**, em vez de inventar a montagem.
-
-O sistema pode recusar um pedido se faltar a combinação exata de peças, se não houver solução conectada ou se a busca atingir o limite. Isso é preferível a inventar peças ou encaixes. A prévia web simplifica a aparência externa dos tijolos; exporte o arquivo .ldr para visualização com modelos oficiais de peças em ferramentas compatíveis, conforme licenças das bibliotecas utilizadas.
-
-## Publicação no GitHub Pages pelo celular
-
-1. Abra Settings → Pages no repositório Lego.
-2. Em Build and deployment, escolha Deploy from a branch.
-3. Selecione main e /(root), e salve.
-4. Depois de confirmado pelo GitHub, acesse https://tsvalencio-ia.github.io/Lego/ .
-
-## Inventário
-
-Importe CSV com cabeçalho e linhas como:
-
-    part,color,quantity,name
-    3004,Black,4,Brick 1 x 2
-    3002,Black,8,Brick 2 x 3
-
-Aceita também codigo,cor,quantidade,nome. O catálogo importado não pode exceder 790 peças nem conter pares código/cor duplicados. Projetos existentes são preservados apenas se continuarem compatíveis com o estoque.
-
-Importante: não somar os itens extras, componentes internos de peças compostas e alternativas duplicadas. Brickset mostra 801 na lista de reposição, que não equivale automaticamente às 790 peças regulares.
-
-## Fontes
-
-- https://www.lego.com/en-us/product/lego-large-creative-brick-box-10698
-- https://www.bricklink.com/catalogItemInv.asp?S=10698-1
-- https://brickset.com/inventories/10698-1
-- https://threejs.org/manual/pages/installation.html
-- https://www.ldraw.org/legal-info
-
-Powered by thIAguinho Soluções Digitais
+Powered by thIAguinho Soluções Digitais.
