@@ -15,6 +15,11 @@ jobs:
         with:
           node-version: '22'
       - name: Validar sintaxe JavaScript
-        run: node --check app.js
+        run: |
+          node --check app.js
+          node --check generator.js
+          node --check oraculo.js
       - name: Testar estoque, reservas e projetos
         run: node tests/smoke.cjs
+      - name: Testar ORÁCULO 3D e regras de fidelidade
+        run: node tests/oraculo.cjs
