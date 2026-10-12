@@ -188,5 +188,27 @@
    this.element.replaceChildren();
   }
  }
- return {inspect,put,get,projectSource,CADViewer,REMOTE};
+
+ class ReliableCADViewer {
+  constructor(element,onState){
+   this.element=element;this.status=onState||(()=>{});
+   this.impl=null;this.steps=0;this.step=0;
+  }
+  async loadModel(source){
+   if(!window.OTTOCanvasCAD?.Viewer)throw Error("Renderizador LDraw local não foi carregado.");
+   const info=inspect(source);
+   if(this.impl)this.impl.dispose();
+   this.impl=new window.OTTOCanvasCAD.Viewer(this.element,this.status);
+   const result=this.impl.load(source);
+   this.steps=result.steps;this.step=this.steps;
+   this.status("Modelo LDraw renderizado localmente com "+result.meshCount+" faces.");
+   return {...result,meta:info};
+  }
+  setStep(n){if(!this.impl)return;this.impl.setStep(n);this.step=this.impl.step;}
+  fit(){this.impl?.fit();}
+  turn(){this.impl?.turn();}
+  zoom(f){this.impl?.zoom(f);}
+  dispose(){if(this.impl)this.impl.dispose();this.impl=null;}
+ }
+ return {inspect,put,get,projectSource,CADViewer:ReliableCADViewer,REMOTE};
 });
