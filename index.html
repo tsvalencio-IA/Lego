@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1630">
+  <meta name="description" content="OTTO 3D: crie, planeje, monte e controle peças da sua cidade LEGO Classic 10698.">
+  <title>OTTO 3D | Laboratório de criações</title>
+  <link rel="stylesheet" href="./styles.css?v=1.0.0">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <script type="importmap">
+  {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"}}
+  </script>
+</head>
+<body>
+<header class="topbar">
+  <div class="branding"><div class="brand-icon" aria-hidden="true">▦</div><div><strong>OTTO <span>3D</span></strong><small>Laboratório de criações</small></div></div>
+  <div class="header-right"><span class="set-pill">LEGO Classic • 10698</span><button id="export" class="btn btn-ghost" title="Salvar backup JSON">↧ <span>Backup</span></button></div>
+</header>
+<main class="container">
+  <div class="heading-row"><div><div class="eyebrow">MEU MUNDO DE CONSTRUÇÕES</div><h1>O que vamos construir, Otto?</h1><p>Imagine, planeje, monte e acompanhe cada peça da sua cidade.</p></div><span class="status-label" id="catalogStatus">Verificando inventário</span></div>
+  <section class="metrics" aria-label="Painel do estoque">
+    <article class="metric"><span>Peças da caixa</span><strong id="total">790</strong><small>LEGO 10698</small></article>
+    <article class="metric"><span>Identificadas</span><strong id="identified">—</strong><small id="unmapped">Catálogo parcial</small></article>
+    <article class="metric"><span>Em projetos</span><strong id="committed">0</strong><small id="committed-detail">Montadas e reservadas</small></article>
+    <article class="metric highlighted"><span>Livres e catalogadas</span><strong id="available">—</strong><small>Por tipo e cor</small></article>
+  </section>
+  <nav class="tabs" aria-label="Seções do aplicativo">
+    <button class="tab active" data-tab="criar">✦ Projetar</button>
+    <button class="tab" data-tab="cidade">▦ Minha cidade <span id="projectCount">0</span></button>
+    <button class="tab" data-tab="pecas">▤ Peças e estoque</button>
+    <button class="tab" data-tab="sobre">ⓘ Precisão</button>
+  </nav>
+
+  <section id="page-criar" class="page active">
+    <div class="workspace">
+      <article class="panel idea">
+        <div class="panel-heading"><div><span class="eyebrow">01 / SUA IDEIA</span><h2>Imagine e peça</h2></div><span class="dot-purple"></span></div>
+        <label for="ideaText">Conte como quer seu brinquedo</label>
+        <textarea id="ideaText" rows="4" placeholder="Ex.: Otto quer uma torre azul bem alta com base preta..."></textarea>
+        <div class="field-row"><button id="voice" class="btn btn-ghost">◉ Falar minha ideia</button><span id="voiceState" class="fine">Também pode escrever</span></div>
+        <div class="chips"><button data-idea="Quero uma torre alta">Torre</button><button data-idea="Quero uma casinha">Casinha</button><button data-idea="Quero um muro grande">Muro</button><button data-idea="Quero uma praça pequena">Praça</button></div>
+        <label for="nameText">Nome do projeto</label><input id="nameText" maxlength="70" placeholder="Ex.: Torre do Otto">
+        <button id="generate" class="btn btn-primary full">✦ Criar projeto de demonstração</button>
+        <div class="notice">O gerador inicial utiliza modelos predefinidos e somente peças catalogadas. Não é uma IA livre nem certifica resistência física.</div>
+        <div id="plannerMessage" role="status" aria-live="polite"></div>
+      </article>
+      <article class="panel viewer">
+        <div class="viewer-top"><div><span class="eyebrow">02 / PROJETO 3D</span><h2 id="modelTitle">Sua criação aparece aqui</h2></div><span class="scene-tag" id="modelStatus">Sem projeto</span></div>
+        <div class="scene" id="scene" aria-label="Visualizador tridimensional com controle de rotação e zoom"><div class="scene-placeholder" id="scenePlaceholder"><span>▧</span><strong>Seu laboratório está pronto</strong><small>Escolha uma ideia para visualizar a montagem.</small></div></div>
+        <div class="viewer-tools"><button id="rotate" class="btn btn-ghost btn-sm">⟳ Girar</button><button id="fit" class="btn btn-ghost btn-sm">⊡ Centralizar</button><span class="fine">Arraste para girar • gesto de pinça para zoom</span></div>
+        <div class="steps-header"><div><span class="eyebrow">03 / MONTE PASSO A PASSO</span><h3 id="stepTitle">Etapas da montagem</h3></div><span id="stepCounter" class="step-counter">0 / 0</span></div>
+        <div class="step-card" id="stepDetail">Assim que Otto criar um projeto, cada etapa aparecerá aqui.</div>
+        <div class="step-navigation"><button id="prevStep" class="btn btn-ghost" disabled>← Anterior</button><input id="stepRange" type="range" min="0" max="0" value="0" disabled aria-label="Navegar nas etapas"><button id="nextStep" class="btn btn-primary" disabled>Próxima →</button></div>
+        <div id="projectActions" class="project-actions hidden"><button id="saveProject" class="btn btn-primary">＋ Salvar na cidade</button><button id="clearPreview" class="btn btn-ghost">Limpar prévia</button></div>
+      </article>
+    </div>
+    <article class="panel materials"><div class="panel-heading"><div><span class="eyebrow">04 / LISTA DO PROJETO</span><h2>Peças necessárias</h2></div><span id="bomTotal" class="list-pill">0 peças</span></div><div id="bom" class="empty-small">Crie um projeto para consultar quantidades por formato e cor.</div></article>
+  </section>
+
+  <section id="page-cidade" class="page">
+    <article class="panel"><div class="panel-heading"><div><span class="eyebrow">CONSTRUINDO UM UNIVERSO</span><h2>A cidade do Otto</h2><p class="fine">Os projetos planejados reservam peças; os montados permanecem ocupando estoque.</p></div><span class="list-pill" id="cityTotal">0 projetos</span></div><div id="projectGrid" class="project-grid"></div></article>
+  </section>
+
+  <section id="page-pecas" class="page">
+    <div class="two-columns">
+      <article class="panel"><div class="panel-heading"><div><span class="eyebrow">CONFERÊNCIA</span><h2>Meu inventário</h2></div><span class="list-pill" id="inventoryProgress">—</span></div><p class="fine">Somente quantidades identificadas podem ser reservadas. Uma lista parcial nunca vira automaticamente 790 itens.</p>
+        <div class="progress"><div id="progressBar"></div></div><div class="field-row wrap"><input id="inventoryFilter" placeholder="Buscar cor, nome ou código..." aria-label="Pesquisar peças"><button id="downloadCSV" class="btn btn-ghost">Exportar CSV</button></div><div id="inventoryList" class="inventory-list"></div>
+      </article>
+      <article class="panel"><div class="panel-heading"><div><span class="eyebrow">IMPORTAR CATÁLOGO</span><h2>Conferir caixa 10698</h2></div></div>
+        <p>Importe um CSV ou JSON validado com <b>código, cor e quantidade</b>. Antes de substituir o catálogo, o sistema informa a soma e exige 790 unidades para marcar como completo.</p>
+        <label class="file-label" for="importFile">↑ Selecionar inventário CSV ou JSON</label><input type="file" id="importFile" accept=".csv,.json,text/csv,application/json" hidden>
+        <div id="importMessage" class="notice">Importação deve representar apenas as peças regulares do conjunto — não somar extras, componentes internos de conjuntos e alternativas em duplicidade.</div>
+        <button id="resetCatalog" class="btn btn-ghost btn-sm">Restaurar amostra conferida</button>
+        <hr><h3>Formato CSV aceito</h3><pre>part,color,quantity,name
+3004,Black,4,Brick 1 x 2
+3002,Black,8,Brick 2 x 3</pre>
+        <p class="fine">A versão inicial possui uma amostra verificada do catálogo BrickLink. Complete o inventário antes de tratar o planejamento como representação integral da caixa.</p>
+      </article>
+    </div>
+  </section>
+  <section id="page-sobre" class="page">
+    <article class="panel docs"><span class="eyebrow">COMPROMISSO COM A PRECISÃO</span><h2>O que é real e o que ainda precisa ser validado</h2>
+    <p><b>Estoque:</b> os cálculos são feitos pelo par código da peça + cor, reservando somente quantidades confirmadas. O número 790 representa o total nominal da caixa, não uma autorização para inventar peças.</p>
+    <p><b>Visualização:</b> as peças retangulares comuns são desenhadas em proporções de referência (passo 8 mm; tijolo 9,6 mm; placa 3,2 mm). Detalhes internos, encaixes não retangulares, estabilidade e carga não são simulados. A prévia 3D é didática.</p>
+    <p><b>Gerador:</b> modelos demonstrativos de torre, casinha, muro e praça. Pedidos fora desses modelos exigem um mecanismo posterior de projeto, biblioteca completa de geometria e verificação estrutural. O aplicativo não finge ter criado um brinquedo não validado.</p>
+    <p><b>Salvamento:</b> projetos e inventário ficam no armazenamento deste navegador. Use Backup para transferir dados; eles ainda não são sincronizados em tempo real entre aparelhos.</p>
+    <p><b>Fontes:</b> <a href="https://www.bricklink.com/catalogItemInv.asp?S=10698-1" target="_blank" rel="noopener">BrickLink 10698-1</a> · <a href="https://www.ldraw.org/legal-info" target="_blank" rel="noopener">Biblioteca LDraw e licenças</a> · <a href="https://www.lego.com/pt-br/service/building-instructions/10698" target="_blank" rel="noopener">Instruções LEGO 10698</a>.</p>
+    <button id="restoreBackup" class="btn btn-ghost">↥ Restaurar backup do Otto</button><input type="file" accept=".json,application/json" id="backupFile" hidden><div id="backupMessage" role="status"></div>
+    </article>
+  </section>
+</main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<footer>Projeto OTTO 3D · Conjunto 10698 · Powered by thIAguinho Soluções Digitais</footer>
+<script type="module" src="./app.js?v=1.0.0"></script>
+</body>
+</html>
