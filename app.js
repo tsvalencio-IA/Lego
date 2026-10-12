@@ -321,6 +321,15 @@ el("prevStep").addEventListener("click",()=>{step=Math.max(0,step-1);renderStep(
 el("nextStep").addEventListener("click",()=>{step=Math.min(preview?.pieces.length||0,step+1);renderStep();if(viewLib)update3D();});
 el("stepRange").addEventListener("input",e=>{step=Number(e.target.value);renderStep();if(viewLib)update3D();});
 el("saveProject").addEventListener("click",savePreview);
+el("exportLDraw").addEventListener("click",()=>{
+ if(!preview)return;
+ try{
+  const content=window.OTTOGenerator.exportLDraw(preview);
+  const safe=preview.name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9_-]+/g,"-").slice(0,45);
+  fileSave("OTTO-"+safe+".ldr",content,"text/plain;charset=utf-8");
+  notify("Projeto LDraw exportado com etapas e códigos de peças.");
+ }catch(e){notify("Não foi possível exportar: "+e.message,true);}
+});
 el("clearPreview").addEventListener("click",clearPreview);
 el("projectGrid").addEventListener("click",e=>{const b=e.target.closest("button[data-project]");if(b)onProjectAction(b.dataset.project,b.dataset.action);});
 el("inventoryFilter").addEventListener("input",renderInventory);
