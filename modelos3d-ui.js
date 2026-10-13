@@ -4,6 +4,7 @@
 (()=>{"use strict";
  const catalog=Array.isArray(window.OTTO_CATALOGO_REAL)?window.OTTO_CATALOGO_REAL:[];
  const engine=window.OTTOModelos3D;
+ const fidelity=window.OTTO_FIDELIDADE;
  const $=id=>document.getElementById(id);
  const MODAL=$("model3dDetail");
  let active=null,viewer=null,modelData=null,token=0;
@@ -11,6 +12,29 @@
  const isOpen=()=>MODAL.classList.contains("open");
  function report(text,warning=false){
   const e=$("model3dStatus");e.textContent=text;e.className="model3d-status"+(warning?" warning":"");
+ }
+
+ function referenceForStep(){
+  const group=$("model3dCompare"),frame=$("model3dManualFrame"),anchor=$("model3dManualStep");
+  const project=active;
+  if(!project||project.tipoManual!=="pdf"){group.classList.add("hidden");frame.removeAttribute("src");return;}
+  group.classList.remove("hidden");
+  const page=fidelity?.manualPage(project.id,Math.max(1,viewer?.step||1));
+  const href=project.manual+(page?"#page="+page+"&view=FitH":"#page=1");
+  anchor.href=href;
+  anchor.textContent=page?"Ver original — página "+page+" ↗":"Abrir manual original ↗";
+  if(frame.dataset.current!==href){frame.src=href;frame.dataset.current=href;}
+ }
+ function checkFidelity(record,project){
+  const panel=$("model3dAudit"),audit=fidelity?.audit(project.id,record?.text||null);
+  if(!audit){panel.textContent="Fidelidade não auditada: compare manual, códigos e posições.";return;}
+  const counts=audit.criteria||{};
+  const goodCounts=counts.stepCountsMatch&&counts.pieceTotalMatches;
+  panel.className="model3d-status "+(audit.certified100?"":"warning");
+  panel.textContent=(audit.certified100?"PROJETO CONFERIDO: ":"FIDELIDADE AINDA NÃO CERTIFICADA: ")+
+   (goodCounts?"As 11 etapas e as quantidades de peças correspondem ao PDF. ":"")+
+   "Conferência de códigos, cores, posições, encaixes e montagem física ainda pendente."+
+   (audit.failures?.length?" Falhas: "+audit.failures.join("; "):"");
  }
  function setSteps(n=0){
   const step=viewer?.step||0,max=viewer?.steps||0;
@@ -21,6 +45,7 @@
   const enabled=!!max;
   for(const id of ["model3dRotate","model3dZoomIn","model3dZoomOut","model3dReset"])$(id).disabled=!enabled;
   $("model3dExport").disabled=!modelData;
+  referenceForStep();
  }
  function details(record,project){
   let msg="";
@@ -45,6 +70,7 @@
    if(requestId!==token||!isOpen())return;
    if(!value)throw Error("Modelo cancelado");
    setSteps(value.steps);
+   checkFidelity(record,project);
    const q=record.quality==="reconstrucao-preliminar";
    report("3D carregado: "+value.steps+" etapas, "+value.meshCount+" malhas. "+(q?"RECONSTRUÇÃO PRELIMINAR; verifique contra o PDF.":"Modelo importado, ainda sem comparação automática com o PDF."),q);
   }catch(error){
@@ -61,6 +87,7 @@
   $("model3dOrigin").textContent=project.origem+" • "+project.autor;
   $("model3dManual").href=project.manual;
   $("model3dCanvas").textContent="";
+  checkFidelity(null,project);
   report("Procurando modelo digital deste projeto…");
   $("model3dNote").textContent="A visualização 3D exige posições digitais das peças. PDF sozinho não fornece essas coordenadas.";
   MODAL.classList.add("open");MODAL.setAttribute("aria-hidden","false");
@@ -72,6 +99,7 @@
    if(!record){
     $("model3dCanvas").innerHTML='<p class="empty">O arquivo CAD deste projeto ainda não foi reconstruído. O manual real continua disponível.</p>';
     $("model3dNote").textContent="O arquivo fonte deste manual é PDF. Para girar o projeto em 3D, precisamos reproduzir as posições das peças em LDraw (.ldr ou .mpd). Você também pode importar um modelo digital com origem conhecida. Não serão exibidas peças aleatórias.";
+    checkFidelity(null,project);
     report("3D deste exemplo ainda não digitalizado e auditado.",true);
    }else await renderRecord(record,project,my);
   }catch(err){
