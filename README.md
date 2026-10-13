@@ -19,6 +19,16 @@ O aplicativo **não inventa novas construções**. A tela principal agora utiliz
 - Nos outros projetos aparece **Importar 3D**: o manual continua acessível; o aplicativo aceita arquivos reais `.ldr`/`.mpd` (com autoria/proveniência) que ficam registrados no navegador via IndexedDB. Não exibe um projeto adivinhado.
 - A integração não modifica nem substitui os PDFs oficiais e mantém integralmente a cidade, o backup e o histórico antigo.
 
+## Oficina 3D em tela cheia — correção mobile
+
+No celular, tocar em 3D preliminar/parcial abre uma janela de montagem que ocupa a tela do navegador. O modelo e os controles Anterior, Próxima, zoom, girar e centralizar permanecem juntos, sem rolar entre a lista antiga e o CAD.
+
+Próxima adiciona uma instância de peça LDraw por vez; a peça nova é identificada em destaque e o código, cor e etapa do manual ficam visíveis. Manual abre o PDF como camada opcional. Voltar ao 3D preserva a etapa.
+
+Foi corrigida a mensagem de etapas indefinidas, preservando o total de etapas da fonte. A câmera agora abre mostrando a parte superior da construção. Também foram acrescentadas cores LDraw faltantes (110 e 321).
+
+Essas correções são de navegação e visualização: o modelo CAD continua em conferência, sem certificação de fidelidade total às instruções oficiais.
+
 ## Precisão: o que não está implementado
 
 - O primeiro modelo digital do sapo **não está auditado como 100% fiel**. A reconstrução geométrica usa as peças LDraw, mas a posição original deve ser conferida peça por peça em relação ao PDF. Os outros 11 projetos ainda não possuem um modelo digital validado. Nenhum deve ser anunciado como 3D pronto antes dessa verificação.
