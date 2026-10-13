@@ -46,6 +46,24 @@ const server=http.createServer((req,res)=>{
    await page.locator("#model3dReset").click();
    console.log("Modelo Sapo 3D aprovado:",viewport.width+"×"+viewport.height,cadStatus);
    await page.locator("#model3dClose").click();
+   for(const id of ["lego-camera","lego-castelo","lego-escavadeira","lego-apartamento","lego-palmeira","lego-ursinho"]){
+    await page.locator('[data-view3d="'+id+'"]').first().click();
+    await page.waitForSelector("#model3dDetail.open",{timeout:10000});
+    await page.waitForFunction(()=>{
+      const t=document.querySelector("#model3dStatus")?.textContent||"";
+      return t.includes("3D carregado")||t.includes("Não foi possível")||t.includes("Arquivo 3D indisponível");
+    },null,{timeout:15000});
+    const status=await page.locator("#model3dStatus").textContent();
+    assert.match(status,/3D carregado:/,"Falha ao mostrar "+id+": "+status);
+    assert.match(status,/INCOMPLETO/,"Falta aviso de etapas parciais: "+id);
+    assert.equal(await page.locator("#model3dStep").textContent(),"2 / 2");
+    assert.equal(await page.locator("#model3dCanvas canvas").count(),1);
+    await page.locator("#model3dPrev").click();
+    assert.equal(await page.locator("#model3dStep").textContent(),"1 / 2");
+    await page.locator("#model3dNext").click();
+    await page.locator("#model3dClose").click();
+   }
+
 
    assert.equal(await page.locator("#prompt").count(),0,"Deve retirar criação livre");
    await page.fill("#search","castelo");
