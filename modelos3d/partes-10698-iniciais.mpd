@@ -2576,3 +2576,171 @@
 1 16 0 0 0 1 0 0 0 1 0 0 0 1 stug-2x2.dat
 1 16 0 4 0 1 0 0 0 -5 0 0 0 1 stud4.dat
 1 16 20 6.472 0 1 0 0 0 -4.382 0 0 0 1 stud4a.dat
+
+0 FILE s/3002s01.dat
+0 ~Brick  2 x  3 without Front Face
+0 Name: s\3002s01.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Subpart UPDATE 2003-03
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2002-05-07 [unknown] BFC Certification
+0 !HISTORY 2003-07-03 [Steffen] Subfiled for patterns
+0 !HISTORY 2003-12-19 [PTadmin] Official Update 2003-03
+0 !HISTORY 2007-08-29 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+
+1 16 10 4 0 1 0 0 0 -5 0 0 0 1 stud4.dat
+1 16 -10 4 0 1 0 0 0 -5 0 0 0 1 stud4.dat
+0 BFC INVERTNEXT
+1 16 0 24 0 26 0 0 0 -20 0 0 0 16 box5.dat
+4 16 30 24 20 26 24 16 -26 24 16 -30 24 20
+4 16 -30 24 20 -26 24 16 -26 24 -16 -30 24 -20
+4 16 -30 24 -20 -26 24 -16 26 24 -16 30 24 -20
+4 16 30 24 -20 26 24 -16 26 24 16 30 24 20
+2 24 30 0 20 -30 0 20
+2 24 -30 0 20 -30 0 -20
+2 24 -30 0 -20 30 0 -20
+2 24 30 0 -20 30 0 20
+2 24 30 24 20 -30 24 20
+2 24 -30 24 20 -30 24 -20
+2 24 -30 24 -20 30 24 -20
+2 24 30 24 -20 30 24 20
+2 24 30 24 20 30 0 20
+2 24 -30 24 20 -30 0 20
+2 24 30 24 -20 30 0 -20
+2 24 -30 24 -20 -30 0 -20
+4 16 -30 0 -20 30 0 -20 30 0 20 -30 0 20
+4 16 30 0 20 30 24 20 -30 24 20 -30 0 20
+4 16 -30 0 20 -30 24 20 -30 24 -20 -30 0 -20
+4 16 30 0 -20 30 24 -20 30 24 20 30 0 20
+1 16 20 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 0 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 -20 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 20 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 0 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 -20 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+0
+
+0 FILE s/3001s01.dat
+0 ~Brick  2 x  4 without Front and Back Faces
+0 Name: s\3001s01.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Subpart UPDATE 2004-03
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2002-05-07 [unknown] BFC certification 
+0 !HISTORY 2002-05-07 [westrate] Unknown change
+0 !HISTORY 2004-09-15 [PTadmin] Official Update 2004-03
+0 !HISTORY 2007-08-29 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+
+0 // Uncomment for front and back faces:
+0 // 4 16 40 0 -20 -40 0 -20 -40 24 -20 40 24 -20 
+0 // 4 16 40 0 20 -40 0 20 -40 24 20 40 24 
+
+1 16 20 4 0 1 0 0 0 -5 0 0 0 1 stud4.dat
+1 16 0 4 0 1 0 0 0 -5 0 0 0 1 stud4.dat
+1 16 -20 4 0 1 0 0 0 -5 0 0 0 1 stud4.dat
+0 BFC INVERTNEXT
+1 16 0 24 0 36 0 0 0 -20 0 0 0 16 box5.dat
+4 16 40 24 20 36 24 16 -36 24 16 -40 24 20
+4 16 -40 24 20 -36 24 16 -36 24 -16 -40 24 -20
+4 16 -40 24 -20 -36 24 -16 36 24 -16 40 24 -20
+4 16 40 24 -20 36 24 -16 36 24 16 40 24 20
+1 16 0 24 0 0 0 40 0 -24 0 -20 0 0 box3u2p.dat
+2 24 -40 24 -20 40 24 -20 
+2 24 -40 24 20 40 24 20 
+1 16 30 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 10 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 -10 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 -30 0 10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 30 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 10 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 -10 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+1 16 -30 0 -10 1 0 0 0 1 0 0 0 1 stud.dat
+0
+
+0 FILE 3069b.dat
+0 Tile  1 x  2 with Groove
+0 Name: 3069b.dat
+0 Author: Santeri Piippo [arezey]
+0 !LDRAW_ORG Part UPDATE 2010-02
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2010-07-05 [PTadmin] Official Update 2010-02
+
+4 16 20 0 -10 20 0 10 -20 0 10 -20 0 -10
+1 16 0 0 0 1 0 0 0 1 0 0 0 1 s\3069bs01.dat
+0 //
+
+0 FILE 1-4edge.dat
+0 Circle 0.25
+0 Name: 1-4edge.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Primitive UPDATE 2017-01
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2007-06-22 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+0 !HISTORY 2017-01-15 [Steffen] BFCed
+0 !HISTORY 2017-12-30 [PTadmin] Official Update 2017-01
+
+2 24 1 0 0 0.9239 0 0.3827
+2 24 0.9239 0 0.3827 0.7071 0 0.7071
+2 24 0.7071 0 0.7071 0.3827 0 0.9239
+2 24 0.3827 0 0.9239 0 0 1
+
+0 FILE 1-4disc.dat
+0 Disc 0.25
+0 Name: 1-4disc.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Primitive UPDATE 2002-02
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2002-03-23 [sbliss] Added BFC statement.
+0 !HISTORY 2002-04-25 [PTadmin] Official Update 2002-02
+0 !HISTORY 2007-06-22 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+
+ 3 16 0 0 0 1 0 0 0.9239 0 0.3827
+ 3 16 0 0 0 0.9239 0 0.3827 0.7071 0 0.7071
+ 3 16 0 0 0 0.7071 0 0.7071 0.3827 0 0.9239
+ 3 16 0 0 0 0.3827 0 0.9239 0 0 1
+0
+
+0 FILE 1-4cyli.dat
+0 Cylinder 0.25
+0 Name: 1-4cyli.dat
+0 Author: James Jessiman
+0 !LDRAW_ORG Primitive UPDATE 2012-01
+0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt
+
+0 BFC CERTIFY CCW
+
+0 !HISTORY 2002-03-23 [sbliss] Added BFC statement.
+0 !HISTORY 2002-04-25 [PTadmin] Official Update 2002-02
+0 !HISTORY 2007-06-22 [PTadmin] Header formatted for Contributor Agreement
+0 !HISTORY 2008-07-01 [PTadmin] Official Update 2008-01
+0 !HISTORY 2012-02-16 [Philo] Changed to CCW
+0 !HISTORY 2012-03-30 [PTadmin] Official Update 2012-01
+
+4 16 1 1 0 0.9239 1 0.3827 0.9239 0 0.3827 1 0 0
+5 24 1 0 0 1 1 0 0.9239 0 0.3827 1 0 -1
+4 16 0.9239 1 0.3827 0.7071 1 0.7071 0.7071 0 0.7071 0.9239 0 0.3827
+5 24 0.9239 0 0.3827 0.9239 1 0.3827 0.7071 0 0.7071 1 0 0
+4 16 0.7071 1 0.7071 0.3827 1 0.9239 0.3827 0 0.9239 0.7071 0 0.7071
+5 24 0.7071 0 0.7071 0.7071 1 0.7071 0.3827 0 0.9239 0.9239 0 0.3827
+4 16 0.3827 1 0.9239 0 1 1 0 0 1 0.3827 0 0.9239
+5 24 0.3827 0 0.9239 0.3827 1 0.9239 0 0 1 0.7071 0 0.7071
+5 24 0 0 1 0 1 1 0.3827 0 0.9239 -1 0 1
