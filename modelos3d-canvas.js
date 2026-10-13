@@ -14,7 +14,7 @@ const COLORS={
 const norm=s=>String(s||"").trim().replaceAll("\\","/").toLowerCase();
 const clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
 const rgb=color=>{const x=(COLORS[color]||COLORS[7]).slice(1);return [parseInt(x.slice(0,2),16),parseInt(x.slice(2,4),16),parseInt(x.slice(4,6),16)];};
-function parse(text){
+function parse(text,options={}){
  const files=new Map(),seq=[],lines=String(text).replace(/\r/g,"").split("\n");
  let file=null,depth=0;
  for(let ln=0;ln<lines.length;ln++){
@@ -71,13 +71,16 @@ function parse(text){
   }
  }
  let step=0;
+ const parts=[];
  for(const x of main){
   if(x.step){step++;continue;}
   if(x.type!==1)continue;
-  expand(x.ref,x.mat,x.pos,x.color,step,[rootName]);
+  parts.push({id:x.ref,color:x.color,position:x.pos,manualStage:step+1,pieceNumber:parts.length+1});
+  expand(x.ref,x.mat,x.pos,x.color,options.onePiecePerStep?parts.length-1:step,[rootName]);
  }
  if(triangles.length===0)throw Error("O arquivo não contém malhas LDraw renderizáveis.");
- return {triangles,steps:stepCount,bounds,partCount:main.filter(x=>x.type===1).length,filenames:files.size};
+ return {triangles,steps:options.onePiecePerStep?parts.length:stepCount,manualSteps:stepCount,parts,
+   bounds,partCount:parts.length,filenames:files.size};
 }
 class Viewer {
  constructor(container,onStatus){
@@ -115,9 +118,13 @@ class Viewer {
   this.ctx.setTransform(pixel,0,0,pixel,0,0);this.request();
  }
  load(text){
-  const data=parse(text);this.geometry=data;this.steps=data.steps;this.step=this.steps;this.fit();
-  return {steps:data.steps,meshCount:data.triangles.length,meta:{partsReferenced:data.partCount,files:data.filenames}};
+  const data=parse(text,{onePiecePerStep:true});this.geometry=data;this.steps=data.steps;
+  this.manualSteps=data.manualSteps;this.step=this.steps;this.fit();
+  return {steps:data.steps,manualSteps:data.manualSteps,meshCount:data.triangles.length,
+   meta:{partsReferenced:data.partCount,files:data.filenames}};
  }
+ currentPiece(){return this.geometry?.parts?.[this.step-1]||null;}
+ currentManualStage(){return this.currentPiece()?.manualStage||1;}
  setStep(n){this.step=clamp(Number(n)||0,0,this.steps);this.request();}
  turn(){this.yaw+=Math.PI/4;this.request();}
  zoom(f){this.zoomValue=clamp(this.zoomValue*f,.22,8);this.request();}
