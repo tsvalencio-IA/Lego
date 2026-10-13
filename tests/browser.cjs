@@ -23,10 +23,20 @@ const server=http.createServer((req,res)=>{
    await page.waitForSelector("#model3dDetail.open",{timeout:10000});
    await page.waitForFunction(()=>{
      const s=document.querySelector("#model3dStatus")?.textContent||"";
-     return s.includes("3D carregado")||s.includes("Não foi possível")||s.includes("indisponível:");
+     return s.includes("3D:")||s.includes("Não foi possível")||s.includes("indisponível:");
    },null,{timeout:20000});
+   const layout=await page.evaluate(()=>{
+    const modal=document.querySelector("#model3dDetail").getBoundingClientRect();
+    const canvas=document.querySelector("#model3dCanvas").getBoundingClientRect();
+    const controls=document.querySelector("#model3dNext").getBoundingClientRect();
+    const manual=getComputedStyle(document.querySelector("#model3dCompare")).display;
+    return {modal,canvas,controls,manual,viewportH:innerHeight};
+   });
+   assert(layout.controls.bottom<=layout.viewportH+2,"Etapas não estão visíveis: "+JSON.stringify(layout));
+   assert(layout.canvas.height>90,"3D ocupa altura insuficiente: "+layout.canvas.height);
+   assert.equal(layout.manual,"none","Manual não pode ocupar tela até ser solicitado");
    const cadStatus=await page.locator("#model3dStatus").textContent();
-   assert.match(cadStatus,/3D carregado:/,"Modelo do sapo não carregou malhas LDraw reais");
+   assert.match(cadStatus,/3D:/,"Modelo do sapo não carregou malhas LDraw reais");
    const modelCanvas=page.locator("#model3dCanvas canvas");
    assert.equal(await modelCanvas.count(),1,"Precisa renderizar 3D dentro do sistema");
    const imageBefore=await modelCanvas.screenshot();
@@ -34,14 +44,18 @@ const server=http.createServer((req,res)=>{
    await page.waitForTimeout(250);
    const imageAfter=await modelCanvas.screenshot();
    assert(!imageBefore.equals(imageAfter),"Modelo não girou visualmente no navegador");
-   assert.equal(await page.locator("#model3dStep").textContent(),"11 / 11");
+   assert.equal(await page.locator("#model3dStep").textContent(),"Peça 16 de 16");
    assert.match(await page.locator("#model3dManualStep").getAttribute("href"),/#page=8/);
    assert.match(await page.locator("#model3dAudit").textContent(),/NÃO CERTIFICADA/);
    await page.locator("#model3dPrev").click();
-   assert.equal(await page.locator("#model3dStep").textContent(),"10 / 11");
-   assert.match(await page.locator("#model3dManualStep").getAttribute("href"),/#page=7/);
+   assert.equal(await page.locator("#model3dStep").textContent(),"Peça 15 de 16");
+   assert.match(await page.locator("#model3dManualStep").getAttribute("href"),/#page=8/);
    await page.locator("#model3dNext").click();
-   assert.equal(await page.locator("#model3dStep").textContent(),"11 / 11");
+   assert.equal(await page.locator("#model3dStep").textContent(),"Peça 16 de 16");
+   await page.locator("#model3dManualToggle").click();
+   assert.notEqual(await page.locator("#model3dCompare").evaluate(el=>getComputedStyle(el).display),"none");
+   await page.locator("#model3dBack3D").click();
+   assert.equal(await page.locator("#model3dCompare").evaluate(el=>getComputedStyle(el).display),"none");
    await page.locator("#model3dZoomIn").click();
    await page.locator("#model3dReset").click();
    console.log("Modelo Sapo 3D aprovado:",viewport.width+"×"+viewport.height,cadStatus);
@@ -51,15 +65,15 @@ const server=http.createServer((req,res)=>{
     await page.waitForSelector("#model3dDetail.open",{timeout:10000});
     await page.waitForFunction(()=>{
       const t=document.querySelector("#model3dStatus")?.textContent||"";
-      return t.includes("3D carregado")||t.includes("Não foi possível")||t.includes("Arquivo 3D indisponível");
+      return t.includes("3D:")||t.includes("Não foi possível")||t.includes("Arquivo 3D indisponível");
     },null,{timeout:15000});
     const status=await page.locator("#model3dStatus").textContent();
-    assert.match(status,/3D carregado:/,"Falha ao mostrar "+id+": "+status);
-    assert.match(status,/INCOMPLETO/,"Falta aviso de etapas parciais: "+id);
-    assert.equal(await page.locator("#model3dStep").textContent(),"2 / 2");
+    assert.match(status,/3D:/,"Falha ao mostrar "+id+": "+status);
+    assert.match(status,/PARCIAL/,"Falta aviso de etapas parciais: "+id);
+    assert.match(await page.locator("#model3dStep").textContent(),/^Peça \d+ de \d+$/);
     assert.equal(await page.locator("#model3dCanvas canvas").count(),1);
     await page.locator("#model3dPrev").click();
-    assert.equal(await page.locator("#model3dStep").textContent(),"1 / 2");
+    assert.match(await page.locator("#model3dStep").textContent(),/^Peça \d+ de \d+$/);
     await page.locator("#model3dNext").click();
     await page.locator("#model3dClose").click();
    }
