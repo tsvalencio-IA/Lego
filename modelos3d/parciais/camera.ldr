@@ -1,0 +1,10 @@
+0 FILE otto-camera-etapas-iniciais.ldr
+0 Name: OTTO - lego-camera - etapas iniciais
+0 Author: OTTO LEGO - estudo por manual LEGO oficial
+0 // PARCIAL: somente 2 etapas digitalizadas, total de etapas do manual maior.
+0 // Posições ainda aguardam verificação CAD x manual; NÃO é modelo completo nem 100% fiel.
+0 // Etapa 1: verificar página 3 do manual oficial 10698_X_Camera
+1 71 0 0 0 1 0 0 0 1 0 0 0 1 3034.dat
+0 STEP
+0 // Etapa 2: verificar página 4 do manual oficial 10698_X_Camera
+1 0 0 -8 0 1 0 0 0 1 0 0 0 1 2456.dat
