@@ -3,7 +3,7 @@ const home=path.join(__dirname,".."),get=p=>fs.readFileSync(path.join(home,p),"u
 const canvas={window:{}},fid=require("../fidelidade.js");
 vm.runInNewContext(get("modelos3d-canvas.js"),canvas);
 vm.runInNewContext(get("modelos3d-catalogo.js"),canvas);
-const parse=canvas.window.OTTOCanvasCAD.parse,records=canvas.window.OTTO_MODELOS3D;
+const parse=(canvas.OTTOCanvasCAD||canvas.window.OTTOCanvasCAD).parse,records=canvas.window.OTTO_MODELOS3D;
 const cases={
  "lego-camera":{path:"camera",parts:2,page2:3},
  "lego-castelo":{path:"castelo",parts:3,page2:4},
