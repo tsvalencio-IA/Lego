@@ -51,6 +51,8 @@
   let msg="";
   if(record.source==="Arquivo LDraw importado"){
    msg="3D LDraw importado: geometria das peças carregada, mas ainda não conferida com o manual deste projeto.";
+  }else if(record.quality==="reconstrucao-parcial"){
+   msg="MODELO 3D PARCIAL: "+Number(record.stepsDigitized||2)+" etapas digitalizadas de "+Number(record.stepsDeclared||0)+" previstas no manual. "+record.review;
   }else if(record.quality==="reconstrucao-preliminar"){
    msg="Reconstrução 3D preliminar baseada no manual oficial. "+record.review;
   }else{
@@ -71,8 +73,10 @@
    if(!value)throw Error("Modelo cancelado");
    setSteps(value.steps);
    checkFidelity(record,project);
-   const q=record.quality==="reconstrucao-preliminar";
-   report("3D carregado: "+value.steps+" etapas, "+value.meshCount+" malhas. "+(q?"RECONSTRUÇÃO PRELIMINAR; verifique contra o PDF.":"Modelo importado, ainda sem comparação automática com o PDF."),q);
+   const partial=record.quality==="reconstrucao-parcial";
+   const q=record.quality==="reconstrucao-preliminar"||partial;
+   const scope=partial?"MODELO INCOMPLETO: "+value.steps+" das "+record.stepsDeclared+" etapas do manual digitalizadas.":q?"RECONSTRUÇÃO PRELIMINAR; verifique contra o PDF.":"Modelo importado, ainda sem comparação automática com o PDF.";
+   report("3D carregado: "+value.steps+" etapas, "+value.meshCount+" malhas. "+scope,q);
   }catch(error){
    if(requestId!==token||!isOpen())return;
    setSteps();
