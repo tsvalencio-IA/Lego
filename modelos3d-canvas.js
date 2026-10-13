@@ -9,7 +9,7 @@ const COLORS={
  6:"#583927",7:"#9ba19d",8:"#6d6e5c",9:"#4b9fdd",10:"#4b9fdd",
  11:"#53a2a3",12:"#ff8014",13:"#ffb729",14:"#f2cd37",15:"#ffffff",
  19:"#e4cd9e",25:"#fe8a18",27:"#a5ca18",28:"#958a73",36:"#55aa44",
- 71:"#a0a5a9",72:"#6c6e68",320:"#720e0f"
+ 71:"#969696",72:"#646464",73:"#7396c8",110:"#26469a",115:"#b7d425",320:"#720012",321:"#469bc3",322:"#68c3e2"
 };
 const norm=s=>String(s||"").trim().replaceAll("\\","/").toLowerCase();
 const clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
@@ -85,7 +85,7 @@ function parse(text,options={}){
 class Viewer {
  constructor(container,onStatus){
   this.container=container;this.onStatus=onStatus||(()=>{});
-  this.step=0;this.steps=0;this.geometry=null;this.yaw=-.75;this.pitch=.54;this.zoomValue=1;this.frame=0;this.pointer=new Map();
+  this.step=0;this.steps=0;this.geometry=null;this.yaw=-.75;this.pitch=-.54;this.zoomValue=1;this.frame=0;this.pointer=new Map();
   this.canvas=document.createElement("canvas");this.canvas.setAttribute("aria-label","Modelo CAD LEGO em três dimensões");
   this.canvas.style.cssText="width:100%;height:100%;display:block;touch-action:none";
   this.ctx=this.canvas.getContext("2d");if(!this.ctx)throw Error("Canvas 3D não disponível.");
@@ -128,7 +128,7 @@ class Viewer {
  setStep(n){this.step=clamp(Number(n)||0,0,this.steps);this.request();}
  turn(){this.yaw+=Math.PI/4;this.request();}
  zoom(f){this.zoomValue=clamp(this.zoomValue*f,.22,8);this.request();}
- fit(){this.zoomValue=1;this.yaw=-.75;this.pitch=.54;this.request();}
+ fit(){this.zoomValue=1;this.yaw=-.75;this.pitch=-.54;this.request();}
  request(){if(this.frame||!this.ctx)return;this.frame=requestAnimationFrame(()=>{this.frame=0;this.draw();});}
  draw(){
   const ctx=this.ctx,w=this.container.clientWidth||460,h=this.container.clientHeight||340;
