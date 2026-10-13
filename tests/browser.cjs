@@ -35,8 +35,11 @@ const server=http.createServer((req,res)=>{
    const imageAfter=await modelCanvas.screenshot();
    assert(!imageBefore.equals(imageAfter),"Modelo não girou visualmente no navegador");
    assert.equal(await page.locator("#model3dStep").textContent(),"11 / 11");
+   assert.match(await page.locator("#model3dManualStep").getAttribute("href"),/#page=8/);
+   assert.match(await page.locator("#model3dAudit").textContent(),/NÃO CERTIFICADA/);
    await page.locator("#model3dPrev").click();
    assert.equal(await page.locator("#model3dStep").textContent(),"10 / 11");
+   assert.match(await page.locator("#model3dManualStep").getAttribute("href"),/#page=7/);
    await page.locator("#model3dNext").click();
    assert.equal(await page.locator("#model3dStep").textContent(),"11 / 11");
    await page.locator("#model3dZoomIn").click();
