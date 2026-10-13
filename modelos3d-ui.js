@@ -19,11 +19,11 @@
   const project=active;
   if(!project||project.tipoManual!=="pdf"){group.classList.add("hidden");frame.removeAttribute("src");return;}
   group.classList.remove("hidden");
-  const page=fidelity?.manualPage(project.id,Math.max(1,viewer?.step||1));
+  const page=fidelity?.manualPage(project.id,Math.max(1,viewer?.currentManualStage?.()||1));
   const href=project.manual+(page?"#page="+page+"&view=FitH":"#page=1");
   anchor.href=href;
   anchor.textContent=page?"Ver original — página "+page+" ↗":"Abrir manual original ↗";
-  if(frame.dataset.current!==href){frame.src=href;frame.dataset.current=href;}
+  if(group.classList.contains("is-visible")&&frame.dataset.current!==href){frame.src=href;frame.dataset.current=href;}
  }
  function checkFidelity(record,project){
   const panel=$("model3dAudit"),audit=fidelity?.audit(project.id,record?.text||null);
@@ -38,7 +38,12 @@
  }
  function setSteps(n=0){
   const step=viewer?.step||0,max=viewer?.steps||0;
-  $("model3dStep").textContent=step+" / "+max;
+  $("model3dStep").textContent="Peça "+step+" de "+max;
+  const piece=viewer?.currentPiece?.();
+  const full=viewer?.manualSteps||0;
+  $("model3dPartInfo").textContent=piece
+    ?"Peça "+step+"/"+max+" • "+piece.id+" • cor LDraw "+piece.color+" • Manual etapa "+piece.manualStage+"/"+full
+    :max?"Início: toque em Próxima para colocar a primeira peça.":"Aguardando modelo 3D";
   $("model3dPrev").disabled=!max||step<=0;
   $("model3dNext").disabled=!max||step>=max;
   $("model3dRange").max=String(max);$("model3dRange").value=String(step);$("model3dRange").disabled=!max;
@@ -75,8 +80,8 @@
    checkFidelity(record,project);
    const partial=record.quality==="reconstrucao-parcial";
    const q=record.quality==="reconstrucao-preliminar"||partial;
-   const scope=partial?"MODELO INCOMPLETO: "+value.steps+" das "+record.stepsDeclared+" etapas do manual digitalizadas.":q?"RECONSTRUÇÃO PRELIMINAR; verifique contra o PDF.":"Modelo importado, ainda sem comparação automática com o PDF.";
-   report("3D carregado: "+value.steps+" etapas, "+value.meshCount+" malhas. "+scope,q);
+   const scope=partial?"MODELO PARCIAL: "+(record.stepsDigitized||value.manualSteps)+" de "+(record.stepsDeclared||"?")+" etapas do manual.":q?"RECONSTRUÇÃO PRELIMINAR; conferir PDF.":"Modelo importado, não auditado.";
+   report("3D: "+value.steps+" peças navegáveis uma a uma • "+(value.manualSteps||"?")+" etapas modeladas. "+scope,q);
   }catch(error){
    if(requestId!==token||!isOpen())return;
    setSteps();
