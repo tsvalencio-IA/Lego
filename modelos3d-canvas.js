@@ -148,15 +148,24 @@ class Viewer {
   const transformed=visible.map(t=>{
    const a=project(t.vertices[0]),b=project(t.vertices[1]),c=project(t.vertices[2]);
    const bright=clamp(.76+.15*Math.abs((b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]))/(extent*factor+5),.72,1.1);
-   return {points:[a,b,c],depth:(a[2]+b[2]+c[2])/3,color:t.color,bright};
+   return {points:[a,b,c],depth:(a[2]+b[2]+c[2])/3,color:t.color,bright,current:t.step===this.step-1};
   });
   transformed.sort((a,b)=>b.depth-a.depth);
+  let last=[Infinity,Infinity,-Infinity,-Infinity];
   for(const t of transformed){
+   if(t.current)for(const p of t.points){last[0]=Math.min(last[0],p[0]);last[1]=Math.min(last[1],p[1]);last[2]=Math.max(last[2],p[0]);last[3]=Math.max(last[3],p[1]);}
    ctx.beginPath();ctx.moveTo(t.points[0][0],t.points[0][1]);ctx.lineTo(t.points[1][0],t.points[1][1]);ctx.lineTo(t.points[2][0],t.points[2][1]);ctx.closePath();
    const c=rgb(Object.keys(COLORS).find(k=>COLORS[k]===t.color)||7);
    ctx.fillStyle="rgb("+c.map(v=>clamp(Math.round(v*t.bright),0,255)).join(",")+")";ctx.fill();
   }
-  ctx.fillStyle="#526782";ctx.font="12px system-ui";ctx.fillText("LDraw 3D local · toque e arraste para girar",12,h-12);
+  if(Number.isFinite(last[0])){
+   const x=last[0]-7,y=last[1]-7,X=last[2]+7,Y=last[3]+7;
+   ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X,y);ctx.lineTo(X,Y);ctx.lineTo(x,Y);ctx.closePath();
+   ctx.strokeStyle="#fa921d";ctx.lineWidth=2.5;ctx.stroke();
+   ctx.font="bold 12px system-ui";ctx.fillStyle="#9b4e0a";
+   ctx.fillText("Peça atual",Math.max(8,x),Math.max(15,y-6));
+  }
+  ctx.fillStyle="#526782";ctx.font="12px system-ui";ctx.fillText("LDraw 3D local · arraste para girar",12,h-12);
  }
  dispose(){if(this.observer)this.observer.disconnect();this.ctx=null;this.geometry=null;this.canvas?.remove();}
 }
