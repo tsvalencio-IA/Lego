@@ -22,6 +22,13 @@
 .model3d-import p{margin:5px 0;font-size:.81rem;color:#62728b}
 .model3d-dialog{max-width:980px}
 
+
+.model3d-review{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:12px}
+.model3d-manual-comparison{background:#f8fbff;border:1px solid #d7e1ef;border-radius:13px;padding:10px;min-width:0}
+.model3d-manual-comparison b{display:block;margin:0 0 8px;font-size:.83rem}
+.model3d-manual-comparison iframe{display:block;border:0;background:#fff;width:100%;height:370px}
+.model3d-manual-comparison .buttonlink{margin-top:8px}
+@media(max-width:690px){.model3d-review{grid-template-columns:1fr}.model3d-manual-comparison iframe{height:260px}}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"}}</script>
 </head>
@@ -40,7 +47,15 @@
   <div class="dialog-head"><div><h2 id="model3dTitle">Modelo LEGO em 3D</h2><div id="model3dOrigin" class="mini"></div></div><button id="model3dClose">✕ Fechar</button></div>
   <div class="model3d-body">
    <div class="model3d-status" id="model3dStatus" aria-live="polite">Carregando modelo 3D…</div>
+   <div class="model3d-review">
    <div class="model3d-area" id="model3dCanvas"><p class="empty">Selecione um projeto para abrir o 3D.</p></div>
+   <div class="model3d-manual-comparison" id="model3dCompare">
+    <b>Manual original — conferência visual</b>
+    <iframe id="model3dManualFrame" title="Manual original correspondente à etapa" loading="lazy"></iframe>
+    <a id="model3dManualStep" class="buttonlink outline" href="#" target="_blank" rel="noopener noreferrer">Abrir etapa original ↗</a>
+   </div>
+  </div>
+  <div class="model3d-status warning" id="model3dAudit" role="status">Auditoria de fidelidade: nenhum modelo certificado como 100%.</div>
    <div class="model3d-controls">
     <button id="model3dRotate">⟳ Girar</button><button id="model3dZoomIn">＋ Zoom</button>
     <button id="model3dZoomOut">－ Zoom</button><button id="model3dReset">Centralizar</button>
@@ -60,6 +75,7 @@
 <footer>Catálogo de terceiros referenciado com atribuição. LEGO® é marca do LEGO Group. Este site não é afiliado à LEGO. Powered by thIAguinho Soluções Digitais.</footer>
 <script src="./catalogo-reais.js?v=7.0.0"></script>
 <script src="./modelos3d-catalogo.js?v=7.0.0"></script>
+<script src="./fidelidade.js?v=8.0.0"></script>
 <script src="./modelos3d-canvas.js?v=7.1.0"></script>
 <script src="./modelos3d-engine.js?v=7.0.0"></script>
 <script src="./viewer3d.js?v=7.0.0"></script>
