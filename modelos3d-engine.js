@@ -71,7 +71,7 @@
   const response=await fetch(config.src,{cache:"no-cache"});
   if(!response.ok)throw Error("Falha ao buscar arquivo 3D ("+response.status+").");
   const text=await response.text();
-  return {id,filename:config.src.split("/").pop(),text,meta:inspect(text),source:config.source,
+  return {...config,id,filename:config.src.split("/").pop(),text,meta:inspect(text),source:config.source,
    quality:config.quality,review:config.review||"",officialReference:config.officialReference||""};
  }
  class CADViewer{
@@ -200,11 +200,13 @@
    if(this.impl)this.impl.dispose();
    this.impl=new window.OTTOCanvasCAD.Viewer(this.element,this.status);
    const result=this.impl.load(source);
-   this.steps=result.steps;this.step=this.steps;
+   this.steps=result.steps;this.step=this.steps;this.manualSteps=result.manualSteps||result.steps;
    this.status("Modelo LDraw renderizado localmente com "+result.meshCount+" faces.");
    return {...result,meta:info};
   }
   setStep(n){if(!this.impl)return;this.impl.setStep(n);this.step=this.impl.step;}
+  currentPiece(){return this.impl?.currentPiece?.()||null;}
+  currentManualStage(){return this.impl?.currentManualStage?.()||1;}
   fit(){this.impl?.fit();}
   turn(){this.impl?.turn();}
   zoom(f){this.impl?.zoom(f);}
