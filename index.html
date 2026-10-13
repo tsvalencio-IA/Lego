@@ -31,6 +31,7 @@
 @media(max-width:690px){.model3d-review{grid-template-columns:1fr}.model3d-manual-comparison iframe{height:260px}}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"}}</script>
+<link rel="stylesheet" href="./montagem-imersiva.css?v=11.0.0">
 </head>
 <body>
 <header><div><strong>▣ OTTO LEGO</strong><small>Projetos verdadeiros • Caixa Classic 10698</small></div><span class="pill">Biblioteca real</span></header>
@@ -44,17 +45,18 @@
 </main>
 <div id="model3dDetail" class="detail" role="dialog" aria-modal="true" aria-labelledby="model3dTitle" aria-hidden="true">
  <div class="dialog model3d-dialog">
-  <div class="dialog-head"><div><h2 id="model3dTitle">Modelo LEGO em 3D</h2><div id="model3dOrigin" class="mini"></div></div><button id="model3dClose">✕ Fechar</button></div>
+  <div class="dialog-head"><div><h2 id="model3dTitle">Modelo LEGO em 3D</h2><div id="model3dOrigin" class="mini"></div></div><button id="model3dManualToggle" aria-expanded="false" aria-controls="model3dCompare">Manual</button><button id="model3dMore" aria-expanded="false" aria-controls="model3dExtra">Detalhes</button><button id="model3dClose">✕ Fechar</button></div>
   <div class="model3d-body">
    <div class="model3d-status" id="model3dStatus" aria-live="polite">Carregando modelo 3D…</div>
    <div class="model3d-review">
    <div class="model3d-area" id="model3dCanvas"><p class="empty">Selecione um projeto para abrir o 3D.</p></div>
    <div class="model3d-manual-comparison" id="model3dCompare">
-    <b>Manual original — conferência visual</b>
+    <button id="model3dBack3D" type="button">← Voltar ao 3D</button><b>Manual original — conferência visual</b>
     <iframe id="model3dManualFrame" title="Manual original correspondente à etapa" loading="lazy"></iframe>
     <a id="model3dManualStep" class="buttonlink outline" href="#" target="_blank" rel="noopener noreferrer">Abrir etapa original ↗</a>
    </div>
   </div>
+  <div id="model3dPartInfo" role="status" aria-live="polite">Selecione um projeto para começar.</div>
   <div class="model3d-status warning" id="model3dAudit" role="status">Auditoria de fidelidade: nenhum modelo certificado como 100%.</div>
    <div class="model3d-controls">
     <button id="model3dRotate">⟳ Girar</button><button id="model3dZoomIn">＋ Zoom</button>
@@ -62,6 +64,7 @@
     <span class="mini">Arraste com o dedo para girar. Pinça para zoom.</span>
    </div>
    <div class="model3d-step"><button id="model3dPrev">← Etapa</button><input type="range" min="0" max="0" step="1" id="model3dRange" aria-label="Etapa da montagem"><button id="model3dNext">Próxima →</button><b id="model3dStep">0 / 0</b></div>
+   <div id="model3dExtra"><a id="model3dManualQuick" href="#" target="_blank" rel="noopener noreferrer">Abrir manual ↗</a><div id="model3dExtraText"></div></div>
    <p class="model3d-message" id="model3dNote">Somente modelos CAD provenientes de arquivo de montagem são exibidos como 3D.</p>
    <div class="model3d-import"><strong>Arquivo 3D deste projeto</strong><p>O sistema aceita modelos LDraw (.ldr / .mpd) com posições de peças. Não tenta adivinhar o 3D a partir de imagens do PDF.</p>
     <div class="row"><button id="model3dImport">Importar arquivo LDraw</button><input id="model3dFile" type="file" accept=".ldr,.mpd,.txt" class="hidden"><button id="model3dExport">Baixar modelo CAD</button>
@@ -76,11 +79,12 @@
 <script src="./catalogo-reais.js?v=7.0.0"></script>
 <script src="./modelos3d-catalogo.js?v=9.0.0"></script>
 <script src="./fidelidade.js?v=9.0.0"></script>
-<script src="./modelos3d-canvas.js?v=7.1.0"></script>
-<script src="./modelos3d-engine.js?v=7.0.0"></script>
+<script src="./modelos3d-canvas.js?v=11.0.0"></script>
+<script src="./modelos3d-engine.js?v=11.0.0"></script>
 <script src="./viewer3d.js?v=7.0.0"></script>
 <script src="./catalogo-app.js?v=9.0.0"></script>
-<script src="./modelos3d-ui.js?v=9.0.0"></script>
+<script src="./modelos3d-ui.js?v=11.0.0"></script>
+<script src="./montagem-imersiva.js?v=11.0.0"></script>
 <script>
 if ('serviceWorker' in navigator) {
  navigator.serviceWorker.getRegistrations().then(rs => Promise.all(rs.map(r => r.unregister()))).catch(() => {});
