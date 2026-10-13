@@ -2,8 +2,8 @@ const assert=require("node:assert/strict"),fs=require("node:fs"),vm=require("nod
 const dir=path.resolve(__dirname,".."),read=p=>fs.readFileSync(path.join(dir,p),"utf8");
 const html=read("index.html"),cad=read("modelos3d-engine.js"),ui=read("modelos3d-ui.js"),models=read("modelos3d-catalogo.js");
 assert.match(html,/modelos3d-engine\.js\?v=7\.0\.0/);
-assert.match(html,/modelos3d-ui\.js\?v=8\.0\.0/);
-assert.match(html,/modelos3d-catalogo\.js\?v=7\.0\.0/);
+assert.match(html,/modelos3d-ui\.js\?v=9\.0\.0/);
+assert.match(html,/modelos3d-catalogo\.js\?v=9\.0\.0/);
 for(const id of ["model3dDetail","model3dCanvas","model3dImport","model3dNext","model3dRotate","model3dClose"])
  assert(html.includes('id="'+id+'"'),"Falta controle "+id);
 assert(read("catalogo-app.js").includes("data-view3d"),"Cards não expõem o visualizador 3D");
