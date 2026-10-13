@@ -98,8 +98,17 @@
   report.certified100=passed;
   return report;
  }
+ const PARTIAL_PAGE_MAP={
+  "lego-camera":[3,3],
+  "lego-castelo":[3,4],
+  "lego-escavadeira":[3,3],
+  "lego-apartamento":[3,4],
+  "lego-palmeira":[3,3],
+  "lego-ursinho":[3,3]
+ };
  function manualPage(id,step){
-  const row=get(id),page=row?.sourcePageByStep?.[Math.max(0,Number(step||1)-1)];
+  const row=get(id),pages=row?.sourcePageByStep||PARTIAL_PAGE_MAP[id],
+   page=pages?.[Math.max(0,Number(step||1)-1)];
   return page||null;
  }
  function status(id){
