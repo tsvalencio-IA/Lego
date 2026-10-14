@@ -7,8 +7,8 @@
 1 14 0 0 0 1 0 0 0 1 0 0 0 1 3032.dat
 0 STEP
 0 // Etapa 2: verificar página 4 do manual oficial 10698_X_Digger
-1 191 -20 -8 0 1 0 0 0 1 0 0 0 1 3001.dat
-1 191 20 -8 0 1 0 0 0 1 0 0 0 1 3001.dat
+1 191 -20 -24 0 1 0 0 0 1 0 0 0 1 3001.dat
+1 191 20 -24 0 1 0 0 0 1 0 0 0 1 3001.dat
 0 FILE partes-10698.ldr
 0 Fonte: LDraw.org Parts Library CC BY 2.0
 0 Nome: biblioteca de formas do projeto
