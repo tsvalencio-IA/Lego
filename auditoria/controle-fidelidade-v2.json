@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "otto-fidelidade-2",
+  "set": "10698",
+  "setPieces": 790,
+  "officialSource": "https://www.lego.com/pt-br/service/building-instructions/10698",
+  "modelSourcePolicy": "PDF original ou instrução autorizada; arquivo .ldr/.mpd apenas quando posições e peças conferidas contra cada etapa",
+  "releasePolicy": "Nenhum modelo 3D é liberado como fiel se uma etapa, peça, cor, rotação, encaixe ou prova faltar. Livros são coleções e devem ser decompostos em construções individuais.",
+  "entries": [
+    {
+      "id": "lego-sapo",
+      "kind": "modelo",
+      "official": true,
+      "manual": "https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Frog.pdf",
+      "manualStages": 11,
+      "stagesIndependentlyCounted": true,
+      "expectedParts": 16,
+      "cadFile": "modelos3d/lego-sapo-10698-packed.mpd",
+      "cadStatus": "reconstrucao_nao_conferida",
+      "blockers": [
+        "geometria do modelo não confrontada integralmente com as vistas oficiais",
+        "encaixe e orientação dos olhos ainda não comprovados",
+        "sequência do modelo contém alturas arbitrárias"
+      ]
+    },
+    {
+      "id": "lego-camera",
+      "kind": "modelo",
+      "official": true,
+      "manual": "https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Camera.pdf",
+      "manualStages": 12,
+      "stagesIndependentlyCounted": true,
+      "expectedParts": 26,
+      "cadFile": "modelos3d/parciais/camera-partes.mpd",
+      "cadStatus": "duas_etapas_nao_conferidas",
+      "blockers": [
+        "10 etapas restantes",
+        "submontagem da lente",
+        "posições e códigos não confirmados"
+      ]
+    },
+    {
+      "id": "lego-castelo",
+      "kind": "modelo",
+      "official": true,
+      "manual": "https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Castle.pdf",
+      "manualStages": null,
+      "legacyStageEstimate": 22,
+      "cadFile": "modelos3d/parciais/castelo-partes.mpd",
+      "cadStatus": "duas_etapas_nao_conferidas",
+      "blockers": [
+        "manual ainda não transcrito até a última etapa",
+        "2 estágios preliminares sem conferência visual completa"
+      ]
+    },
+    {
+      "id": "lego-escavadeira",
+      "kind": "modelo",
+      "official": true,
+      "manual": "https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Digger.pdf",
+      "manualStages": null,
+      "legacyStageEstimate": 11,
+      "cadFile": "modelos3d/parciais/escavadeira-partes.mpd",
+      "cadStatus": "duas_etapas_nao_conferidas",
+      "blockers": [
+        "mecanismos e movimento não verificados",
+        "manual não digitalizado integralmente"
+      ]
+    },
+    {
+      "id": "lego-apartamento",
+      "kind": "modelo",
+      "official": true,
+      "manual": "https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Apartment.pdf",
+      "manualStages": null,
+      "legacyStageEstimate": 25,
+      "cadFile": "modelos3d/parciais/apartamento-partes.mpd",
+      "cadStatus": "duas_etapas_nao_conferidas",
+      "blockers": [
+        "somente duas etapas preliminares",
+        "não reproduz edifício final"
+      ]
+    },
+    {
+      "id": "lego-palmeira",
+      "kind": "modelo",
+      "official": true,
+      "manual": "https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Palm%20Tree.pdf",
+      "manualStages": null,
+      "legacyStageEstimate": 15,
+      "cadFile": "modelos3d/parciais/palmeira-partes.mpd",
+      "cadStatus": "duas_etapas_nao_conferidas",
+      "blockers": [
+        "orientação dos ramos e submontagens pendente",
+        "restante das etapas sem CAD"
+      ]
+    },
+    {
+      "id": "lego-ursinho",
+      "kind": "modelo",
+      "official": true,
+      "manual": "https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Teddybear.pdf",
+      "manualStages": null,
+      "legacyStageEstimate": 16,
+      "cadFile": "modelos3d/parciais/ursinho-partes.mpd",
+      "cadStatus": "duas_etapas_nao_conferidas",
+      "blockers": [
+        "modelo do urso e acessório final não reconstruídos",
+        "cores e encaixes pendentes"
+      ]
+    },
+    {
+      "id": "lego-manual-1",
+      "kind": "colecao",
+      "official": true,
+      "manual": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6517266.pdf",
+      "blockers": [
+        "dividir livro em construções individuais antes de cadastrar modelos CAD"
+      ]
+    },
+    {
+      "id": "lego-manual-2",
+      "kind": "colecao",
+      "official": true,
+      "manual": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6517268.pdf",
+      "blockers": [
+        "dividir livro em construções individuais antes de cadastrar modelos CAD"
+      ]
+    },
+    {
+      "id": "moc-casa-modular",
+      "kind": "modelo",
+      "official": false,
+      "manual": "https://rebrickable.com/mocs/MOC-47317/Lenarex/10698-modular-house/",
+      "author": "Lenarex",
+      "reportedParts": 495,
+      "cadFile": null,
+      "blockers": [
+        "três PDFs por andar e telhado",
+        "instruções do autor ainda não transcritas em CAD"
+      ]
+    },
+    {
+      "id": "moc-nave",
+      "kind": "modelo",
+      "official": false,
+      "manual": "https://rebrickable.com/mocs/MOC-61117/Moe%20Brickman/10698-star-fighter/",
+      "author": "Moe Brickman",
+      "reportedParts": 112,
+      "cadFile": null,
+      "blockers": [
+        "instruções do autor em PDF",
+        "posições e sequência não transcritas"
+      ]
+    },
+    {
+      "id": "moc-camaleao",
+      "kind": "modelo",
+      "official": false,
+      "manual": "https://rebrickable.com/mocs/MOC-185994/Lenarex/10698-chameleon/",
+      "author": "Lenarex",
+      "reportedParts": 60,
+      "cadFile": null,
+      "blockers": [
+        "manual externo do autor",
+        "posições e sequência não transcritas"
+      ]
+    }
+  ]
+}
