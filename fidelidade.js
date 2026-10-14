@@ -67,6 +67,52 @@
     "https://www.bricklink.com/catalogItemInv.asp?S=10698-1"],
    warning:"Comparação com candidatos de código/cor não comprova posições, variantes decoradas ou estabilidade física."};
  }
+
+ const MATERIAL_NAMES={
+  "3021":"placa 2×3", "4287":"rampa invertida 1×3", "3040":"rampa 1×2",
+  "3039":"rampa 2×2", "3004":"tijolo 1×2", "85984":"rampa baixa 1×2",
+  "3003":"tijolo 2×2", "4070":"tijolo com pino lateral 1×1",
+  "98138p07":"olho redondo estampado", "3034":"placa 2×8",
+  "2456":"tijolo 2×6","3028":"placa 6×12", "3001":"tijolo 2×4",
+  "3032":"placa 4×6","3029":"placa 4×12","3069":"azulejo liso 1×2",
+  "3031":"placa 4×4","3020":"placa 2×4","6215":"rampa curva 2×3"
+ };
+ const COLOR_NAMES={
+  0:"preto",1:"azul",2:"verde",14:"amarelo",15:"branco",
+  19:"bege",27:"verde-limão",36:"verde-vivo",
+  71:"cinza-claro",72:"cinza-escuro",191:"amarelo-alaranjado",321:"azul-azur"
+ };
+ function describePiece(piece){
+  if(!piece)return "";
+  const id=String(piece.id||"").replace(/\.dat$/i,"").toLowerCase();
+  return (MATERIAL_NAMES[id]||"peça LEGO "+id)+" · "+(COLOR_NAMES[Number(piece.color)]||"cor "+piece.color)+" (código "+id+")";
+ }
+ // Transcrição visual dos dois primeiros quadros de cada manual oficial.
+ // As geometrias 3D e os encaixes NÃO são certificados por esta tabela.
+ const FIRST_TWO_STAGES={
+  "lego-camera":{total:12,parts:[[["3034",71]],[["2456",0]]]},
+  "lego-castelo":{total:22,parts:[[["3028",36]],[["3001",71],["3001",71]]]},
+  "lego-escavadeira":{total:11,parts:[[["3032",14]],[["3001",191],["3001",191]]]},
+  "lego-apartamento":{total:25,parts:[[["3029",72],["3004",321]],[["3069",15],["3004",321]]]},
+  "lego-palmeira":{total:15,parts:[[["3031",1],["3031",1]],[["3001",14]]]},
+  "lego-ursinho":{total:16,parts:[[["3020",19]],[["6215",15]]]}
+ };
+ function auditInitialStages(id,text){
+  const target=FIRST_TWO_STAGES[id];
+  if(!target)return {hasReference:false,matching:false,issues:["Quadros ainda não transcritos do manual."]};
+  try{
+   const actual=rootSteps(text).steps;
+   const problems=[],key=p=>String(p.id).replace(/\.dat$/i,"").toLowerCase()+"|"+Number(p.color);
+   target.parts.forEach((expected,i)=>{
+    const found=(actual[i]||[]).map(key).sort(),needed=expected.map(pair=>pair[0]+"|"+pair[1]).sort();
+    if(JSON.stringify(found)!==JSON.stringify(needed))
+      problems.push("Etapa "+(i+1)+" com códigos, cores ou quantidades diferentes do manual.");
+   });
+   if(actual.length!==target.parts.length)problems.push("O arquivo 3D não contém exatamente as duas etapas previstas.");
+   return {hasReference:true,matching:problems.length===0,issues:problems,
+    stagesDigitized:actual.length,stagesDeclared:target.total,positionsCertified:false,physicalCertified:false};
+  }catch(e){return {hasReference:true,matching:false,issues:[String(e.message||e)]};}
+ }
  const REQUIRED=["instructionsVerified","stepCountsVerified","partIdsVerified","exactColorsVerified",
   "allPositionsVerified","connectionVerified","realBuildVerified"];
  const MODELS={ "lego-sapo":frog };
@@ -107,6 +153,13 @@
    criteria:{},failures:[],pending:[],model3dPresent:!!text
   };
   if(!record){
+   if(text){
+    const early=auditInitialStages(id,text);
+    report.partialAudit=early;
+    report.criteria.firstTwoStageMaterialsMatch=early.matching;
+    report.status="EM_CONFERENCIA";
+    if(!early.matching)report.failures.push(...early.issues);
+   }
    report.pending.push("Obter modelo digital com proveniência e lista real de peças e passos.");
    report.pending.push("Confrontar manual, geometria, ordem e encaixes reais antes de certificar.");
    return report;
@@ -157,5 +210,5 @@
  function status(id){
   const m=get(id);return m?m.status:"SEM_MODELO_AUDITADO";
  }
- return {MODELS,REQUIRED,get,audit,rootSteps,manualPage,status,catalogComparison,FROG_CANDIDATES,FROG_SET_STOCK};
+ return {MODELS,REQUIRED,get,audit,rootSteps,manualPage,status,catalogComparison,FROG_CANDIDATES,FROG_SET_STOCK,MATERIAL_NAMES,COLOR_NAMES,describePiece,FIRST_TWO_STAGES,auditInitialStages};
 });
