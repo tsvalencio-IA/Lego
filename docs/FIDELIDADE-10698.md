@@ -40,3 +40,21 @@ O sistema contém leitor e visualizador rotativo de malhas LDraw, com zoom e eta
 Nos outros 11 exemplos, o link original é preservado e não há 3D inventado ou copiado de outro projeto.
 
 Powered by thIAguinho Soluções Digitais.
+
+## Correções auditadas em 14/10/2026
+
+A comparação direta com as páginas oficiais da LEGO identificou e levou às seguintes correções no CAD, mantendo os rascunhos classificados como não certificados:
+
+- Castelo: etapa 2 usa dois tijolos cinza-claros **2×4 (3001)**, em lugar do código 2×3 (3002) usado anteriormente. Posições reajustadas de forma preliminar, ainda sem prova de encaixe completo.
+- Escavadeira: etapa 2 usa dois tijolos **2×4 Bright Light Orange**, código de cor LDraw **191**, e não cor violeta 110. A visualização agora interpreta a cor 191 corretamente.
+- Câmera: tijolo preto 2×6 (2456) deslocado sobre a placa 2×8 (3034), para preservar a faixa de pinos exposta como no manual. Ainda é necessário aprovar orientação e acabamento.
+- Apartamento: azulejo liso branco 1×2 (3069) transferido para a altura das faces superiores dos tijolos azuis 1×2 (3004). Geometria completa dos andares continua pendente.
+- Sapo: as **11 etapas e 16 instâncias** tiveram os códigos, cores e quantidades cruzados com a tabela de itens regulares da 10698. A comparação não valida a posição final ou a estabilidade do brinquedo.
+
+Foi acrescentado o teste `tests/materiais-originais.cjs`, que reprova mudanças deliberadas em códigos/cores dos materiais transcritos. O aplicativo passou a apresentar nomes legíveis das peças durante o passo a passo.
+
+**Uso no Android:** o PDF original não será mais aberto dentro de um quadro vazio ou preto. O botão Manual mostra o link para a página correspondente do documento original em outra aba; ao voltar, o 3D preserva a etapa. No computador a visualização interna do PDF permanece disponível.
+
+**Estado de certificação:** nenhuma das construções recebe selo 100% fiel por estes ajustes. A conferência manual de todas as posições, etapas restantes, ligações reais e estabilidade física continua necessária.
+
+Fontes primárias: [instruções oficiais LEGO 10698](https://www.lego.com/pt-br/service/building-instructions/10698), [inventário regular 10698 no BrickLink](https://www.bricklink.com/catalogItemInv.asp?S=10698-1) e [especificação de peças LDraw](https://www.ldraw.org/docs-main.html).
