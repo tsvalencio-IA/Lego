@@ -51,7 +51,7 @@ for(const name of names){
  assert.deepEqual(a.map(p=>p.part.position),b.map(p=>p.part.position),"Fontes CAD distintas: "+name);
  console.log("ENCAIXE PRELIMINAR "+name+": "+a.length+" peças sem sobreposição de tijolos e com apoio nominal");
 }
-let broken=get("modelos3d/parciais/camera.ldr").replace("1 0 0 -24 20","1 0 20 -24 20");
+let broken=get("modelos3d/parciais/camera.ldr").replace("1 0 20 -24 0","1 0 0 -24 20");
 assert.throws(()=>inspect(broken,"camera com deslocamento fora da placa"),/fora da placa/);
 broken=get("modelos3d/parciais/escavadeira.ldr").replace("1 191 0 -24 20","1 191 0 -24 -20");
 assert.throws(()=>inspect(broken,"escavadeira com tijolos sobrepostos"),/colisão/);
