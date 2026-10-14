@@ -54,6 +54,12 @@ const server=http.createServer((req,res)=>{
    assert.equal(await page.locator("#model3dStep").textContent(),"Peça 16 de 16");
    await page.locator("#model3dManualToggle").click();
    assert.notEqual(await page.locator("#model3dCompare").evaluate(el=>getComputedStyle(el).display),"none");
+   if(viewport.width<700){
+    assert.equal(await page.locator("#model3dManualFrame").getAttribute("src"),null,
+      "Android não deve carregar iframe PDF que exibe painel preto");
+    assert.equal(await page.locator("#model3dMobileHint").isVisible(),true);
+    assert.match(await page.locator("#model3dManualStep").getAttribute("href"),/^https:\/\/www\.lego\.com\/.*#page=8/);
+   }
    await page.locator("#model3dBack3D").click();
    assert.equal(await page.locator("#model3dCompare").evaluate(el=>getComputedStyle(el).display),"none");
    await page.locator("#model3dZoomIn").click();
