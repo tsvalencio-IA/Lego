@@ -1,4 +1,4 @@
-name: Validar OTTO LEGO Projetos Reais
+name: Testar interface e auditar fontes (NÃO certifica CAD)
 on:
   push:
     branches: [main, reconstrucao-fiel-10698]
@@ -24,7 +24,7 @@ jobs:
           node --check modelos3d-ui.js
           node --check modelos3d-catalogo.js
           node --check fidelidade.js
-      - name: Verificar fontes verdadeiras e retirar geração livre
+      - name: Testar catálogo e reprovar liberações CAD sem provas
         run: |
           node tests/catalogo-v6.cjs
           node tests/viewer3d.cjs
