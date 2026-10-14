@@ -23,7 +23,7 @@
   const href=project.manual+(page?"#page="+page+"&view=FitH":"#page=1");
   anchor.href=href;
   anchor.textContent=page?"Ver original — página "+page+" ↗":"Abrir manual original ↗";
-  if(group.classList.contains("is-visible")&&frame.dataset.current!==href){frame.src=href;frame.dataset.current=href;}
+  if(group.classList.contains("is-visible")&&group.dataset.noIframe!=="true"&&frame.dataset.current!==href){frame.src=href;frame.dataset.current=href;}
  }
  function checkFidelity(record,project){
   const panel=$("model3dAudit"),audit=fidelity?.audit(project.id,record?.text||null);
