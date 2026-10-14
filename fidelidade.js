@@ -27,6 +27,46 @@
    ],
    notes:"Reconstrução MPD anterior produz uma prévia, mas não há evidência suficiente para declarar fidelidade ao manual."
  };
+ // Referência cruzada: instruções oficiais 10698_X_Frog + itens regulares do BrickLink 10698-1.
+ // O arquivo LDraw de olhos 98138p07.dat representa o design decorado BrickLink 98138pb007.
+ // Esta lista comprova alinhamento de identificação e quantidade com a referência adotada,
+ // MAS NÃO comprova coordenadas, rotações, conexões nem montagem física.
+ const FROG_CANDIDATES=[
+  [["3021",2]], [["4287",2],["4287",2]],
+  [["3040",2],["3040",2]], [["3039",2]],
+  [["3004",27]], [["85984",2],["85984",2]],
+  [["3003",27]], [["3021",2]],
+  [["4070",2],["4070",2]], [["3039",2]],
+  [["98138p07",15],["98138p07",15]]
+ ];
+ const FROG_SET_STOCK={
+  "3021|2":2,"4287|2":2,"3040|2":4,"3039|2":4,
+  "3004|27":4,"85984|2":4,"3003|27":4,"4070|2":4,"98138p07|15":4
+ };
+ function catalogComparison(id,text){
+  if(id!=="lego-sapo")return {available:false,matching:false,discrepancies:["Nenhuma tabela cruzada aprovada para este projeto."]};
+  let stages;
+  try{stages=rootSteps(text).steps;}catch(e){return {available:true,matching:false,discrepancies:[String(e.message||e)]};}
+  const problems=[],need=new Map();
+  const normal=p=>p.id.toLowerCase().replace(/\.dat$/i,"")+"|"+Number(p.color);
+  const candidate=pair=>pair[0]+"|"+pair[1];
+  FROG_CANDIDATES.forEach((expected,i)=>{
+    const actual=stages[i]||[];
+    const expectedKeys=expected.map(candidate).sort(),actualKeys=actual.map(normal).sort();
+    if(JSON.stringify(expectedKeys)!==JSON.stringify(actualKeys))
+      problems.push("Etapa "+(i+1)+": candidatos do inventário não correspondem aos códigos e cores do CAD.");
+    for(const key of actualKeys)need.set(key,(need.get(key)||0)+1);
+  });
+  if(stages.length!==FROG_CANDIDATES.length)problems.push("Número de etapas divergente.");
+  for(const [key,n] of need){
+    if(!(key in FROG_SET_STOCK))problems.push("Peça/cor não localizada na seleção do inventário 10698: "+key);
+    else if(n>FROG_SET_STOCK[key])problems.push("Quantidade excedida para "+key+": "+n+"/"+FROG_SET_STOCK[key]);
+  }
+  return {available:true,matching:problems.length===0,discrepancies:problems,
+   references:["https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Frog.pdf",
+    "https://www.bricklink.com/catalogItemInv.asp?S=10698-1"],
+   warning:"Comparação com candidatos de código/cor não comprova posições, variantes decoradas ou estabilidade física."};
+ }
  const REQUIRED=["instructionsVerified","stepCountsVerified","partIdsVerified","exactColorsVerified",
   "allPositionsVerified","connectionVerified","realBuildVerified"];
  const MODELS={ "lego-sapo":frog };
@@ -82,6 +122,9 @@
    if(!report.criteria.stepCountsMatch)report.failures.push("Divergência na quantidade de peças por etapa.");
    if(!report.criteria.pieceTotalMatches)report.failures.push("Divergência na quantidade total.");
    report.criteria.modelIncludesRealPartCodes=details.parts.every(p=>/\.dat$/i.test(p.id));
+   report.catalogComparison=catalogComparison(id,text);
+   report.criteria.expectedDesignIdsAndColors=report.catalogComparison.matching;
+   if(!report.catalogComparison.matching)report.failures.push(...report.catalogComparison.discrepancies);
    if(!report.criteria.modelIncludesRealPartCodes)report.failures.push("Uma ou mais referências CAD não são códigos de peça.");
   }catch(error){
    report.failures.push("Arquivo digital não pode ser auditado: "+String(error.message||error));
@@ -114,5 +157,5 @@
  function status(id){
   const m=get(id);return m?m.status:"SEM_MODELO_AUDITADO";
  }
- return {MODELS,REQUIRED,get,audit,rootSteps,manualPage,status};
+ return {MODELS,REQUIRED,get,audit,rootSteps,manualPage,status,catalogComparison,FROG_CANDIDATES,FROG_SET_STOCK};
 });
