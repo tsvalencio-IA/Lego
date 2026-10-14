@@ -30,10 +30,13 @@
   if(!audit){panel.textContent="Fidelidade não auditada: compare manual, códigos e posições.";return;}
   const counts=audit.criteria||{};
   const goodCounts=counts.stepCountsMatch&&counts.pieceTotalMatches;
+  const shortAudit=audit.partialAudit;
+  const firstStages=shortAudit?.matching===true;
   panel.className="model3d-status "+(audit.certified100?"":"warning");
   panel.textContent=(audit.certified100?"PROJETO CONFERIDO: ":"FIDELIDADE AINDA NÃO CERTIFICADA: ")+
    (goodCounts?"As 11 etapas e as quantidades de peças correspondem ao PDF. ":"")+
-   "Conferência de códigos, cores, posições, encaixes e montagem física ainda pendente."+
+   (firstStages?"Os formatos, cores e quantidades das duas primeiras etapas correspondem à transcrição do manual. ":"")+
+   "Posições exatas, encaixes e montagem física ainda pendentes de conferência."+
    (audit.failures?.length?" Falhas: "+audit.failures.join("; "):"");
  }
  function setSteps(n=0){
@@ -42,7 +45,7 @@
   const piece=viewer?.currentPiece?.();
   const full=viewer?.manualSteps||0;
   $("model3dPartInfo").textContent=piece
-    ?"Peça "+step+"/"+max+" • "+piece.id+" • cor LDraw "+piece.color+" • Manual etapa "+piece.manualStage+"/"+full
+    ?"Peça "+step+"/"+max+" • "+(fidelity?.describePiece?.(piece)||piece.id)+" • Manual etapa "+piece.manualStage+"/"+full
     :max?"Início: toque em Próxima para colocar a primeira peça.":"Aguardando modelo 3D";
   $("model3dPrev").disabled=!max||step<=0;
   $("model3dNext").disabled=!max||step>=max;
