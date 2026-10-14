@@ -30,6 +30,7 @@ jobs:
           node tests/viewer3d.cjs
           node tests/modelos3d.cjs
           node tests/fidelidade.cjs
+          node tests/manual-trace.cjs
           node tests/parciais.cjs
   browser-e2e:
     runs-on: ubuntu-latest
