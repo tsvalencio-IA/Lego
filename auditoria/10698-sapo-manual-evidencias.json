@@ -1,0 +1,144 @@
+{
+  "schema": "otto.manual-evidence.v1",
+  "set": "10698",
+  "modelId": "lego-sapo",
+  "manual": {
+    "issuer": "The LEGO Group",
+    "url": "https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Frog.pdf",
+    "pages": 9,
+    "printedPagesWithSteps": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "acquiredBy": "Inspeção das páginas ilustradas do PDF oficial em 2026-10-14"
+  },
+  "scope": "Rastreamento visual de peças por etapa; não valida design ID nem coordenadas CAD.",
+  "status": "PENDENTE_VALIDACAO_CAD_E_MONTAGEM_FISICA",
+  "expectedPieceTotal": 16,
+  "expectedStages": 11,
+  "stages": [
+    {
+      "step": 1,
+      "page": 3,
+      "count": 1,
+      "observed": [
+        "Placa verde de 2 x 3 pinos."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 2,
+      "page": 3,
+      "count": 2,
+      "observed": [
+        "Dois elementos verdes longos e estreitos, com superfície superior com pinos e face lateral inclinada, dispostos transversalmente à placa-base."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 3,
+      "page": 4,
+      "count": 2,
+      "observed": [
+        "Dois elementos verdes inclinados, cada um com um pino superior, adicionados ao corpo."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 4,
+      "page": 4,
+      "count": 1,
+      "observed": [
+        "Uma peça verde inclinada com dois pinos superiores, colocada na região central superior."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 5,
+      "page": 5,
+      "count": 1,
+      "observed": [
+        "Uma peça verde-limão, formato aparente 1 x 2 com dois pinos, na frente e abaixo da peça superior."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 6,
+      "page": 5,
+      "count": 2,
+      "observed": [
+        "Duas peças verdes com uma inclinação e um pino superior cada, aplicadas nas extremidades posteriores/laterais."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 7,
+      "page": 6,
+      "count": 1,
+      "observed": [
+        "Um componente verde-limão com superfície superior e ressaltos, aplicado frontalmente; verificar sua geometria especial no detalhe do manual."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 8,
+      "page": 6,
+      "count": 1,
+      "observed": [
+        "Uma placa verde aparente 2 x 3 pinos instalada horizontalmente na parte superior."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 9,
+      "page": 7,
+      "count": 2,
+      "observed": [
+        "Dois blocos verdes modificados 1 x 1, com pino lateral para prender os olhos."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 10,
+      "page": 7,
+      "count": 1,
+      "observed": [
+        "Uma peça verde inclinada e de superfície lisa, montada na frente como focinho."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    },
+    {
+      "step": 11,
+      "page": 8,
+      "count": 2,
+      "observed": [
+        "Dois olhos redondos brancos com pupila escura, presos nos pinos laterais."
+      ],
+      "partCodesVerified": false,
+      "positionsVerified": false
+    }
+  ],
+  "certificationRequirements": [
+    "Design IDs conferidos contra inventário e cada ilustração oficial",
+    "Cores e variantes verificadas",
+    "Posições e orientações LDraw comparadas com todas as vistas do PDF",
+    "Conectividade e ausência de colisão",
+    "Montagem física feita com as peças correspondentes",
+    "Retenção das provas da conferência"
+  ],
+  "note": "Os descritores descrevem o que é visível no PDF; não determinam por si mesmos um design ID ou uma orientação 3D precisa. Não marcar o modelo como 100% fiel."
+}
