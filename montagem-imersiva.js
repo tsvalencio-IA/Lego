@@ -9,8 +9,29 @@
   panel.classList.toggle("is-visible",visible);
   toggle.setAttribute("aria-expanded",String(visible));
   toggle.textContent=visible?"Voltar ao 3D":"Manual";
-  if(visible){const href=el("model3dManualStep").href;if(href&&iframe.src!==href)iframe.src=href;}
-  else{iframe.removeAttribute("src");delete iframe.dataset.current;}
+  let mobileHint=el("model3dMobileHint");
+  if(!mobileHint){
+   mobileHint=document.createElement("p");
+   mobileHint.id="model3dMobileHint";
+   mobileHint.className="pdf-mobile-note";
+   mobileHint.textContent="No celular, o PDF original abre em outra aba para evitar tela preta. Use o botão abaixo e volte ao OTTO para continuar a montagem na mesma etapa.";
+   mobileHint.hidden=true;
+   panel.insertBefore(mobileHint,el("model3dManualStep"));
+  }
+  if(visible){
+   const nativeMobile=window.matchMedia?.("(max-width: 700px)")?.matches||/\bAndroid\b/i.test(navigator.userAgent);
+   if(nativeMobile){
+    panel.dataset.noIframe="true";iframe.hidden=true;iframe.removeAttribute("src");
+    delete iframe.dataset.current;mobileHint.hidden=false;
+   }else{
+    delete panel.dataset.noIframe;iframe.hidden=false;mobileHint.hidden=true;
+    const href=el("model3dManualStep").href;
+    if(href&&iframe.src!==href){iframe.src=href;iframe.dataset.current=href;}
+   }
+  }else{
+   iframe.removeAttribute("src");delete iframe.dataset.current;
+   mobileHint.hidden=true;delete panel.dataset.noIframe;
+  }
  }
  function details(show){
   info.classList.toggle("is-visible",Boolean(show));
