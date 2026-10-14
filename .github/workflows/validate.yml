@@ -1,7 +1,7 @@
 name: Validar OTTO LEGO Projetos Reais
 on:
   push:
-    branches: [main]
+    branches: [main, reconstrucao-fiel-10698]
   pull_request:
   workflow_dispatch:
 permissions:
@@ -35,6 +35,8 @@ jobs:
           node tests/encaixes-iniciais.cjs
           node tests/camera-manual-trace.cjs
           node tests/parciais.cjs
+          node tests/controle-release.cjs
+          node scripts/verificar-fidelidade.cjs
   browser-e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 12
