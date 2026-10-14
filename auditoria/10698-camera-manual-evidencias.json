@@ -1,0 +1,119 @@
+{
+  "schema": "otto.manual-evidence.v1",
+  "set": "10698",
+  "modelId": "lego-camera",
+  "manual": {
+    "issuer": "The LEGO Group",
+    "url": "https://www.lego.com/cdn/product-assets/product.bi.additional.extra.pdf/10698_X_Camera.pdf",
+    "pdfPages": 10,
+    "illustratedPages": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "status": "CONTAGEM_VISUAL_TRANSCRITA__CAD_INCOMPLETO",
+  "note": "Contagem de peças nos quadros azuis do PDF oficial. Design IDs, orientação e coordenadas do CAD além da etapa 2 NÃO foram confirmados. Último passo inclui montagem separada da lente.",
+  "totalManualStages": 12,
+  "counts": [
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    1,
+    2,
+    3,
+    1,
+    6
+  ],
+  "sources": [
+    {
+      "step": 1,
+      "page": 3,
+      "qty": 1,
+      "description": "Placa cinza 2×8."
+    },
+    {
+      "step": 2,
+      "page": 3,
+      "qty": 1,
+      "description": "Tijolo preto 2×6 posicionado no sentido longitudinal da base."
+    },
+    {
+      "step": 3,
+      "page": 4,
+      "qty": 2,
+      "description": "Dois tijolos pretos 2×2, um em cada extremidade do conjunto principal."
+    },
+    {
+      "step": 4,
+      "page": 4,
+      "qty": 2,
+      "description": "Tijolo preto 2×2 e peça especial amarela com pino frontal para lente."
+    },
+    {
+      "step": 5,
+      "page": 5,
+      "qty": 2,
+      "description": "Dois tijolos pretos 1×2."
+    },
+    {
+      "step": 6,
+      "page": 5,
+      "qty": 2,
+      "description": "Um tijolo preto 1×2 e um tijolo cinza 2×4."
+    },
+    {
+      "step": 7,
+      "page": 6,
+      "qty": 3,
+      "description": "Uma peça branca com textura frontal e dois elementos pretos inclinados."
+    },
+    {
+      "step": 8,
+      "page": 6,
+      "qty": 1,
+      "description": "Uma placa cinza 2×8 para finalizar a parte superior."
+    },
+    {
+      "step": 9,
+      "page": 7,
+      "qty": 2,
+      "description": "Um botão vermelho redondo e uma peça cinza redonda plana para a câmera."
+    },
+    {
+      "step": 10,
+      "page": 7,
+      "qty": 3,
+      "description": "Uma peça branca 1×2 e dois blocos cinza 1×1 na parte superior."
+    },
+    {
+      "step": 11,
+      "page": 8,
+      "qty": 1,
+      "description": "Um tile cinza liso comprido sobre o topo."
+    },
+    {
+      "step": 12,
+      "page": 9,
+      "qty": 6,
+      "description": "Lente: disco preto redondo, quatro elementos cinza curvos e componente branco central. O PDF possui quatro subetapas para esta lente.",
+      "substeps": 4
+    }
+  ],
+  "audit": {
+    "countSource": "Imagens nas páginas 3–9 do PDF oficial",
+    "exactBrickIdsConfirmed": false,
+    "colorsConfirmed": false,
+    "positionsConfirmed": false,
+    "physicalFitConfirmed": false,
+    "usableForStockReservation": false
+  }
+}
