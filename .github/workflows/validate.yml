@@ -32,6 +32,7 @@ jobs:
           node tests/fidelidade.cjs
           node tests/manual-trace.cjs
           node tests/materiais-originais.cjs
+          node tests/encaixes-iniciais.cjs
           node tests/parciais.cjs
   browser-e2e:
     runs-on: ubuntu-latest
