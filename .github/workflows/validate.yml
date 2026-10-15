@@ -37,6 +37,8 @@ jobs:
           node tests/camera-manual-trace.cjs
           node tests/controle-release.cjs
           node scripts/verificar-fidelidade.cjs
+          node tests/controle-release.cjs
+          node scripts/verificar-fidelidade.cjs
           node tests/parciais.cjs
   browser-e2e:
     runs-on: ubuntu-latest
